@@ -23,7 +23,7 @@ public class Connexion {
         
         Button registerButton = new Button("Inscription");
 
-        // Mise en page avec GridPane
+        // Mise en page
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(20, 20, 20, 20));
         gridPane.setVgap(10);

@@ -29,7 +29,7 @@ public class InscriptionPage {
 
         Button registerButton = new Button("S'inscrire");
 
-        // Mise en page avec GridPane
+        // Mise en page 
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(20, 20, 20, 20));
         gridPane.setVgap(10);
@@ -49,7 +49,6 @@ public class InscriptionPage {
         registerButton.setOnAction(e -> handleRegistration(nameField.getText(), firstNameField.getText(),
                 emailField.getText(), passwordField.getText()));
 
-        // Création de la scène
         Scene scene = new Scene(gridPane, 300, 250);
 
         // Configuration de la scène principale
@@ -58,11 +57,11 @@ public class InscriptionPage {
 	}
 	
 	private static void handleRegistration(String name, String firstName, String email, String password) {
-        // Ajoutez ici le code pour traiter l'inscription
+        // traitement de l'execution 
         System.out.println("Nom: " + name);
         System.out.println("Prénom: " + firstName);
         System.out.println("Email: " + email);
         System.out.println("Mot de passe: " + password);
-        // Ajoutez la logique de traitement de l'inscription ici
+        // logique de traitement ci dessous
     }
 }
