@@ -6,6 +6,10 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
+=======
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX21"/>
+>>>>>>> 6904f20e047e3465ad7ac80f342cf018ec191ef0
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFXLibrary"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
