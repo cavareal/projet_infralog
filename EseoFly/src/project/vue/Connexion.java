@@ -1,4 +1,5 @@
-package src.project.vue;
+package project.vue;
 
 public class Connexion {
+
 }
