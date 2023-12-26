@@ -20,6 +20,8 @@ public class Connexion {
         PasswordField passwordField = new PasswordField();
 
         Button loginButton = new Button("Se connecter");
+        
+        Button registerButton = new Button("Inscription");
 
         // Mise en page avec GridPane
         GridPane gridPane = new GridPane();
@@ -32,12 +34,18 @@ public class Connexion {
         gridPane.add(passwordLabel, 0, 1);
         gridPane.add(passwordField, 1, 1);
         gridPane.add(loginButton, 1, 2);
+        gridPane.add(registerButton, 1, 3);
+
 
         // Gestion de l'événement de clic du bouton de connexion
         loginButton.setOnAction(e -> handleLogin(emailField.getText(), passwordField.getText()));
+        
+        // Gestion de l'événement du clic du boutin inscription 
+        registerButton.setOnAction(e -> handleRegistration(primaryStage));
 
+        
         // Création de la scène = contenu de la fenêtre
-        Scene scene = new Scene(gridPane, 300, 200);
+        Scene scene = new Scene(gridPane, 400, 300);
 
         // Configuration de la scène principale
         primaryStage.setScene(scene);
@@ -46,10 +54,22 @@ public class Connexion {
 	
 	   // Méthode de gestion de la connexion (à personnaliser selon vos besoins)
     private static void handleLogin(String email, String password) {
-        // Ici simple affichage de eamail et du mdp dans la console 
+        // Ici simple affichage de email et du mdp dans la console PB DE SECU 
+    	// Faire l'appel à la data base ici ? 
         System.out.println("Email: " + email);
         System.out.println("Mot de passe: " + password);
-        // Ajoutez la logique de vérification de l'authentification ici
+        // vérif ici 
+    }
+    
+    private static void handleRegistration(Stage primaryStage) {
+    	// Crée une instance de la nouvelle page d'inscription
+        InscriptionPage inscriptionPage = new InscriptionPage();
+        
+        // Appelle la méthode start pour afficher la nouvelle page
+        InscriptionPage.fenetreInscription(new Stage());
+
+        // Ferme la scène actuelle (page de connexion)
+        primaryStage.close();
     }
 
 }
