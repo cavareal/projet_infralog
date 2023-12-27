@@ -1,7 +1,6 @@
 package project.vue;
 
 import javafx.geometry.Insets;
-import project.vue.GardePage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -41,7 +40,7 @@ public class ConnexionPage{
         // Gestion de l'événement de clic du bouton de connexion
         loginButton.setOnAction(e -> handleLogin(emailField.getText(), passwordField.getText(), primaryStage));
         
-        // Gestion de l'événement du clic du boutin inscription 
+        // Gestion de l'événement du clic du bouton inscription 
         registerButton.setOnAction(e -> handleRegistration(primaryStage));
 
         

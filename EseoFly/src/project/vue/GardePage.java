@@ -71,6 +71,9 @@ public class GardePage {
 
         // Placeholder content
         ajouterVolTab.setContent(gridPane);
+        
+        boutonAjout.setOnAction(e -> handleAjout(numeroVolField.getText(),nombrePlaceField.getText(),
+        		aeroportDepartField.getText(), aeroportArriveeField.getText(), heureDecollageField.getText()));
 
         return ajouterVolTab;
     }
@@ -86,6 +89,15 @@ public class GardePage {
         historiqueTab.setContent(label);
 
         return historiqueTab;
+    }
+    
+    private static void handleAjout(String numeroVolField, String nombrePlaceField,
+    		String aeroportDepartField, String aeroportArriveeField, String heureDecollageField) {
+    	// Gestion de l'ajout des vols dans la BDD
+    	
+    	System.out.println("Envoie des données");
+    	
+    	// Vérification si le vol n'est pas déjà présent dans la BDD 
     }
 
 }
