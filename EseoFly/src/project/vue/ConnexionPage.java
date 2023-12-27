@@ -1,6 +1,7 @@
 package project.vue;
 
 import javafx.geometry.Insets;
+import project.vue.GardePage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,7 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class Connexion {
+public class ConnexionPage{
 	
 	public static void fenetreConnexion(Stage primaryStage){
 		 // Création des éléments de l'IHM
@@ -38,7 +39,7 @@ public class Connexion {
 
 
         // Gestion de l'événement de clic du bouton de connexion
-        loginButton.setOnAction(e -> handleLogin(emailField.getText(), passwordField.getText()));
+        loginButton.setOnAction(e -> handleLogin(emailField.getText(), passwordField.getText(), primaryStage));
         
         // Gestion de l'événement du clic du boutin inscription 
         registerButton.setOnAction(e -> handleRegistration(primaryStage));
@@ -53,17 +54,18 @@ public class Connexion {
 	}
 	
 	   // Méthode de gestion de la connexion (à personnaliser selon vos besoins)
-    private static void handleLogin(String email, String password) {
+    private static void handleLogin(String email, String password, Stage primaryStage) {
         // Ici simple affichage de email et du mdp dans la console PB DE SECU 
     	// Faire l'appel à la data base ici ? 
         System.out.println("Email: " + email);
         System.out.println("Mot de passe: " + password);
         // vérif ici 
+        GardePage.pageDeGarde(new Stage());
+        primaryStage.close();
+        
     }
     
     private static void handleRegistration(Stage primaryStage) {
-    	// Crée une instance de la nouvelle page d'inscription
-        InscriptionPage inscriptionPage = new InscriptionPage();
         
         // Appelle la méthode start pour afficher la nouvelle page
         InscriptionPage.fenetreInscription(new Stage());

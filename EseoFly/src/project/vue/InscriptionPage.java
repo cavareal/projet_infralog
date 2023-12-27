@@ -26,6 +26,9 @@ public class InscriptionPage {
 
         Label passwordLabel = new Label("Mot de passe:");
         PasswordField passwordField = new PasswordField();
+        
+        Label passwordLabel2 = new Label("Mot de passe:"); // Correspondance des 2 password
+        PasswordField passwordField2 = new PasswordField();
 
         Button registerButton = new Button("S'inscrire");
 
@@ -43,11 +46,13 @@ public class InscriptionPage {
         gridPane.add(emailField, 1, 2);
         gridPane.add(passwordLabel, 0, 3);
         gridPane.add(passwordField, 1, 3);
-        gridPane.add(registerButton, 1, 4);
+        gridPane.add(passwordLabel2, 0, 4);
+        gridPane.add(passwordField2, 1, 4);
+        gridPane.add(registerButton, 1, 5);
 
         // Gestion de l'événement de clic du bouton d'inscription
         registerButton.setOnAction(e -> handleRegistration(nameField.getText(), firstNameField.getText(),
-                emailField.getText(), passwordField.getText()));
+                emailField.getText(), passwordField.getText(), primaryStage));
 
         Scene scene = new Scene(gridPane, 300, 250);
 
@@ -56,12 +61,14 @@ public class InscriptionPage {
         primaryStage.show();
 	}
 	
-	private static void handleRegistration(String name, String firstName, String email, String password) {
+	private static void handleRegistration(String name, String firstName, String email, String password, Stage primaryStage) {
         // traitement de l'execution 
         System.out.println("Nom: " + name);
         System.out.println("Prénom: " + firstName);
         System.out.println("Email: " + email);
         System.out.println("Mot de passe: " + password);
         // logique de traitement ci dessous
+        GardePage.pageDeGarde(new Stage());
+        primaryStage.close();
     }
 }
