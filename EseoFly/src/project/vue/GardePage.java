@@ -20,6 +20,9 @@ public class GardePage {
         MenuBar menuBar = new MenuBar();
         Menu menu = new Menu("Menu");
         MenuItem monCompteItem = new MenuItem("Mon Compte");
+        
+        monCompteItem.setOnAction(event -> handleMonCompteClick(secondStage));
+        
         menu.getItems().add(monCompteItem);
         menuBar.getMenus().add(menu);
 
@@ -98,6 +101,12 @@ public class GardePage {
     	System.out.println("Envoie des données");
     	
     	// Vérification si le vol n'est pas déjà présent dans la BDD 
+    }
+    
+    private static void handleMonCompteClick(Stage secondStage) {
+        // Ajoutez le code pour afficher la page de compte, par exemple
+    	
+    	ComptePage.fenetreCompte(new Stage());
     }
 
 }
