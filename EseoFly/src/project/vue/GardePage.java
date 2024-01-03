@@ -6,6 +6,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Color;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.scene.control.ScrollPane;
 
 public class GardePage {
 	
@@ -83,13 +89,17 @@ public class GardePage {
 
     private static Tab createHistoriqueTab() {
         Tab historiqueTab = new Tab("Historique");
+        
+        // VBox contenant les rectangles d'informations de vol
+        VBox flightInfoVBox = createFlightInfoVBox();
 
-        // Ajoutez les composants nécessaires pour l'onglet "Historique" ici
-        // Par exemple : TableView, Labels, etc.
+        // Défilement de la page
+        ScrollPane scrollPane = new ScrollPane(flightInfoVBox);
+        scrollPane.setFitToWidth(true);
 
         // Placeholder content
-        Label label = new Label("Contenu de l'onglet 'Historique'");
-        historiqueTab.setContent(label);
+        //historiqueTab.setContent(createFlight());
+        historiqueTab.setContent(scrollPane);
 
         return historiqueTab;
     }
@@ -108,5 +118,51 @@ public class GardePage {
     	
     	ComptePage.fenetreCompte(new Stage());
     }
+    
+    
+    
+    private static VBox createFlightInfoVBox() {
+        VBox vbox = new VBox(10); // Espacement vertical entre les rectangles
+        
+        // NON PERMANANT : Boucle pour remplir l'histo et voir si le scroll fonctionne
+        for (int i = 1; i <= 10; i++) {
+        	StackPane rectangleinfo = createFlightRectangle();
+            vbox.getChildren().add(rectangleinfo);
+          //getChildren() = liste observable des enfants actuellement présents dans la VBox
+        }
+        
+        return vbox;
+    }
+    
+    private static StackPane createFlightRectangle() {
+    	
+    	// RECUPERATION DES VRAIES INFOS 
+    	
+    	String numeroVol = "FR34";
+    	String date = "01-02-2024";
+    	String heureDecollage ="6:11";
+    	String aeroportDepart = "Paris";
+    	String aeroportArrive = "Marseille";
+    	String nbPlace= "Nb de place : " + "122";
+    	String nbPlaceAchetee="Nb de place achetée : " + "97";
+    	
+    	Rectangle rectangle = new Rectangle(350,50);
+        rectangle.setFill(Color.LIGHTGRAY);
+        rectangle.setStroke(Color.BLACK);
+        rectangle.setStrokeWidth(1);
+      
+        Text text = new Text(numeroVol + "    " + date +"    " + heureDecollage + "\n"
+        		+ aeroportDepart + " To " + aeroportArrive + "\n" 
+        		+ nbPlace + "   "+ nbPlaceAchetee);
+        text.setWrappingWidth(280); // Largeur maximale avant le retour à la ligne
+        
+        // Utilisation d'un StackPane pour superposer le rectangle et le texte
+        StackPane stackPane = new StackPane();
+        stackPane.getChildren().addAll(rectangle, text);
+        
+        return stackPane;
+    }
+    
+    
 
 }
