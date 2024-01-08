@@ -20,16 +20,25 @@ public class GardePage {
 
         // Création des onglets
         TabPane tabPane = new TabPane();
-        tabPane.getTabs().addAll(createAjouterVolTab(), createHistoriqueTab());
+        tabPane.getTabs().addAll(createAjouterVolTab(), createHistoriqueTab(), createAVenirTab());
 
         // Barre de menu
         MenuBar menuBar = new MenuBar();
         Menu menu = new Menu("Menu");
         MenuItem monCompteItem = new MenuItem("Mon Compte");
+        MenuItem ajoutItem = new MenuItem ("Ajouter un vol");
+        MenuItem historiqueItem = new MenuItem("Historique");
+        MenuItem aVenirItem = new MenuItem("A Venir");
         
         monCompteItem.setOnAction(event -> handleMonCompteClick(secondStage));
+        ajoutItem.setOnAction(event -> tabPane.getTabs().add(createAjouterVolTab()));
+        historiqueItem.setOnAction(event -> tabPane.getTabs().add(createHistoriqueTab()));
+        aVenirItem.setOnAction(event -> tabPane.getTabs().add(createAVenirTab()));
         
         menu.getItems().add(monCompteItem);
+        menu.getItems().add(ajoutItem);
+        menu.getItems().add(historiqueItem);
+        menu.getItems().add(aVenirItem);
         menuBar.getMenus().add(menu);
         
         // Mise en page
@@ -104,6 +113,24 @@ public class GardePage {
         return historiqueTab;
     }
     
+    private static Tab createAVenirTab() {
+    	Tab aVenirTab = new Tab("A Venir");
+        
+        // VBox contenant les rectangles d'informations de vol
+        VBox flightInfoVBox = createFlightInfoVBox();
+
+        // Défilement de la page
+        ScrollPane scrollPane = new ScrollPane(flightInfoVBox);
+        scrollPane.setFitToWidth(true);
+
+        // Placeholder content
+        //historiqueTab.setContent(createFlight());
+        aVenirTab.setContent(scrollPane);
+
+        return aVenirTab;
+    	
+    }
+    
     private static void handleAjout(String numeroVolField, String nombrePlaceField,
     		String aeroportDepartField, String aeroportArriveeField, String heureDecollageField) {
     	// Gestion de l'ajout des vols dans la BDD
@@ -163,7 +190,4 @@ public class GardePage {
         
         return stackPane;
     }
-    
-    
-
 }
