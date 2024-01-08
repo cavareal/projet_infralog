@@ -96,7 +96,7 @@ public class GardePage {
         return ajouterVolTab;
     }
 
-    private static Tab createHistoriqueTab() {
+    private static Tab createHistoriqueTab() { // VOL ANTERIEUR A L HEURE COURANTE
         Tab historiqueTab = new Tab("Historique");
         
         // VBox contenant les rectangles d'informations de vol
@@ -113,7 +113,7 @@ public class GardePage {
         return historiqueTab;
     }
     
-    private static Tab createAVenirTab() {
+    private static Tab createAVenirTab() { // VOL POSTERIEUR A L HEURE COURANTE
     	Tab aVenirTab = new Tab("A Venir");
         
         // VBox contenant les rectangles d'informations de vol
@@ -124,7 +124,6 @@ public class GardePage {
         scrollPane.setFitToWidth(true);
 
         // Placeholder content
-        //historiqueTab.setContent(createFlight());
         aVenirTab.setContent(scrollPane);
 
         return aVenirTab;
@@ -140,9 +139,7 @@ public class GardePage {
     	// Vérification si le vol n'est pas déjà présent dans la BDD 
     }
     
-    private static void handleMonCompteClick(Stage secondStage) {
-        // Ajoutez le code pour afficher la page de compte, par exemple
-    	
+    private static void handleMonCompteClick(Stage secondStage) {    	
     	ComptePage.fenetreCompte(new Stage());
     }
     
