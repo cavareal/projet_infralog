@@ -8,6 +8,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import project.controleur.ConnexionGestion;
 
 public class ConnexionPage{
 	
@@ -54,21 +55,26 @@ public class ConnexionPage{
 	
 	   // Méthode de gestion de la connexion (à personnaliser selon vos besoins)
     private static void handleLogin(String email, String password, Stage primaryStage) {
+    	
+    	// METHODE DE VERIFICATION
         // Ici simple affichage de email et du mdp dans la console PB DE SECU 
     	// Faire l'appel à la data base ici ? 
         System.out.println("Email: " + email);
         System.out.println("Mot de passe: " + password);
-        // vérif ici 
-        GardePage.pageDeGarde(new Stage());
-        primaryStage.close();
+        
+        
+        // METHODE DE CHANGEMENT DE PAGE
+        ConnexionGestion.redirection(primaryStage);
+        
         
     }
     
     private static void handleRegistration(Stage primaryStage) {
+        	
+    	// METHODE DE CHANGEMENT DE PAGE
         
         // Appelle la méthode start pour afficher la nouvelle page
         InscriptionPage.fenetreInscription(new Stage());
-
         // Ferme la scène actuelle (page de connexion)
         primaryStage.close();
     }

@@ -31,7 +31,7 @@ public class GardePage {
         
         menu.getItems().add(monCompteItem);
         menuBar.getMenus().add(menu);
-
+        
         // Mise en page
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(menuBar);
@@ -150,7 +150,8 @@ public class GardePage {
         rectangle.setFill(Color.LIGHTGRAY);
         rectangle.setStroke(Color.BLACK);
         rectangle.setStrokeWidth(1);
-      
+        
+        // RECUPERATION DES DONNEES DE VOL
         Text text = new Text(numeroVol + "    " + date +"    " + heureDecollage + "\n"
         		+ aeroportDepart + " To " + aeroportArrive + "\n" 
         		+ nbPlace + "   "+ nbPlaceAchetee);

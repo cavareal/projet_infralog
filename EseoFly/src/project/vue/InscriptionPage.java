@@ -1,6 +1,7 @@
 package project.vue;
 
 import javafx.stage.Stage;
+import project.controleur.ConnexionGestion;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -62,13 +63,14 @@ public class InscriptionPage {
 	}
 	
 	private static void handleRegistration(String name, String firstName, String email, String password, Stage primaryStage) {
-        // traitement de l'execution 
+        
+		// traitement des infos 
         System.out.println("Nom: " + name);
         System.out.println("Prénom: " + firstName);
         System.out.println("Email: " + email);
         System.out.println("Mot de passe: " + password);
+        
         // logique de traitement ci dessous
-        GardePage.pageDeGarde(new Stage());
-        primaryStage.close();
+        ConnexionGestion.redirection(primaryStage);
     }
 }
