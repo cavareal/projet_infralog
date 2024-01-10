@@ -1,11 +1,17 @@
 package project.vue;
 
 import javafx.stage.Stage;
+import project.modele.Aeroport;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.VBox;
@@ -15,21 +21,32 @@ import javafx.scene.control.ScrollPane;
 
 public class GardePage {
 	
+	private static String formattedTime;
+	
 	public static void pageDeGarde(Stage secondStage) {
 		secondStage.setTitle("Page de Garde");
 
         // Création des onglets
         TabPane tabPane = new TabPane();
-        tabPane.getTabs().addAll(createAjouterVolTab(), createHistoriqueTab());
+        tabPane.getTabs().addAll(createAjouterVolTab(), createHistoriqueTab(), createAVenirTab());
 
         // Barre de menu
         MenuBar menuBar = new MenuBar();
         Menu menu = new Menu("Menu");
         MenuItem monCompteItem = new MenuItem("Mon Compte");
+        MenuItem ajoutItem = new MenuItem ("Ajouter un vol");
+        MenuItem historiqueItem = new MenuItem("Historique");
+        MenuItem aVenirItem = new MenuItem("A Venir");
         
         monCompteItem.setOnAction(event -> handleMonCompteClick(secondStage));
+        ajoutItem.setOnAction(event -> tabPane.getTabs().add(createAjouterVolTab()));
+        historiqueItem.setOnAction(event -> tabPane.getTabs().add(createHistoriqueTab()));
+        aVenirItem.setOnAction(event -> tabPane.getTabs().add(createAVenirTab()));
         
         menu.getItems().add(monCompteItem);
+        menu.getItems().add(ajoutItem);
+        menu.getItems().add(historiqueItem);
+        menu.getItems().add(aVenirItem);
         menuBar.getMenus().add(menu);
         
         // Mise en page
@@ -45,49 +62,81 @@ public class GardePage {
     }
 
     private static Tab createAjouterVolTab() {
+    	// CREATION ONGLET  
         Tab ajouterVolTab = new Tab("Ajouter un Vol");
-
         
-        Label numeroVolLabel = new Label("Numéro de vol:");
+        // CREATIONS COMPOSANTS  
+        Label numeroVolLabel = new Label("Numéro de vol :");
         TextField numeroVolField = new TextField();
 
-        Label nombrePlaceLabel = new Label("Nombre de places:");
+        Label nombrePlaceLabel = new Label("Nombre de places :");
         TextField nombrePlaceField = new TextField();
+        
+        Label heureLabel = new Label("H :");
+        Label minuteLabel = new Label("m :");
+        Label dateLabel = new Label("Date :");
+        
+        Label aeroportDepartLabel = new Label("Aéroport de départ :");
+        Label aeroportArriveeLabel = new Label("Aéroport d'arrivée :");
+        
+        // Creation d'une liste déroulante 
+        HBox aeroportsHBox = new HBox(10);
+        HBox aeroportsHBoxBis = new HBox(10);
+        ComboBox<String> aeroportsComboBox = createAeroportsComboBox();
+        ComboBox<String> aeroportsComboBoxBis = createAeroportsComboBox();
+        aeroportsHBox.getChildren().add(aeroportsComboBox);
+        aeroportsHBoxBis.getChildren().add(aeroportsComboBoxBis);
 
-        Label aeroportDepartLabel = new Label("Aéroport de départ:");
-        TextField aeroportDepartField = new TextField();
-
-        Label aeroportArriveeLabel = new Label("Aéroport d'arrivée:");
-        TextField aeroportArriveeField = new TextField();
-
-        Label heureDecollageLabel = new Label("Heure de décollage:");
-        TextField heureDecollageField = new TextField();
+        // Creation du calendrier 
+        DatePicker datePicker = new DatePicker();
+        datePicker.setValue(LocalDate.now());
+        datePicker.setShowWeekNumbers(true);
+        
+        // Creation du selecteur de l'heure 
+        ComboBox<Integer> hourComboBox = createComboBox(0, 23);
+        ComboBox<Integer> minuteComboBox = createComboBox(0, 59);
+        HBox root = new HBox(10);
+        root.getChildren().addAll( dateLabel, datePicker);
+        HBox heureHbox = new HBox(10);
+        heureHbox.getChildren().addAll(heureLabel, hourComboBox, minuteLabel,
+        		minuteComboBox);
         
         Button boutonAjout = new Button("Ajouter");
         
-
-        // Mise en page avec GridPane
+        // MISE EN PAGE AVEC GRIDPANE
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(20, 20, 20, 20));
         gridPane.setVgap(10);
         gridPane.setHgap(10);
         gridPane.addRow(0, numeroVolLabel, numeroVolField);
         gridPane.addRow(1, nombrePlaceLabel, nombrePlaceField);
-        gridPane.addRow(2, aeroportDepartLabel, aeroportDepartField);
-        gridPane.addRow(3, aeroportArriveeLabel, aeroportArriveeField);
-        gridPane.addRow(4, heureDecollageLabel, heureDecollageField);
+        gridPane.addRow(2, aeroportDepartLabel, aeroportsHBox);
+        gridPane.addRow(3, aeroportArriveeLabel,aeroportsHBoxBis);
+        gridPane.addRow(4,heureHbox, root);
         gridPane.addRow(5, boutonAjout);
 
-        // Placeholder content
+        // MISE A JOUR DU CONTENU 
         ajouterVolTab.setContent(gridPane);
         
+        // FORMATAGE DE LA DATE 
+        datePicker.setOnAction(event -> {
+            int selectedHour = hourComboBox.getValue();
+            int selectedMinute = minuteComboBox.getValue();
+            
+            LocalTime selectedTime = LocalTime.of(selectedHour, selectedMinute);
+
+            formattedTime = selectedTime.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"));
+            
+            //System.out.println("Heure sélectionnée : " + formattedTime);
+        });
+        
         boutonAjout.setOnAction(e -> handleAjout(numeroVolField.getText(),nombrePlaceField.getText(),
-        		aeroportDepartField.getText(), aeroportArriveeField.getText(), heureDecollageField.getText()));
+        		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(), datePicker.getValue(), formattedTime));
 
         return ajouterVolTab;
     }
 
-    private static Tab createHistoriqueTab() {
+    private static Tab createHistoriqueTab() { // VOL ANTERIEUR A L HEURE COURANTE
         Tab historiqueTab = new Tab("Historique");
         
         // VBox contenant les rectangles d'informations de vol
@@ -104,8 +153,25 @@ public class GardePage {
         return historiqueTab;
     }
     
+    private static Tab createAVenirTab() { // VOL POSTERIEUR A L HEURE COURANTE
+    	Tab aVenirTab = new Tab("A Venir");
+        
+        // VBox contenant les rectangles d'informations de vol
+        VBox flightInfoVBox = createFlightInfoVBox();
+
+        // Défilement de la page
+        ScrollPane scrollPane = new ScrollPane(flightInfoVBox);
+        scrollPane.setFitToWidth(true);
+
+        // Placeholder content
+        aVenirTab.setContent(scrollPane);
+
+        return aVenirTab;
+    	
+    }
+    
     private static void handleAjout(String numeroVolField, String nombrePlaceField,
-    		String aeroportDepartField, String aeroportArriveeField, String heureDecollageField) {
+    		String aeroportDepartField, String aeroportArriveeField, LocalDate date, String heureDecollageField) {
     	// Gestion de l'ajout des vols dans la BDD
     	
     	System.out.println("Envoie des données");
@@ -113,9 +179,7 @@ public class GardePage {
     	// Vérification si le vol n'est pas déjà présent dans la BDD 
     }
     
-    private static void handleMonCompteClick(Stage secondStage) {
-        // Ajoutez le code pour afficher la page de compte, par exemple
-    	
+    private static void handleMonCompteClick(Stage secondStage) {    	
     	ComptePage.fenetreCompte(new Stage());
     }
     
@@ -157,13 +221,32 @@ public class GardePage {
         		+ nbPlace + "   "+ nbPlaceAchetee);
         text.setWrappingWidth(280); // Largeur maximale avant le retour à la ligne
         
-        // Utilisation d'un StackPane pour superposer le rectangle et le texte
+        // StackPane pour superposer le rectangle et le texte 
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(rectangle, text);
         
         return stackPane;
     }
     
+    private static ComboBox<Integer> createComboBox(int start, int end) {
+        ComboBox<Integer> comboBox = new ComboBox<>();
+        for (int i = start; i <= end; i++) {
+            comboBox.getItems().add(i);
+        }
+        comboBox.getSelectionModel().select(0); // Sélection de la première valeur par défaut
+        return comboBox;
+    }
     
-
+    private static ComboBox<String> createAeroportsComboBox() {
+        ComboBox<String> comboBox = new ComboBox<>();
+        for (Aeroport[] aeroportArray : Aeroport.aeroportsListe()) {
+            Aeroport aeroport = aeroportArray[0];
+            String aeroportString = aeroport.getPays() + " - " +
+                                     aeroport.getVille() + " - " +
+                                     aeroport.getCodeIATA() + " - " +
+                                     aeroport.getNom();
+            comboBox.getItems().add(aeroportString);
+        }
+        return comboBox;
+    }
 }
