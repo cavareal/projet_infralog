@@ -52,8 +52,12 @@ public class InscriptionPage {
         gridPane.add(registerButton, 1, 5);
 
         // Gestion de l'événement de clic du bouton d'inscription
-        registerButton.setOnAction(e -> handleRegistration(nameField.getText(), firstNameField.getText(),
-                emailField.getText(), passwordField.getText(), primaryStage));
+//        registerButton.setOnAction(e -> handleRegistration(nameField.getText(), firstNameField.getText(),
+//                emailField.getText(), passwordField.getText(), primaryStage));
+        registerButton.setOnAction(e ->{
+        	
+        });
+        
 
         Scene scene = new Scene(gridPane, 300, 250);
 
@@ -62,15 +66,15 @@ public class InscriptionPage {
         primaryStage.show();
 	}
 	
-	private static void handleRegistration(String name, String firstName, String email, String password, Stage primaryStage) {
-        
-		// traitement des infos 
-        System.out.println("Nom: " + name);
-        System.out.println("Prénom: " + firstName);
-        System.out.println("Email: " + email);
-        System.out.println("Mot de passe: " + password);
-        
-        // logique de traitement ci dessous
-        ConnexionGestion.redirection(primaryStage);
-    }
+//	private static void handleRegistration(String name, String firstName, String email, String password, Stage primaryStage) {
+//        
+//		// traitement des infos 
+//        System.out.println("Nom: " + name);
+//        System.out.println("Prénom: " + firstName);
+//        System.out.println("Email: " + email);
+//        System.out.println("Mot de passe: " + password);
+//        
+//        // logique de traitement ci dessous
+//        ConnexionGestion.redirection(primaryStage);
+//    }
 }
