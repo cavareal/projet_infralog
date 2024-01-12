@@ -7,7 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import project.controleur.ConnexionGestion;
@@ -41,7 +43,7 @@ public class ConnexionPage{
         gridPane.setPadding(new Insets(20, 20, 20, 20));
         gridPane.setVgap(10);
         gridPane.setHgap(10);
-
+        
         gridPane.addRow(0, emailLabel, emailField);
         gridPane.addRow(1, passwordLabel, passwordField);
         gridPane.addRow(2, gapLabel, loginButton);
@@ -63,10 +65,19 @@ public class ConnexionPage{
         
         // Gestion de l'événement du clic du bouton inscription 
         registerButton.setOnAction(e -> handleRegistration(primaryStage));
+        
+        Image image = new Image("file:fly_book_eseo.png"); // Remplacez le chemin par le chemin de votre image
+
+        // Créer un objet ImageView pour afficher l'image
+        ImageView imageView = new ImageView(image);
+
+        // Créer un conteneur de type StackPane pour contenir l'ImageView
+        StackPane root = new StackPane();
+        root.getChildren().addAll(imageView, gridPane);
 
         
         // Création de la scène = contenu de la fenêtre
-        Scene scene = new Scene(gridPane, 400, 300);
+        Scene scene = new Scene(root, 400, 300);
 
         // Configuration de la scène principale
         primaryStage.setScene(scene);
