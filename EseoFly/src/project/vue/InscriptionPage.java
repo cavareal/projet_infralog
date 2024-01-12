@@ -8,12 +8,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 
 public class InscriptionPage {
 	
 	public static void fenetreInscription (Stage primaryStage){
 		primaryStage.setTitle("Inscription");
+		primaryStage.getIcons().add(new Image("file:icon_flybookeseo.png"));
 
         // Création des éléments de l'IHM pour la page d'inscription
         Label nameLabel = new Label("Nom:");
