@@ -83,9 +83,10 @@ public class ConnexionPage{
 //            System.out.println("PASS");
 //        }
 //       
+		
 //        // METHODE DE CHANGEMENT DE PAGE
 //        //ConnexionGestion.redirection(primaryStage);
-//        
+//        //efrthyuki
 //        
 //    }
     
