@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import project.controleur.ConnexionGestion;
@@ -19,6 +20,8 @@ public class ConnexionPage{
 	public static void fenetreConnexion(Stage primaryStage){
 		//Changement du favIcon
 		primaryStage.getIcons().add(new Image("file:icon_flybookeseo.png"));
+		
+		
 		 
 		// Création des éléments de l'IHM
         Label emailLabel = new Label("Email:");
@@ -66,18 +69,14 @@ public class ConnexionPage{
         // Gestion de l'événement du clic du bouton inscription 
         registerButton.setOnAction(e -> handleRegistration(primaryStage));
         
-        Image image = new Image("file:fly_book_eseo.png"); // Remplacez le chemin par le chemin de votre image
-
-        // Créer un objet ImageView pour afficher l'image
+        Image image = new Image("file:fly_book_eseo_resize.png");
         ImageView imageView = new ImageView(image);
-
-        // Créer un conteneur de type StackPane pour contenir l'ImageView
-        StackPane root = new StackPane();
-        root.getChildren().addAll(imageView, gridPane);
+        VBox imageVBox = new VBox(10);
+        imageVBox.getChildren().addAll(imageView,gridPane);
 
         
         // Création de la scène = contenu de la fenêtre
-        Scene scene = new Scene(root, 400, 300);
+        Scene scene = new Scene(imageVBox, image.getHeight(), 500);
 
         // Configuration de la scène principale
         primaryStage.setScene(scene);
