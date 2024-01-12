@@ -36,17 +36,17 @@ public class GardePage {
         MenuItem monCompteItem = new MenuItem("Mon Compte");
         MenuItem ajoutItem = new MenuItem ("Ajouter un vol");
         MenuItem historiqueItem = new MenuItem("Historique");
-        MenuItem aVenirItem = new MenuItem("A Venir");
+        MenuItem rechercheItem = new MenuItem("Recherche");
         
         monCompteItem.setOnAction(event -> handleMonCompteClick(secondStage));
         ajoutItem.setOnAction(event -> tabPane.getTabs().add(createAjouterVolTab()));
         historiqueItem.setOnAction(event -> tabPane.getTabs().add(createHistoriqueTab()));
-        aVenirItem.setOnAction(event -> tabPane.getTabs().add(createRechercheTab()));
+        rechercheItem.setOnAction(event -> tabPane.getTabs().add(createRechercheTab()));
         
         menu.getItems().add(monCompteItem);
         menu.getItems().add(ajoutItem);
         menu.getItems().add(historiqueItem);
-        menu.getItems().add(aVenirItem);
+        menu.getItems().add(rechercheItem);
         menuBar.getMenus().add(menu);
         
         // Mise en page
@@ -242,7 +242,7 @@ public class GardePage {
     
 
     
-    private static ComboBox<Integer> createComboBox(int start, int end) {
+    protected static ComboBox<Integer> createComboBox(int start, int end) {
         ComboBox<Integer> comboBox = new ComboBox<>();
         for (int i = start; i <= end; i++) {
             comboBox.getItems().add(i);
@@ -251,7 +251,7 @@ public class GardePage {
         return comboBox;
     }
     
-    private static ComboBox<String> createAeroportsComboBox() {
+    protected static ComboBox<String> createAeroportsComboBox() {
         ComboBox<String> comboBox = new ComboBox<>();
         for (Aeroport[] aeroportArray : Aeroport.aeroportsListe()) {
             Aeroport aeroport = aeroportArray[0];

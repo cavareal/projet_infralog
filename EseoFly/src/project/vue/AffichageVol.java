@@ -9,6 +9,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import project.modele.Vol;
 
 public class AffichageVol {
@@ -67,6 +68,7 @@ public class AffichageVol {
         // Afficher une autre vue ou effectuer une action appropriée lors du clic sur le rectangle
         System.out.println("Rectangle cliqué ! Vous pouvez changer de vue ici.");
         // Par exemple, vous pourriez ouvrir une nouvelle fenêtre ou masquer la vue actuelle.
+        ModificationPage.fenetreModification(new Stage());
     }
 	
 }
