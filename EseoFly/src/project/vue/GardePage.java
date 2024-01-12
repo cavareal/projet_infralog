@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -17,7 +18,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-import javafx.scene.control.ScrollPane;
 
 public class GardePage {
 	
@@ -28,7 +28,7 @@ public class GardePage {
 
         // Création des onglets
         TabPane tabPane = new TabPane();
-        tabPane.getTabs().addAll(createAjouterVolTab(), createHistoriqueTab(), createAVenirTab());
+        tabPane.getTabs().addAll(createAjouterVolTab(), createHistoriqueTab(), createRechercheTab());
 
         // Barre de menu
         MenuBar menuBar = new MenuBar();
@@ -41,7 +41,7 @@ public class GardePage {
         monCompteItem.setOnAction(event -> handleMonCompteClick(secondStage));
         ajoutItem.setOnAction(event -> tabPane.getTabs().add(createAjouterVolTab()));
         historiqueItem.setOnAction(event -> tabPane.getTabs().add(createHistoriqueTab()));
-        aVenirItem.setOnAction(event -> tabPane.getTabs().add(createAVenirTab()));
+        aVenirItem.setOnAction(event -> tabPane.getTabs().add(createRechercheTab()));
         
         menu.getItems().add(monCompteItem);
         menu.getItems().add(ajoutItem);
@@ -113,8 +113,6 @@ public class GardePage {
         heureHboxDuree.getChildren().addAll(heureLabelDuree, hourComboBoxDuree, 
         		minuteLabelDuree,minuteComboBoxDuree);
         
-        
-        
         Button boutonAjout = new Button("Ajouter");
         
         // MISE EN PAGE AVEC GRIDPANE
@@ -169,20 +167,48 @@ public class GardePage {
         return historiqueTab;
     }
     
-    private static Tab createAVenirTab() { // VOL POSTERIEUR A L HEURE COURANTE
-    	Tab aVenirTab = new Tab("A Venir");
+    private static Tab createRechercheTab() { // VOL POSTERIEUR A L HEURE COURANTE
+    	Tab RechercheTab = new Tab("Recherche");
+    	
+    	Label nomLabel = new Label("Nom : ");
+    	TextField nomField = new TextField();
+    	
+    	Label prenomLabel = new Label("Prénom : ");
+    	TextField prenomField = new TextField();
+    	
+    	Label numeroVolLabel = new Label("Numéro de vol : ");
+    	TextField numeroVolField = new TextField();
+    	
+    	Label space1 = new Label("  ");
+    	Label space2 = new Label("  ");
+    	
+    	Label dateLabel = new Label("Date : ");
+    	DatePicker datePicker = new DatePicker();
+        datePicker.setShowWeekNumbers(true);
+        HBox dateHBox = new HBox(10);
+        dateHBox.getChildren().addAll(datePicker);
         
+        Button rechercheButton = new Button("Rechercher");
+        
+        GridPane gridPane = new GridPane();
+        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setVgap(10);
+        gridPane.setHgap(10);
+        gridPane.addRow(0, nomLabel, nomField, prenomLabel, prenomField);
+        gridPane.addRow(1, numeroVolLabel, numeroVolField, dateLabel, dateHBox  );
+        gridPane.addRow(2,space1, space2, rechercheButton );
+    	
         // VBox contenant les rectangles d'informations de vol
         VBox flightInfoVBox = createFlightInfoVBox();
-
-        // Défilement de la page
         ScrollPane scrollPane = new ScrollPane(flightInfoVBox);
         scrollPane.setFitToWidth(true);
+        VBox mainVBox = new VBox(gridPane, scrollPane);
+        
+        // Défilement de la page
 
-        // Placeholder content
-        aVenirTab.setContent(scrollPane);
+        RechercheTab.setContent(mainVBox);
 
-        return aVenirTab;
+        return RechercheTab;
     	
     }
     
@@ -206,7 +232,7 @@ public class GardePage {
         
         // NON PERMANANT : Boucle pour remplir l'histo et voir si le scroll fonctionne
         for (int i = 1; i <= 10; i++) {
-        	StackPane rectangleinfo = createFlightRectangle();
+        	StackPane rectangleinfo = AffichageVol.createFlightRectangle();
             vbox.getChildren().add(rectangleinfo);
           //getChildren() = liste observable des enfants actuellement présents dans la VBox
         }
@@ -214,35 +240,7 @@ public class GardePage {
         return vbox;
     }
     
-    private static StackPane createFlightRectangle() {
-    	
-    	// RECUPERATION DES VRAIES INFOS 
-    	
-    	String numeroVol = "FR34";
-    	String date = "01-02-2024";
-    	String heureDecollage ="6:11";
-    	String aeroportDepart = "Paris";
-    	String aeroportArrive = "Marseille";
-    	String nbPlace= "Nb de place : " + "122";
-    	String nbPlaceAchetee="Nb de place achetée : " + "97";
-    	
-    	Rectangle rectangle = new Rectangle(350,50);
-        rectangle.setFill(Color.LIGHTGRAY);
-        rectangle.setStroke(Color.BLACK);
-        rectangle.setStrokeWidth(1);
-        
-        // RECUPERATION DES DONNEES DE VOL
-        Text text = new Text(numeroVol + "    " + date +"    " + heureDecollage + "\n"
-        		+ aeroportDepart + " To " + aeroportArrive + "\n" 
-        		+ nbPlace + "   "+ nbPlaceAchetee);
-        text.setWrappingWidth(280); // Largeur maximale avant le retour à la ligne
-        
-        // StackPane pour superposer le rectangle et le texte 
-        StackPane stackPane = new StackPane();
-        stackPane.getChildren().addAll(rectangle, text);
-        
-        return stackPane;
-    }
+
     
     private static ComboBox<Integer> createComboBox(int start, int end) {
         ComboBox<Integer> comboBox = new ComboBox<>();
@@ -265,4 +263,5 @@ public class GardePage {
         }
         return comboBox;
     }
+   
 }
