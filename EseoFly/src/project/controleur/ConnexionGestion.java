@@ -5,7 +5,7 @@ import project.vue.GardePage;
 
 public class ConnexionGestion {
 	
-	public boolean connexion(String email, String password) {
+	public static boolean connexion(String email, String password) {
 		boolean bool = false; 
 		
 		// CONNEXION VALIDE OU NON 

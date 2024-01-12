@@ -54,6 +54,10 @@ public class InscriptionPage {
         // Gestion de l'événement de clic du bouton d'inscription
         registerButton.setOnAction(e -> handleRegistration(nameField.getText(), firstNameField.getText(),
                 emailField.getText(), passwordField.getText(), primaryStage));
+//        registerButton.setOnAction(e ->{
+//        	
+//        });
+        
 
         Scene scene = new Scene(gridPane, 300, 250);
 

@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import project.controleur.ConnexionGestion;
 
@@ -18,11 +19,18 @@ public class ConnexionPage{
         TextField emailField = new TextField();
 
         Label passwordLabel = new Label("Mot de passe:");
-        PasswordField passwordField = new PasswordField();
+        PasswordField passwordField = new PasswordField(); //mdp caché 
+        
+        Label problemeDeConnexionLabel = new Label("Problème de connexion");
+        problemeDeConnexionLabel.setTextFill(Color.RED);
+        
+        Label gapLabel = new Label("  ");
+        Label gapLabel2 = new Label("  ");
+        Label gapLabel3 = new Label("  ");
 
         Button loginButton = new Button("Se connecter");
         
-        Button registerButton = new Button("Inscription");
+        Button registerButton = new Button("  Inscription  ");
 
         // Mise en page
         GridPane gridPane = new GridPane();
@@ -30,16 +38,24 @@ public class ConnexionPage{
         gridPane.setVgap(10);
         gridPane.setHgap(10);
 
-        gridPane.add(emailLabel, 0, 0);
-        gridPane.add(emailField, 1, 0);
-        gridPane.add(passwordLabel, 0, 1);
-        gridPane.add(passwordField, 1, 1);
-        gridPane.add(loginButton, 1, 2);
-        gridPane.add(registerButton, 1, 3);
-
+        gridPane.addRow(0, emailLabel, emailField);
+        gridPane.addRow(1, passwordLabel, passwordField);
+        gridPane.addRow(2, gapLabel, loginButton);
+        gridPane.addRow(3, gapLabel2, registerButton);
 
         // Gestion de l'événement de clic du bouton de connexion
-        loginButton.setOnAction(e -> handleLogin(emailField.getText(), passwordField.getText(), primaryStage));
+        //loginButton.setOnAction(e -> handleLogin(emailField.getText(), passwordField.getText(), primaryStage));
+        loginButton.setOnAction(e -> {
+        	if (ConnexionGestion.connexion(emailField.getText(), passwordField.getText())) {
+            	// METHODE DE CHANGEMENT DE PAGE
+                ConnexionGestion.redirection(primaryStage);
+            }
+        	else {
+        		// AFFICHAGE MESSAGE D'ERREUR
+        		gridPane.getChildren().removeIf(node -> GridPane.getRowIndex(node) != null && GridPane.getRowIndex(node) == 4);
+        		gridPane.addRow(4, gapLabel3, problemeDeConnexionLabel);
+        	}
+        });
         
         // Gestion de l'événement du clic du bouton inscription 
         registerButton.setOnAction(e -> handleRegistration(primaryStage));
@@ -53,21 +69,25 @@ public class ConnexionPage{
         primaryStage.show(); // Affichage de la fenêtre
 	}
 	
-	   // Méthode de gestion de la connexion (à personnaliser selon vos besoins)
-    private static void handleLogin(String email, String password, Stage primaryStage) {
-    	
-    	// METHODE DE VERIFICATION
-        // Ici simple affichage de email et du mdp dans la console PB DE SECU 
-    	// Faire l'appel à la data base ici ? 
-        System.out.println("Email: " + email);
-        System.out.println("Mot de passe: " + password);
-        
-        
-        // METHODE DE CHANGEMENT DE PAGE
-        ConnexionGestion.redirection(primaryStage);
-        
-        
-    }
+//    private static void handleLogin(String email, String password, Stage primaryStage) {
+//    	
+//    	// METHODE DE VERIFICATION
+//        // Ici simple affichage de email et du mdp dans la console PB DE SECU 
+//        System.out.println("Email: " + email);
+//        System.out.println("Mot de passe: " + password);
+//        
+//        
+//        if (ConnexionGestion.connexion(email, password)) {
+//        	// METHODE DE CHANGEMENT DE PAGE
+//            ConnexionGestion.redirection(primaryStage);
+//            System.out.println("PASS");
+//        }
+//       
+//        // METHODE DE CHANGEMENT DE PAGE
+//        //ConnexionGestion.redirection(primaryStage);
+//        
+//        
+//    }
     
     private static void handleRegistration(Stage primaryStage) {
         	
