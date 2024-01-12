@@ -9,6 +9,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import project.modele.Vol;
 
 public class AffichageVol {
 	
@@ -24,15 +25,9 @@ public class AffichageVol {
     	
     	// RECUPERATION DES VRAIES INFOS 
     	
-    	String numeroVol = "FR34";
-    	String date = "12-01-2024";
-    	String heureDecollage ="06:11";
-    	String aeroportDepart = "Paris";
-    	String aeroportArrive = "Marseille";
-    	String nbPlace= "Nb de place : " + "122";
-    	String nbPlaceAchetee="Nb de place achetée : " + "97";
+    	Vol vol = new Vol("FR76","12-01-2014","06:13","CDG","LUX",120, 87);
     	
-    	String dateTimeArrivee = date + " " + "13:58" ;
+    	String dateTimeArrivee = vol.getDate() + " " + "13:58" ;
 
         // Conversion de la chaîne en LocalDateTime en utilisant un format spécifié
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
@@ -55,9 +50,9 @@ public class AffichageVol {
         rectangle.setStrokeWidth(1);
         
         // RECUPERATION DES DONNEES DE VOL
-        Text text = new Text(numeroVol + "    " + date +"    " + heureDecollage + "\n"
-        		+ aeroportDepart + " To " + aeroportArrive + "\n" 
-        		+ nbPlace + "   "+ nbPlaceAchetee);
+        Text text = new Text(vol.getNumeroVol() + "    " + vol.getDate() +"    " + vol.getHeureDecollage() + "\n"
+        		+ vol.getAeroportDepart() + " To " + vol.getAeroportArrive() + "\n" 
+        		+ "Nombre de places : "+ vol.getNbPlace() + "   "+ "Places vendues : " + vol.getNbPlaceAchetee());
         text.setWrappingWidth(280); // Largeur maximale avant le retour à la ligne
         
         // StackPane pour superposer le rectangle et le texte 
