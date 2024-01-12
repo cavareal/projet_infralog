@@ -72,9 +72,16 @@ public class GardePage {
         Label nombrePlaceLabel = new Label("Nombre de places :");
         TextField nombrePlaceField = new TextField();
         
+        Label prixLabel = new Label("Prix du billet standard (€) :");
+        TextField prixField = new TextField();
+        
         Label heureLabel = new Label("H :");
         Label minuteLabel = new Label("m :");
         Label dateLabel = new Label("Date :");
+        Label dureeLabel = new Label("Durée du trajet :");
+        Label heureLabelDuree = new Label("H :");
+        Label minuteLabelDuree = new Label("m :");
+        
         
         Label aeroportDepartLabel = new Label("Aéroport de départ :");
         Label aeroportArriveeLabel = new Label("Aéroport d'arrivée :");
@@ -100,6 +107,13 @@ public class GardePage {
         HBox heureHbox = new HBox(10);
         heureHbox.getChildren().addAll(heureLabel, hourComboBox, minuteLabel,
         		minuteComboBox);
+        ComboBox<Integer> hourComboBoxDuree = createComboBox(0, 23);
+        ComboBox<Integer> minuteComboBoxDuree = createComboBox(0, 59);
+        HBox heureHboxDuree = new HBox(10);
+        heureHboxDuree.getChildren().addAll(heureLabelDuree, hourComboBoxDuree, 
+        		minuteLabelDuree,minuteComboBoxDuree);
+        
+        
         
         Button boutonAjout = new Button("Ajouter");
         
@@ -113,7 +127,9 @@ public class GardePage {
         gridPane.addRow(2, aeroportDepartLabel, aeroportsHBox);
         gridPane.addRow(3, aeroportArriveeLabel,aeroportsHBoxBis);
         gridPane.addRow(4,heureHbox, root);
-        gridPane.addRow(5, boutonAjout);
+        gridPane.addRow(5, dureeLabel, heureHboxDuree);
+        gridPane.addRow(6, prixLabel, prixField) ;
+        gridPane.addRow(7, boutonAjout);
 
         // MISE A JOUR DU CONTENU 
         ajouterVolTab.setContent(gridPane);
