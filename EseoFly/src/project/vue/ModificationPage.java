@@ -10,6 +10,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -21,6 +22,7 @@ public class ModificationPage {
 	public static void fenetreModification(Stage stage) {
 		
 		stage.setTitle("Modification du vol");
+		stage.getIcons().add(new Image("file:icon_flybookeseo.png"));
 		
 		// CREATIONS COMPOSANTS  
         Label numeroVolLabel = new Label("Numéro de vol :");

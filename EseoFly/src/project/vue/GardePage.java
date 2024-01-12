@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -25,6 +26,7 @@ public class GardePage {
 	
 	public static void pageDeGarde(Stage secondStage) {
 		secondStage.setTitle("Page de Garde");
+		secondStage.getIcons().add(new Image("file:icon_flybookeseo.png"));
 
         // Création des onglets
         TabPane tabPane = new TabPane();

@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -14,6 +15,7 @@ public class ComptePage {
 	
 	public static void fenetreCompte(Stage stage) {
 		stage.setTitle("Mon Compte");
+		stage.getIcons().add(new Image("file:icon_flybookeseo.png"));
 		
 		// Barre de menu
         MenuBar menuBar = new MenuBar();

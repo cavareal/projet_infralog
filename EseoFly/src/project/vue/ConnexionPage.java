@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -14,7 +15,10 @@ import project.controleur.ConnexionGestion;
 public class ConnexionPage{
 	
 	public static void fenetreConnexion(Stage primaryStage){
-		 // Création des éléments de l'IHM
+		//Changement du favIcon
+		primaryStage.getIcons().add(new Image("file:icon_flybookeseo.png"));
+		 
+		// Création des éléments de l'IHM
         Label emailLabel = new Label("Email:");
         TextField emailField = new TextField();
 
