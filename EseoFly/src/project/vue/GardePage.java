@@ -1,6 +1,7 @@
 package project.vue;
 
 import javafx.stage.Stage;
+import project.controleur.AjoutGestion;
 import project.modele.Aeroport;
 
 import java.time.LocalDate;
@@ -42,7 +43,9 @@ public class GardePage {
         MenuItem historiqueItem = new MenuItem("Historique");
         MenuItem rechercheItem = new MenuItem("Recherche");
         
-        monCompteItem.setOnAction(event -> handleMonCompteClick(secondStage));
+        monCompteItem.setOnAction(event -> {
+        	ComptePage.fenetreCompte(new Stage(), secondStage);
+        });
         ajoutItem.setOnAction(event -> tabPane.getTabs().add(createAjouterVolTab()));
         historiqueItem.setOnAction(event -> tabPane.getTabs().add(createHistoriqueTab()));
         rechercheItem.setOnAction(event -> tabPane.getTabs().add(createRechercheTab()));
@@ -58,7 +61,7 @@ public class GardePage {
         borderPane.setTop(menuBar);
         borderPane.setCenter(tabPane);
 
-        Scene scene = new Scene(borderPane, 800, 500);
+        Scene scene = new Scene(borderPane, 820, 500);
 
         // Config de la scène
         secondStage.setScene(scene);
@@ -79,6 +82,7 @@ public class GardePage {
         Label prixLabel = new Label("Prix du billet standard (€) :");
         TextField prixField = new TextField();
         
+        Label decollageLabel = new Label("Décollage :");
         Label heureLabel = new Label("H :");
         Label minuteLabel = new Label("m :");
         Label dateLabel = new Label("Date :");
@@ -107,7 +111,7 @@ public class GardePage {
         ComboBox<Integer> hourComboBox = createComboBox(0, 23);
         ComboBox<Integer> minuteComboBox = createComboBox(0, 59);
         HBox root = new HBox(10);
-        root.getChildren().addAll( dateLabel, datePicker);
+        root.getChildren().add( datePicker);
         HBox heureHbox = new HBox(10);
         heureHbox.getChildren().addAll(heureLabel, hourComboBox, minuteLabel,
         		minuteComboBox);
@@ -124,17 +128,20 @@ public class GardePage {
         gridPane.setPadding(new Insets(20, 20, 20, 20));
         gridPane.setVgap(10);
         gridPane.setHgap(10);
-        gridPane.addRow(0, numeroVolLabel, numeroVolField);
-        gridPane.addRow(1, nombrePlaceLabel, nombrePlaceField);
+        gridPane.addRow(0, numeroVolLabel, numeroVolField, nombrePlaceLabel, nombrePlaceField);
         gridPane.addRow(2, aeroportDepartLabel, aeroportsHBox);
         gridPane.addRow(3, aeroportArriveeLabel,aeroportsHBoxBis);
-        gridPane.addRow(4,heureHbox, root);
-        gridPane.addRow(5, dureeLabel, heureHboxDuree);
-        gridPane.addRow(6, prixLabel, prixField) ;
-        gridPane.addRow(7, boutonAjout);
+        gridPane.addRow(4,decollageLabel,heureHbox, dateLabel,root);
+        gridPane.addRow(5, dureeLabel, heureHboxDuree, prixLabel, prixField);
+                
+        BorderPane borderPane = new BorderPane();
+        borderPane.setPadding(new Insets(0,0, 220,0));
+        borderPane.setCenter(gridPane);
+        borderPane.setBottom(boutonAjout);
+        borderPane.setAlignment(boutonAjout, Pos.CENTER);
 
         // MISE A JOUR DU CONTENU 
-        ajouterVolTab.setContent(gridPane);
+        ajouterVolTab.setContent(borderPane);
         
         // FORMATAGE DE LA DATE 
         datePicker.setOnAction(event -> {
@@ -148,7 +155,7 @@ public class GardePage {
             //System.out.println("Heure sélectionnée : " + formattedTime);
         });
         
-        boutonAjout.setOnAction(e -> handleAjout(numeroVolField.getText(),nombrePlaceField.getText(),
+        boutonAjout.setOnAction(e -> AjoutGestion.handleAjout(numeroVolField.getText(),nombrePlaceField.getText(),
         		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(), datePicker.getValue(), formattedTime));
 
         return ajouterVolTab;
@@ -229,23 +236,7 @@ public class GardePage {
         return RechercheTab;
     	
     }
-    
-    private static void handleAjout(String numeroVolField, String nombrePlaceField,
-    		String aeroportDepartField, String aeroportArriveeField, LocalDate date, String heureDecollageField) {
-    	// Gestion de l'ajout des vols dans la BDD
-    	
-    	System.out.println("Envoie des données");
-    	
-    	// Vérification si le vol n'est pas déjà présent dans la BDD 
-    	// Verif que tous les champs soient bien non vide 
-    }
-    
-    private static void handleMonCompteClick(Stage secondStage) {    	
-    	ComptePage.fenetreCompte(new Stage());
-    }
-    
-    
-    
+   
     private static VBox createFlightInfoVBox() {
         VBox vbox = new VBox(10); // Espacement vertical entre les rectangles
         
@@ -258,8 +249,6 @@ public class GardePage {
         
         return vbox;
     }
-    
-
     
     protected static ComboBox<Integer> createComboBox(int start, int end) {
         ComboBox<Integer> comboBox = new ComboBox<>();

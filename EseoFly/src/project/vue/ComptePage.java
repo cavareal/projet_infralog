@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 
 public class ComptePage {
 	
-	public static void fenetreCompte(Stage stage) {
+	public static void fenetreCompte(Stage stage,Stage previousStage) {
 		stage.setTitle("Mon Compte");
 		stage.getIcons().add(new Image("file:icon_flybookeseo.png"));
         
@@ -39,19 +39,16 @@ public class ComptePage {
         borderPane.setAlignment(gridPane, Pos.CENTER);
         borderPane.setAlignment(deconnexionBouton, Pos.CENTER);
         
+        deconnexionBouton.setOnAction(e -> {
+            stage.close();
+            previousStage.close();
+        });
+        
         Scene scene = new Scene(borderPane, 300, 300);
 
         stage.setScene(scene);
         stage.show();
 	}
 	
-	
-	
-    private static void handleMonCompteClick(Stage secondStage) {
-        // Ajoutez le code pour afficher la page de compte, par exemple
-    	
-    	ComptePage.fenetreCompte(new Stage());
-        secondStage.close();
-    }
 
 }
