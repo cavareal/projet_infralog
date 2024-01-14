@@ -1,7 +1,9 @@
 package project.vue;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -16,19 +18,11 @@ public class ComptePage {
 	public static void fenetreCompte(Stage stage) {
 		stage.setTitle("Mon Compte");
 		stage.getIcons().add(new Image("file:icon_flybookeseo.png"));
-		
-		// Barre de menu
-        MenuBar menuBar = new MenuBar();
-        Menu menu = new Menu("Menu");
-        MenuItem monCompteItem = new MenuItem("Mon Compte");
-        
-        //monCompteItem.setOnAction(event -> handleMonCompteClick(stage));
-        
-        menu.getItems().add(monCompteItem);
-        menuBar.getMenus().add(menu);
         
         Label firstNameLabel = new Label("Récupération du prénom");
         Label surnameLabel = new Label("Récupération du nom");
+        
+        Button deconnexionBouton =  new Button("Déconnexion"); 
         
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(20, 20, 20, 20));
@@ -39,10 +33,13 @@ public class ComptePage {
         gridPane.addRow(1, surnameLabel);
         
         BorderPane borderPane = new BorderPane();
-        borderPane.setTop(menuBar);
+        borderPane.setPadding(new Insets(20,20,20,20));
         borderPane.setCenter(gridPane);
+        borderPane.setBottom(deconnexionBouton); 
+        borderPane.setAlignment(gridPane, Pos.CENTER);
+        borderPane.setAlignment(deconnexionBouton, Pos.CENTER);
         
-        Scene scene = new Scene(borderPane, 600, 400);
+        Scene scene = new Scene(borderPane, 300, 300);
 
         stage.setScene(scene);
         stage.show();
