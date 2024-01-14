@@ -6,7 +6,9 @@ import project.modele.Aeroport;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -56,7 +58,7 @@ public class GardePage {
         borderPane.setTop(menuBar);
         borderPane.setCenter(tabPane);
 
-        Scene scene = new Scene(borderPane, 600, 400);
+        Scene scene = new Scene(borderPane, 800, 500);
 
         // Config de la scène
         secondStage.setScene(scene);
@@ -190,21 +192,35 @@ public class GardePage {
         HBox dateHBox = new HBox(10);
         dateHBox.getChildren().addAll(datePicker);
         
+        Label aeroportLabel = new Label("Aéroport : ");
+        HBox aeroportsHBox = new HBox(10);
+        ComboBox<String> aeroportsComboBox = createAeroportsComboBox();
+        aeroportsHBox.getChildren().add(aeroportsComboBox);
+        CheckBox checkBoxArrivee = new CheckBox("Arrivé");
+        CheckBox checkBoxDepart = new CheckBox("Départ");
+        
         Button rechercheButton = new Button("Rechercher");
         
+        BorderPane borderPane = new BorderPane();
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(20, 20, 20, 20));
         gridPane.setVgap(10);
         gridPane.setHgap(10);
         gridPane.addRow(0, nomLabel, nomField, prenomLabel, prenomField);
         gridPane.addRow(1, numeroVolLabel, numeroVolField, dateLabel, dateHBox  );
-        gridPane.addRow(2,space1, space2, rechercheButton );
+        gridPane.addRow(2, aeroportLabel,aeroportsHBox,checkBoxDepart,  checkBoxArrivee );
+        //gridPane.add(rechercheButton, 1, 3); // colonne 1 et ligne 3 
+
+        
+        borderPane.setCenter(gridPane);
+        borderPane.setBottom(rechercheButton);
+        borderPane.setAlignment(rechercheButton, Pos.CENTER);
     	
         // VBox contenant les rectangles d'informations de vol
         VBox flightInfoVBox = createFlightInfoVBox();
         ScrollPane scrollPane = new ScrollPane(flightInfoVBox);
         scrollPane.setFitToWidth(true);
-        VBox mainVBox = new VBox(gridPane, scrollPane);
+        VBox mainVBox = new VBox(borderPane, scrollPane);
         
         // Défilement de la page
 
