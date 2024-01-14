@@ -1,6 +1,7 @@
 package project.vue;
 
 import javafx.stage.Stage;
+import project.controleur.AjoutGestion;
 import project.modele.Aeroport;
 
 import java.time.LocalDate;
@@ -42,7 +43,9 @@ public class GardePage {
         MenuItem historiqueItem = new MenuItem("Historique");
         MenuItem rechercheItem = new MenuItem("Recherche");
         
-        monCompteItem.setOnAction(event -> handleMonCompteClick(secondStage));
+        monCompteItem.setOnAction(event -> {
+        	ComptePage.fenetreCompte(new Stage(), secondStage);
+        });
         ajoutItem.setOnAction(event -> tabPane.getTabs().add(createAjouterVolTab()));
         historiqueItem.setOnAction(event -> tabPane.getTabs().add(createHistoriqueTab()));
         rechercheItem.setOnAction(event -> tabPane.getTabs().add(createRechercheTab()));
@@ -148,7 +151,7 @@ public class GardePage {
             //System.out.println("Heure sélectionnée : " + formattedTime);
         });
         
-        boutonAjout.setOnAction(e -> handleAjout(numeroVolField.getText(),nombrePlaceField.getText(),
+        boutonAjout.setOnAction(e -> AjoutGestion.handleAjout(numeroVolField.getText(),nombrePlaceField.getText(),
         		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(), datePicker.getValue(), formattedTime));
 
         return ajouterVolTab;
@@ -230,21 +233,7 @@ public class GardePage {
     	
     }
     
-    private static void handleAjout(String numeroVolField, String nombrePlaceField,
-    		String aeroportDepartField, String aeroportArriveeField, LocalDate date, String heureDecollageField) {
-    	// Gestion de l'ajout des vols dans la BDD
-    	
-    	System.out.println("Envoie des données");
-    	
-    	// Vérification si le vol n'est pas déjà présent dans la BDD 
-    	// Verif que tous les champs soient bien non vide 
-    }
-    
-    private static void handleMonCompteClick(Stage secondStage) {    	
-    	ComptePage.fenetreCompte(new Stage());
-    }
-    
-    
+
     
     private static VBox createFlightInfoVBox() {
         VBox vbox = new VBox(10); // Espacement vertical entre les rectangles
@@ -258,8 +247,6 @@ public class GardePage {
         
         return vbox;
     }
-    
-
     
     protected static ComboBox<Integer> createComboBox(int start, int end) {
         ComboBox<Integer> comboBox = new ComboBox<>();
