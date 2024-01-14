@@ -2,6 +2,7 @@ package project.vue;
 
 import javafx.stage.Stage;
 import project.controleur.AjoutGestion;
+import project.controleur.RechercheGestion;
 import project.modele.Aeroport;
 
 import java.time.LocalDate;
@@ -206,7 +207,7 @@ public class GardePage {
         CheckBox checkBoxArrivee = new CheckBox("Arrivé");
         CheckBox checkBoxDepart = new CheckBox("Départ");
         
-        Button rechercheButton = new Button("Rechercher");
+        Button searchButton = new Button("Rechercher");
         
         BorderPane borderPane = new BorderPane();
         GridPane gridPane = new GridPane();
@@ -216,18 +217,20 @@ public class GardePage {
         gridPane.addRow(0, nomLabel, nomField, prenomLabel, prenomField);
         gridPane.addRow(1, numeroVolLabel, numeroVolField, dateLabel, dateHBox  );
         gridPane.addRow(2, aeroportLabel,aeroportsHBox,checkBoxDepart,  checkBoxArrivee );
-        //gridPane.add(rechercheButton, 1, 3); // colonne 1 et ligne 3 
+        //gridPane.add(searchButton, 1, 3); // colonne 1 et ligne 3 
 
         borderPane.setPadding(new Insets(20, 20, 10, 20)); 
         borderPane.setCenter(gridPane);
-        borderPane.setBottom(rechercheButton);
-        borderPane.setAlignment(rechercheButton, Pos.CENTER);
+        borderPane.setBottom(searchButton);
+        borderPane.setAlignment(searchButton, Pos.CENTER);
     	
         // VBox contenant les rectangles d'informations de vol
         VBox flightInfoVBox = createFlightInfoVBox();
         ScrollPane scrollPane = new ScrollPane(flightInfoVBox);
         scrollPane.setFitToWidth(true);
         VBox mainVBox = new VBox(borderPane, scrollPane);
+        
+        searchButton.setOnAction(e -> RechercheGestion.handleRecherche());
         
         // Défilement de la page
 
