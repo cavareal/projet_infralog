@@ -203,7 +203,7 @@ public class GardePage {
         
         BorderPane borderPane = new BorderPane();
         GridPane gridPane = new GridPane();
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setPadding(new Insets(0, 0, 20, 0)); // ( ? , ? ,Dessous, ?)
         gridPane.setVgap(10);
         gridPane.setHgap(10);
         gridPane.addRow(0, nomLabel, nomField, prenomLabel, prenomField);
@@ -211,7 +211,7 @@ public class GardePage {
         gridPane.addRow(2, aeroportLabel,aeroportsHBox,checkBoxDepart,  checkBoxArrivee );
         //gridPane.add(rechercheButton, 1, 3); // colonne 1 et ligne 3 
 
-        
+        borderPane.setPadding(new Insets(20, 20, 10, 20)); 
         borderPane.setCenter(gridPane);
         borderPane.setBottom(rechercheButton);
         borderPane.setAlignment(rechercheButton, Pos.CENTER);
@@ -237,6 +237,7 @@ public class GardePage {
     	System.out.println("Envoie des données");
     	
     	// Vérification si le vol n'est pas déjà présent dans la BDD 
+    	// Verif que tous les champs soient bien non vide 
     }
     
     private static void handleMonCompteClick(Stage secondStage) {    	

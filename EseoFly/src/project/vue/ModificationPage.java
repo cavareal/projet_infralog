@@ -26,7 +26,7 @@ public class ModificationPage {
 		
 		// CREATIONS COMPOSANTS  
         Label numeroVolLabel = new Label("Numéro de vol :");
-        TextField numeroVolField = new TextField();
+        Label numeroVol = new Label ("num vol à récup");
 
         Label nombrePlaceLabel = new Label("Nombre de places :");
         TextField nombrePlaceField = new TextField();
@@ -79,7 +79,7 @@ public class ModificationPage {
         gridPane.setPadding(new Insets(20, 20, 20, 20));
         gridPane.setVgap(10);
         gridPane.setHgap(10);
-        gridPane.addRow(0, numeroVolLabel, numeroVolField);
+        gridPane.addRow(0, numeroVolLabel, numeroVol);
         gridPane.addRow(1, nombrePlaceLabel, nombrePlaceField);
         gridPane.addRow(2, aeroportDepartLabel, aeroportsHBox);
         gridPane.addRow(3, aeroportArriveeLabel,aeroportsHBoxBis);
@@ -100,7 +100,7 @@ public class ModificationPage {
             //System.out.println("Heure sélectionnée : " + formattedTime);
         });
         
-        boutonSauvegarde.setOnAction(e -> handleSauvegarde(numeroVolField.getText(),nombrePlaceField.getText(),
+        boutonSauvegarde.setOnAction(e -> handleSauvegarde(numeroVol.getText(),nombrePlaceField.getText(),
         		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(), datePicker.getValue(), formattedTime));
 		
 		Scene scene = new Scene(gridPane, 600, 400);
