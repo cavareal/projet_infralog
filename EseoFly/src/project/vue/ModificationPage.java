@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -11,6 +12,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -86,7 +88,13 @@ public class ModificationPage {
         gridPane.addRow(4,heureHbox, root);
         gridPane.addRow(5, dureeLabel, heureHboxDuree);
         gridPane.addRow(6, prixLabel, prixField) ;
+        
         gridPane.addRow(7, boutonSauvegarde);
+        BorderPane borderPane = new BorderPane();
+        borderPane.setPadding(new Insets(20,20,20,20));
+        borderPane.setBottom(boutonSauvegarde);
+        borderPane.setCenter(gridPane);
+        borderPane.setAlignment(boutonSauvegarde, Pos.CENTER);
         
         // FORMATAGE DE LA DATE 
         datePicker.setOnAction(event -> {
@@ -103,7 +111,7 @@ public class ModificationPage {
         boutonSauvegarde.setOnAction(e -> handleSauvegarde(numeroVol.getText(),nombrePlaceField.getText(),
         		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(), datePicker.getValue(), formattedTime));
 		
-		Scene scene = new Scene(gridPane, 600, 400);
+		Scene scene = new Scene(borderPane, 600, 400);
 
         // Config de la scène
         stage.setScene(scene);
