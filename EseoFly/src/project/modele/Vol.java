@@ -1,20 +1,25 @@
-package project.modele;
+package EseoFly.src.project.modele;
+
+import java.sql.Date;
+import java.sql.Time;
 
 public class Vol {
 
 	private String numeroVol;
-	private String date;
-	private String heureDecollage;
+	private Date date;
+	private Time heureDecollage;
 	private String aeroportDepart;
 	private String aeroportArrive;
-	private String heureArrivee;
 	private int nbPlace;
 	private int nbPlaceAchetee;
-	private String dureeVol;
+	private Time dureeVol;
+	private int utc;
 
+	public Vol(){
+	}
 
-	public Vol (String numeroVol, String date, String heureDecollage, String aeroportDepart,
-			String aeroportArrive, int nbPlace, int nbPlaceAchetee ) {
+	public Vol (String numeroVol, Date date, Time heureDecollage, String aeroportDepart,
+				String aeroportArrive, int nbPlace, int nbPlaceAchetee ) {
 		this.numeroVol = numeroVol;
 		this.date = date;
 		this.heureDecollage = heureDecollage;
@@ -22,9 +27,9 @@ public class Vol {
 		this.aeroportDepart = aeroportDepart;
 		this.nbPlace = nbPlace;
 		this.nbPlaceAchetee = nbPlaceAchetee;
-		
+
 	}
-	
+
 	public String getNumeroVol() {
 		return numeroVol;
 	}
@@ -33,19 +38,19 @@ public class Vol {
 		this.numeroVol = numeroVol;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
-	public String getHeureDecollage() {
+	public Time getHeureDecollage() {
 		return heureDecollage;
 	}
 
-	public void setHeureDecollage(String heureDecollage) {
+	public void setHeureDecollage(Time heureDecollage) {
 		this.heureDecollage = heureDecollage;
 	}
 
@@ -81,22 +86,22 @@ public class Vol {
 		this.nbPlaceAchetee = nbPlaceAchetee;
 	}
 
-	public String getHeureArrivee() {
-		return heureArrivee;
-	}
-
-	public void setHeureArrivee(String heureArrivee) {
-		this.heureArrivee = heureArrivee;
-	}
-
-	public String getDureeVol() {
+	public Time getDureeVol() {
 		return dureeVol;
 	}
 
-	public void setDureeVol(String dureeVol) {
+	public void setDureeVol(Time dureeVol) {
 		this.dureeVol = dureeVol;
 	}
-	
-	
+
+	public int getUtc(){
+		return this.utc;
+	}
+
+	public void setUtc(int utc){
+		this.utc = utc;
+	}
+
+
 }
 
