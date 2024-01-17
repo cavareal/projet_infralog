@@ -10,14 +10,14 @@ public class InscriptionGestion {
 	
 	public static boolean inscription(String name, String firstName, String email, 
 			String password,String password2 ) {
-		boolean bool = false;
+		boolean isRegistration = false;
 		
 		if(password==password2) {
 			
-			bool = true;
+			isRegistration  = true;
 		}
 		
-		return bool;
+		return isRegistration ;
 	}
 
 }
