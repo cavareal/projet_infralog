@@ -55,7 +55,7 @@ public class ConnexionPage{
         // Gestion de l'événement de clic du bouton de connexion
         //loginButton.setOnAction(e -> handleLogin(emailField.getText(), passwordField.getText(), primaryStage));
         loginButton.setOnAction(e -> {
-        	if (ConnexionGestion.connexion(emailField.getText(), passwordField.getText())) {
+        	if (ConnexionGestion.verifyLogin(emailField.getText(), passwordField.getText())) {
             	// METHODE DE CHANGEMENT DE PAGE
                 ConnexionGestion.redirection(primaryStage);
             }
