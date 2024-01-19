@@ -9,5 +9,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX21"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFXLibrary"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX17"/>
+	<classpathentry kind="lib" path="C:/Users/alice/Documents/Application/jar_files/jar_files/gson-2.8.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alice/Documents/Application/mysql-connector-j-8.3.0/mysql-connector-j-8.3.0/mysql-connector-j-8.3.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
