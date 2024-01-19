@@ -1,19 +1,15 @@
+package defaut;
 
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import project.modele.ConnexionBdd;
+import project.modele.DAO;
 import project.vue.ConnexionPage; 
 
 
 public class Main extends Application {
 	
-	
+	private static DAO daoInstance;
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -25,7 +21,11 @@ public class Main extends Application {
         primaryStage.setTitle("Connexion");
         
         ConnexionPage.fenetreConnexion(primaryStage);
-        new ConnexionBdd();
+        daoInstance =new DAO();
+    }
+	
+	public static DAO getDAOInstance() {
+        return daoInstance;
     }
 }
     

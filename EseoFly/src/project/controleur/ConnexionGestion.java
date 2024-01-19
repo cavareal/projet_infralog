@@ -8,16 +8,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javafx.stage.Stage;
+import project.modele.Employe;
 import project.vue.GardePage;
 
 public class ConnexionGestion {
 	
 	public static boolean verifyLogin(String email, String password) {
 		
-		String query = "SELECT * FROM Employe WHERE email = ? AND motDePasse = ?";
+		String query = "SELECT * FROM fly_book_eseo.Employe WHERE email = ? AND motDePasse = ?";
         
-        try (//Connection connection = DriverManager.getConnection("jdbc:mysql://192.168.4.194:6666/fly_book_eseo", "bdd", "network");
-        	Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/fly_book_eseo", "root", "");
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://192.168.4.194:6666/fly_book_eseo", "bdd", "network");
+        	//Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/fly_book_eseo", "root", "");
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             
             preparedStatement.setString(1, email);
@@ -41,6 +42,15 @@ public class ConnexionGestion {
             e.printStackTrace();
             // Gérer l'exception selon votre logique d'application.
         }
+        return false; 
+	}
+	
+	public static boolean verifyLogin2(String email, String password) {
+		Employe employe = new Employe (email,password);
+		String[] donnees = employe.getDonnees();
+		if ("true".equals(donnees[5]) && email.equals(donnees[0]) && password.equals(donnees[4])) {
+			return true;
+		}
         return false; 
 	}
 	

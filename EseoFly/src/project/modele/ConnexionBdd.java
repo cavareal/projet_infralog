@@ -23,7 +23,7 @@ public class ConnexionBdd {
 	private String password="";
 
 	private String nomBdd = "fly_book_eseo";
-	private static Connection con = null;
+	private static Connection connexion = null;
 	
 
     public ConnexionBdd() throws ClassNotFoundException {
@@ -31,29 +31,49 @@ public class ConnexionBdd {
         try {
         	Class.forName("com.mysql.cj.jdbc.Driver");
         	String url = String.format("jdbc:mysql://%s:%d/%s", ip, port, this.nomBdd);
-        	con = DriverManager.getConnection(url, user, password);
+        	connexion = DriverManager.getConnection(url, user, password);
         	System.out.println("database connexion ok");
-        	//Statement stmt = con.createStatement();
+
         	
+//			A UTILISER POUR L'INSCRIPTION
+//        	String email = "root"; 
+//        	boolean isAdmin = true;
+//        	String nom = "nom";
+//        	String prenom="prenom";
+//        	String motDePasse="root";
+//        	String query = "INSERT INTO fly_book_eseo.Employe (email, administrateur, nom, prenom, motDePasse) VALUES (?, ?, ?, ?, ?)";
+//        	
+//            try (PreparedStatement preparedStatement = con.prepareStatement(query)) {
+//            	
+//            	preparedStatement.setString(1, email);
+//                preparedStatement.setBoolean(2, isAdmin);
+//                preparedStatement.setString(3, nom);
+//                preparedStatement.setString(4, prenom);
+//                preparedStatement.setString(5, motDePasse);
+//
+//                int rowsAffected = preparedStatement.executeUpdate();
+//                System.out.println("OKK" + rowsAffected);
+//                }
+        
         }catch (SQLException e) {
         	System.out.println(e.getMessage());
         }
 
     }
     
-	public Connection getCon() {
-		return con;
+	public Connection getConnexion() {
+		return connexion;
 	}
 	
-	public void setCon(Connection con) {
-		this.con = con;
+	public void setConnexion(Connection con) {
+		this.connexion = con;
 	}
 
 
     public void finaliserConnexion() {
-        if (this.con != null) {
+        if (this.connexion != null) {
             try {
-                this.con.close();
+                this.connexion.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -124,13 +144,7 @@ public class ConnexionBdd {
 //
 //        return null;
 //    }
-//
-//
-//    private static void chargerDotenv(String chemin) throws IOException {
-//        Properties prop = new Properties();
-//        prop.load(new java.io.FileInputStream(chemin));
-//        prop.forEach((cle, valeur) -> System.setProperty((String) cle, (String) valeur));
-//    }
+
 
 
 }
