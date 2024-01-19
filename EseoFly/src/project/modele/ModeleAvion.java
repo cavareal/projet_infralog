@@ -1,13 +1,10 @@
 package project.modele;
 
-import com.google.gson.JsonObject;
-
 public class ModeleAvion {
     private String modele;
     private int nbColonnes;
     private int nbPassager;
     private int nbPremiereClasse;
-    private ConnexionBdd connexionDB;
 
     public ModeleAvion(String modele, int nbColonnes, int nbPassager, int nbPremiereClasse) {
         this.modele = modele;
@@ -19,6 +16,30 @@ public class ModeleAvion {
     // Accesseurs
     public String getModele() {
         return modele;
+    }
+
+    public int getNbPremiereClasse() {
+        return nbPremiereClasse;
+    }
+
+    public void setNbPremiereClasse(int nbPremiereClasse) {
+        this.nbPremiereClasse = nbPremiereClasse;
+    }
+
+    public int getNbPassager() {
+        return nbPassager;
+    }
+
+    public void setNbPassager(int nbPassager) {
+        this.nbPassager = nbPassager;
+    }
+
+    public int getNbColonnes() {
+        return nbColonnes;
+    }
+
+    public void setNbColonnes(int nbColonnes) {
+        this.nbColonnes = nbColonnes;
     }
 
 //    public int getNbColonnes() {
