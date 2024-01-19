@@ -3,16 +3,18 @@ package project.modele;
 import com.google.gson.JsonObject;
 
 public class Billet {
-	
-    private int numeroReservation;
+    private String numeroReservation;
     private int idClient;
     private String numeroVol;
-    private int bagages;
+    private boolean bagages;
     private int prix;
     private boolean garantie;
     private String place;
+    private String nomPassager;
+    private String prenomPassager;
+    private int agePassager;
 
-    public Billet(int numeroReservation, int idClient, String numeroVol, int bagages, int prix, boolean garantie, String place) {
+    public Billet(String numeroReservation, int idClient, String numeroVol, boolean bagages, int prix, boolean garantie, String place) {
         this.numeroReservation = numeroReservation;
         this.idClient = idClient;
         this.numeroVol = numeroVol;
@@ -22,8 +24,16 @@ public class Billet {
         this.place = place;
     }
 
+    public Billet(String numeroReservation) {
+        this.numeroReservation = numeroReservation;
+    }
+
+    public Billet() {
+
+    }
+
     // Accesseurs
-    public int getNumeroReservation() {
+    public String getNumeroReservation() {
         return numeroReservation;
     }
 
@@ -33,10 +43,6 @@ public class Billet {
 
     public String getNumeroVol() {
         return numeroVol;
-    }
-
-    public int getBagages() {
-        return bagages;
     }
 
     public int getPrix() {
@@ -51,10 +57,60 @@ public class Billet {
         return place;
     }
 
+    public void setNumeroReservation(String numeroReservation) {
+        this.numeroReservation = numeroReservation;
+    }
 
-//    public Billet getBilletByNumeroReservation(int numeroReservation, ConnexionBdd connexionDB) {
-//        String requete = String.format("SELECT * FROM EseoFly.src.project.modele.Billet WHERE numeroReservation = %d", numeroReservation);
-//        JsonObject result = connexionDB.executionRequeteSQL(TypeRequeteSQL.SELECT, "EseoFly.src.project.modele.Billet", requete);
-//        return null;
-//    }
+    public void setIdClient(int idClient) {
+        this.idClient = idClient;
+    }
+
+
+    public void setNumeroVol(String numeroVol) {
+        this.numeroVol = numeroVol;
+    }
+
+    public void setBagages(boolean bagages) {
+        this.bagages = bagages;
+    }
+
+    public boolean isBagages() {
+        return bagages;
+    }
+
+    public void setPrix(int prix) {
+        this.prix = prix;
+    }
+
+    public void setGarantie(boolean garantie) {
+        this.garantie = garantie;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public void setNomPassager(String nomPassager) {
+        this.nomPassager = nomPassager;
+    }
+
+    public String getNomPassager() {
+        return nomPassager;
+    }
+
+    public void setPrenomPassager(String prenomPassager) {
+        this.prenomPassager = prenomPassager;
+    }
+
+    public String getPrenomPassager() {
+        return prenomPassager;
+    }
+
+    public void setAgePassager(int agePassager) {
+        this.agePassager = agePassager;
+    }
+
+    public int getAgePassager() {
+        return agePassager;
+    }
 }

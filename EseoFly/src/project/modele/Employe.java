@@ -1,77 +1,29 @@
 package project.modele;
 
 public class Employe {
-    private int id;
+	
     private String email;
     private boolean administrateur;
     private String nom;
     private String prenom;
-    private String password;
-    private ConnexionBdd connexionDB;
+    private String motDePasse; 
+    private String[] donnees = new String[6];
 
-    //Constructeur
 
-    public Employe(String email, String password){
-        this.email = email;
-        this.password = password;
+    public Employe(String email, String motDePasse) {
+    	DAOEmploye daoEmploye = new DAOEmploye();
+    	donnees = daoEmploye.getEmploye(email, motDePasse);
+        this.email = donnees[0];
+        this.administrateur = (donnees[1]=="1") ? true : false;
+        this.nom = donnees[2];
+        this.prenom = donnees[3];
+        this.motDePasse = donnees[4];
     }
-
-    public Employe(int id, String email, boolean administrateur, String nom, String prenom) {
-        this.id = id;
-        this.email = email;
-        this.administrateur = administrateur;
-        this.nom = nom;
-        this.prenom = prenom;
+    
+    public String[] getDonnees() {
+    	return this.donnees;
     }
-
-    // Accesseurs
-//    public int getId() {
-//        String requete = String.format("SELECT id FROM Employe WHERE email = '%s' and motDePasse = '%s", email, password);
-//        JsonObject result = connexionDB.executionRequeteSQL(TypeRequeteSQL.SELECT, "Employe", requete);
-//        id = result.getAsInt();
-//        return id;
-//    }
-
-    public String getEmail() {
-//        String requete = String.format("SELECT email FROM Employe WHERE email = '%s' and motDePasse = '%s", email, motDePasse);
-//        JsonObject result = connexionDB.executionRequeteSQL(TypeRequeteSQL.SELECT, "Employe", requete);
-//        email = result.getAsString();
-        return email;
-    }
-
-//    public boolean isAdministrateur() {
-//        String requete = String.format("SELECT administrateur FROM Employe WHERE email = '%s' and motDePasse = '%s", email, password);
-//        JsonObject result = connexionDB.executionRequeteSQL(TypeRequeteSQL.SELECT, "Employe", requete);
-//        administrateur = result.getAsBoolean();
-//        return administrateur;
-//    }
-
-//    public String getNom() {
-//        String requete = String.format("SELECT nom FROM Employe WHERE email = '%s' and motDePasse = '%s", email, password);
-//        JsonObject result = connexionDB.executionRequeteSQL(TypeRequeteSQL.SELECT, "Employe", requete);
-//        nom = result.getAsString();
-//        return nom;
-//    }
-//
-//    public String getPrenom() {
-//        String requete = String.format("SELECT prenom FROM Employe WHERE email = '%s' and motDePasse = '%s", email, password);
-//        JsonObject result = connexionDB.executionRequeteSQL(TypeRequeteSQL.SELECT, "Employe", requete);
-//        prenom = result.getAsString();
-//        return prenom;
-//    }
-
-    public String getPassword() {
-//        String requete = String.format("SELECT motDePasse FROM Employe WHERE email = '%s' and motDePasse = '%s", email, motDePasse);
-//        JsonObject result = connexionDB.executionRequeteSQL(TypeRequeteSQL.SELECT, "Employe", requete);
-//        motDePasse = result.getAsString();
-        return password;
-    }
-
-
-    public void setId(short id) {
-        this.id = id;
-    }
-
+    
     public void setEmail(String email) {
         this.email = email;
     }
@@ -87,4 +39,27 @@ public class Employe {
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public boolean isAdministrateur() {
+        return administrateur;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public String getMotDePasse() {
+        return motDePasse;
+    }
+    
+    
+
 }
