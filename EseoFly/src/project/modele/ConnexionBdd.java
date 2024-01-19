@@ -9,18 +9,18 @@ import java.util.Properties;
 public class ConnexionBdd {
 
 	//private String ip = "192.168.56.90"; // private
-	private String ip = "192.168.4.194"; //public
-	private int port = 6666; 
-	private String user="bdd"; 
-	private String password="network";
+//	private String ip = "192.168.4.194"; //public
+//	private int port = 6666; 
+//	private String user="bdd"; 
+//	private String password="network";
 
 
 	
-//	private String ip = "127.0.0.1"; 
-//	//private String ip = "localhost";
-//	private int port = 3306; 
-//	private String user="root"; 
-//	private String password="";
+	private String ip = "127.0.0.1"; 
+	//private String ip = "localhost";
+	private int port = 3306; 
+	private String user="root"; 
+	private String password="";
 
 	private String nomBdd = "fly_book_eseo";
 	private static Connection con = null;

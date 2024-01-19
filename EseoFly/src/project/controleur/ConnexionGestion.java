@@ -16,8 +16,8 @@ public class ConnexionGestion {
 		
 		String query = "SELECT * FROM Employe WHERE email = ? AND motDePasse = ?";
         
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://192.168.4.194:6666/fly_book_eseo", "bdd", "network");
-        	//Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/fly_book_eseo", "root", "");
+        try (//Connection connection = DriverManager.getConnection("jdbc:mysql://192.168.4.194:6666/fly_book_eseo", "bdd", "network");
+        	Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/fly_book_eseo", "root", "");
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             
             preparedStatement.setString(1, email);
@@ -25,22 +25,23 @@ public class ConnexionGestion {
             
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
             	
-//            	// Afficher les détails de l'utilisateur
-//                String mail = resultSet.getString("email");
-//                String mdp = resultSet.getString("motDePasse");
-//                // Ajoutez d'autres colonnes au besoin
-//
-//                System.out.println("Détails de l'utilisateur :");
-//                System.out.println("Pseudo : " + mail);
-//                System.out.println("Mot de passe : " + mdp);
-                return resultSet.next();
+            	if (resultSet.next()) {
+                    // Utilisez les getters appropriés pour extraire les valeurs des colonnes
+                    String retrievedEmail = resultSet.getString("email");
+                    String retrievedPassword = resultSet.getString("motDePasse");
+                    System.out.println(retrievedEmail);
+                    // Vous pouvez faire plus de choses avec ces valeurs, par exemple les comparer avec les paramètres d'entrée
+
+                    return true; // Ou retournez true en fonction de votre logique
+                } else {
+                    return false;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
             // Gérer l'exception selon votre logique d'application.
         }
-		
-		return false;
+        return false; 
 	}
 	
 	public static void redirection(Stage stage) {
