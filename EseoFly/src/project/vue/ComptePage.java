@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import project.controleur.ConnexionGestion;
 
 public class ComptePage {
 	
@@ -19,8 +20,9 @@ public class ComptePage {
 		stage.setTitle("Mon Compte");
 		stage.getIcons().add(new Image("file:icon_flybookeseo.png"));
         
-        Label firstNameLabel = new Label("Récupération du prénom");
-        Label surnameLabel = new Label("Récupération du nom");
+        Label firstNameLabel = new Label("Prénom : " +((ConnexionGestion.getEmploye()).getDonnees())[3]);
+        Label surnameLabel = new Label("Nom : " +((ConnexionGestion.getEmploye()).getDonnees())[2]);
+        Label emailLabel = new Label("Email : " +((ConnexionGestion.getEmploye()).getDonnees())[0]);
         
         Button deconnexionBouton =  new Button("Déconnexion"); 
         
@@ -31,6 +33,7 @@ public class ComptePage {
         
         gridPane.addRow(0, firstNameLabel);
         gridPane.addRow(1, surnameLabel);
+        gridPane.addRow(2, emailLabel);
         
         BorderPane borderPane = new BorderPane();
         borderPane.setPadding(new Insets(20,20,20,20));

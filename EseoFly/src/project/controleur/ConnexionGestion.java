@@ -13,6 +13,8 @@ import project.vue.GardePage;
 
 public class ConnexionGestion {
 	
+	private static Employe employe;
+	
 	public static boolean verifyLogin(String email, String password) {
 		
 		String query = "SELECT * FROM fly_book_eseo.Employe WHERE email = ? AND motDePasse = ?";
@@ -46,7 +48,7 @@ public class ConnexionGestion {
 	}
 	
 	public static boolean verifyLogin2(String email, String password) {
-		Employe employe = new Employe (email,password);
+		employe = new Employe (email,password);
 		String[] donnees = employe.getDonnees();
 		if ("true".equals(donnees[5]) && email.equals(donnees[0]) && password.equals(donnees[4])) {
 			return true;
@@ -58,5 +60,8 @@ public class ConnexionGestion {
 		GardePage.pageDeGarde(new Stage());
         stage.close();
 	}
-
+	
+	public static Employe getEmploye() {
+		return employe;
+	}
 }
