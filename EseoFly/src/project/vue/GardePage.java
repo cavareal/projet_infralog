@@ -4,9 +4,11 @@ import javafx.stage.Stage;
 import project.controleur.AjoutGestion;
 import project.controleur.RechercheGestion;
 import project.modele.Aeroport;
+import project.modele.Vol;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -242,10 +244,11 @@ public class GardePage {
    
     private static VBox createFlightInfoVBox() {
         VBox vbox = new VBox(10); // Espacement vertical entre les rectangles
-        
+        Vol v = new Vol();
+        List<Vol> listeVols = v.getAllVols();
         // NON PERMANANT : Boucle pour remplir l'histo et voir si le scroll fonctionne
-        for (int i = 1; i <= 10; i++) {
-        	StackPane rectangleinfo = AffichageVol.createFlightRectangle();
+        for (Vol vol : listeVols) {
+        	StackPane rectangleinfo = AffichageVol.createFlightRectangle(vol);
             vbox.getChildren().add(rectangleinfo);
           //getChildren() = liste observable des enfants actuellement présents dans la VBox
         }
