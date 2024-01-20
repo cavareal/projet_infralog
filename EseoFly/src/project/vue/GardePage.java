@@ -27,7 +27,8 @@ import javafx.scene.layout.StackPane;
 
 public class GardePage {
 	
-	private static String formattedTime;
+	private static String formattedTimeDecollage;
+	private static String formattedTimDuration;
 	
 	public static void pageDeGarde(Stage secondStage) {
 		secondStage.setTitle("Page de Garde");
@@ -149,7 +150,19 @@ public class GardePage {
         borderPane.setCenter(boutonAjout);
         borderPane.setAlignment(boutonAjout, Pos.CENTER);
         
+        
         boutonAjout.setOnAction(e -> {
+        	int heure = hourComboBox.getValue();
+            int minute = minuteComboBox.getValue();
+            int dureeHeure = hourComboBoxDuree.getValue();
+            int dureeMinute = minuteComboBoxDuree.getValue();
+            
+            LocalTime decollage = LocalTime.of(heure, minute);
+            LocalTime duree = LocalTime.of(dureeHeure, dureeMinute);
+
+            formattedTimeDecollage = decollage.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"));
+            formattedTimDuration = duree.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"));
+            //System.out.println("Heure sélectionnée : " + formattedTime);
         	if (numeroVolField.getText() == null || numeroVolField.getText().isEmpty()
         			|| modeleComboBox.getValue() == null
         			|| aeroportsComboBox.getValue() == null
@@ -165,24 +178,15 @@ public class GardePage {
             	borderPane.setAlignment(problemeDestination, Pos.CENTER);
             }
         	else {
-        		
+        		AjoutGestion.handleAjout(numeroVolField.getText(),modeleComboBox.getValue(),
+                		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(),
+                		prixField.getText(), datePicker.getValue(), formattedTimeDecollage,
+                		formattedTimDuration );
         	}
         });
 
         // MISE A JOUR DU CONTENU 
         ajouterVolTab.setContent(borderPane);
-        
-        // FORMATAGE DE LA DATE 
-        datePicker.setOnAction(event -> {
-            int selectedHour = hourComboBox.getValue();
-            int selectedMinute = minuteComboBox.getValue();
-            
-            LocalTime selectedTime = LocalTime.of(selectedHour, selectedMinute);
-
-            formattedTime = selectedTime.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"));
-            
-            //System.out.println("Heure sélectionnée : " + formattedTime);
-        });
         
 //        boutonAjout.setOnAction(e -> AjoutGestion.handleAjout(numeroVolField.getText(),modeleComboBox.getValue(),
 //        		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(), datePicker.getValue(), formattedTime));
@@ -311,7 +315,8 @@ public class GardePage {
             String aeroportString = //aeroport.getPays() + " - " +
                                      aeroport.getVille() + " - " +
                                      aeroport.getCodeIATA() + " - " +
-                                     aeroport.getNom();
+                                     aeroport.getNom() + " - UTC" +
+                                     aeroport.getUtc();
             comboBox.getItems().add(aeroportString);
         }
         return comboBox;

@@ -21,23 +21,24 @@ public class Vol {
 	private String arrivee;
 	private int nbPlaceAchetee;
 	private Time dureeVol;
-	private int utc;
 	private String modeleAvion;
 	
 	private Timestamp dateHeureLocaleDepart;
 	private Timestamp dateHeureLocaleArrivee;
+	private int prixStandard;
 
 	public Vol(){
 	}
 
-	public Vol (String numeroVol, Timestamp dateHeureLocaleDepart, Timestamp dateHeureLocaleArrivee, String depart,
-				String arrivee, int nbPlaceAchetee ) {
+	public Vol (String numeroVol, String modeleAvion, Timestamp dateHeureLocaleDepart,
+			Timestamp dateHeureLocaleArrivee, String depart, String arrivee, int prixStandard ) {
 		this.numeroVol = numeroVol;
 		this.dateHeureLocaleDepart = dateHeureLocaleDepart;
 		this.dateHeureLocaleArrivee = dateHeureLocaleArrivee;
 		this.arrivee = arrivee;
 		this.depart = depart;
-		this.nbPlaceAchetee = nbPlaceAchetee;
+		this.modeleAvion = modeleAvion;
+		this.prixStandard = prixStandard;
 	}
 
 
@@ -96,15 +97,6 @@ public class Vol {
 	public void setDureeVol(Time dureeVol) {
 		this.dureeVol = dureeVol;
 	}
-
-	public int getUtc(){
-		return this.utc;
-	}
-
-	public void setUtc(int utc){
-		this.utc = utc;
-	}
-
 
 	public Time getHeureArrivee() {
 		return heureArrivee;
@@ -168,7 +160,18 @@ public class Vol {
 		return vols;
 	}
 
-	
+	public int getPrixStandard() {
+		return prixStandard;
+	}
+
+	public void setPrixStandard(int prixStandard) {
+		this.prixStandard = prixStandard;
+	}
+
+	public void addVol(Vol vol,short utcDepart, short utcArrivee) {
+		DAOVol daoVol = new DAOVol();
+		daoVol.addVol(vol, utcDepart, utcArrivee);
+	}
 	
 }
 

@@ -67,5 +67,12 @@ public class Aeroport {
     	aeroports = daoAeroport.getAllAeroport();
         return aeroports;
     }
+    
+//    public short getUtcAeroport(String iata) {
+//    	short utc = 0 ; 
+//    	DAOAeroport daoAeroport = new DAOAeroport();
+//    	utc = daoAeroport.getAeroportByAcronyme(iata);
+//    	return utc;
+//    }
 }
 

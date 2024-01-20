@@ -3,6 +3,7 @@ package project.modele;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import defaut.Main;
 
@@ -31,6 +32,7 @@ public class DAOVol {
                 vol.setModeleAvion(resultSet.getString("modeleAvion"));
                 vol.setDureeVol(resultSet.getTime("dureeVol"));
                 vol.setNbPlaceAchetee(getNombreDePlaceAchetee(resultSet.getString("numeroVol")));
+                vol.setPrixStandard(resultSet.getInt("prixStandard"));
                 vols.add(vol);
             }
         } catch (SQLException e) {
@@ -59,34 +61,36 @@ public class DAOVol {
     }
     
     
-    public boolean addVol(Vol vol) {
-        String query = "INSERT INTO Vol (numeroVol, depart, arrivee, dateHeureLocaleDepart, dateHeureLocaleArrivee, "
-        		+ "modeleAvion, dureeVol) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public void addVol(Vol vol,short utcDepart, short utcArrivee) {
+        String query = "INSERT INTO Vol (numeroVol, depart, arrivee, dateHeureLocaleDepart, dateHeureLocaleArrivee, modeleAvion, dureeVol, prixStandard) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         boolean succes = false;
 
         try (PreparedStatement preparedStatement = this.connexion.prepareStatement(query)) {
             preparedStatement.setString(1, vol.getNumeroVol());
             preparedStatement.setString(2, vol.getDepart());
             preparedStatement.setString(3, vol.getArrivee());
-
             preparedStatement.setTimestamp(4, vol.getDateHeureLocaleDepart());
+            
+            // Utilisation de la formule pour calculer la date et heure d'arrivée
+            int utcDifference = utcArrivee - utcDepart;
+            Timestamp dateArrivee = new Timestamp(vol.getDateHeureLocaleDepart().getTime() + TimeUnit.HOURS.toMillis(utcDifference) + vol.getDureeVol().getTime());
 
-            preparedStatement.setTimestamp(5, vol.getDateHeureLocaleArrivee());
-
+            preparedStatement.setTimestamp(5, dateArrivee);
             preparedStatement.setString(6, vol.getModeleAvion());
             preparedStatement.setTime(7, vol.getDureeVol());
+            preparedStatement.setInt(8, vol.getPrixStandard());
 
             int lignesAffectees = preparedStatement.executeUpdate();
-
+            
             if (lignesAffectees > 0) {
-                succes = true;
+                System.out.println("OK");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return succes;
     }
+
 
     public Vol getVolByNumero(String numeroVol) {
         Vol volTrouve = null;
