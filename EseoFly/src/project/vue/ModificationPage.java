@@ -29,7 +29,7 @@ public class ModificationPage {
 		
 		// CREATIONS COMPOSANTS  
         Label numeroVolLabel = new Label("Numéro de vol :");
-        Label numeroVol = new Label ("num vol à récup");
+        Label numeroVol = new Label (vol.getNumeroVol());
 
         Label modeleLabel = new Label("Modele Avion :");
         
@@ -98,6 +98,11 @@ public class ModificationPage {
         borderPane.setBottom(boutonSauvegarde);
         borderPane.setCenter(gridPane);
         borderPane.setAlignment(boutonSauvegarde, Pos.CENTER);
+        
+        modeleComboBox.setValue(vol.getModeleAvion());
+        aeroportsComboBox.setValue(vol.getDepart());
+        aeroportsComboBoxBis.setValue(vol.getArrivee());
+        prixField.setText(String.valueOf(vol.getPrixStandard()));
         
         // FORMATAGE DE LA DATE 
         datePicker.setOnAction(event -> {
