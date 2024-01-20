@@ -2,7 +2,6 @@ package project.vue;
 
 import javafx.stage.Stage;
 import project.controleur.AjoutGestion;
-import project.controleur.ConnexionGestion;
 import project.controleur.RechercheGestion;
 import project.modele.Aeroport;
 import project.modele.ModeleAvion;
@@ -10,7 +9,6 @@ import project.modele.Vol;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.geometry.Insets;
@@ -29,6 +27,7 @@ public class GardePage {
 	
 	private static String formattedTimeDecollage;
 	private static String formattedTimDuration;
+	private static ScrollPane scrollPane;
 	
 	public static void pageDeGarde(Stage secondStage) {
 		secondStage.setTitle("Page de Garde");
@@ -46,12 +45,14 @@ public class GardePage {
         MenuItem historiqueItem = new MenuItem("Historique");
         MenuItem rechercheItem = new MenuItem("Recherche");
         
+        Tab historiqueTab = createHistoriqueTab();
         monCompteItem.setOnAction(event -> {
         	ComptePage.fenetreCompte(new Stage(), secondStage);
         });
         ajoutItem.setOnAction(event -> tabPane.getTabs().add(createAjouterVolTab()));
-        historiqueItem.setOnAction(event -> tabPane.getTabs().add(createHistoriqueTab()));
+        historiqueItem.setOnAction(event -> tabPane.getTabs().add(historiqueTab));
         rechercheItem.setOnAction(event -> tabPane.getTabs().add(createRechercheTab()));
+        historiqueTab.setOnSelectionChanged(event -> refreshScrollPaneContent());
         
         menu.getItems().add(monCompteItem);
         menu.getItems().add(ajoutItem);
@@ -200,13 +201,12 @@ public class GardePage {
         
         // VBox contenant les rectangles d'informations de vol
         VBox flightInfoVBox = createFlightInfoVBox();
-
+        
         // Défilement de la page
-        ScrollPane scrollPane = new ScrollPane(flightInfoVBox);
+        scrollPane = new ScrollPane(flightInfoVBox);
         scrollPane.setFitToWidth(true);
-
+        
         // Placeholder content
-        //historiqueTab.setContent(createFlight());
         historiqueTab.setContent(scrollPane);
 
         return historiqueTab;
@@ -320,6 +320,14 @@ public class GardePage {
             comboBox.getItems().add(aeroportString);
         }
         return comboBox;
+    }
+    
+    private static void refreshScrollPaneContent() {
+    	// Obtenez une nouvelle VBox avec le contenu mis à jour
+        VBox newFlightInfoVBox = createFlightInfoVBox();
+        System.out.println("on passe");
+        // Remplacez complètement le contenu du ScrollPane par la nouvelle VBox
+        scrollPane.setContent(newFlightInfoVBox);
     }
    
 }
