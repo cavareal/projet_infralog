@@ -4,8 +4,9 @@ import java.time.LocalDate;
 
 public class AjoutGestion {
 	
-    public static void handleAjout(String numeroVolField, String nombrePlaceField,
-    		String aeroportDepartField, String aeroportArriveeField, LocalDate date, String heureDecollageField) {
+    public static void handleAjout(String numeroVolField, String modeleAvion,
+    		String aeroportDepartField, String aeroportArriveeField, LocalDate date, 
+    		String heureDecollageField) {
     	// Gestion de l'ajout des vols dans la BDD
     	
     	System.out.println("Envoie des données");

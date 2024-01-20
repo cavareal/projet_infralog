@@ -1,7 +1,6 @@
 package project.controleur;
 
-public class VolGestion {
-	
+public class Gestion {
 	
 
 }

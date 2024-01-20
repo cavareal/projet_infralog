@@ -267,9 +267,10 @@ public class GardePage {
     
     protected static ComboBox<String> createAeroportsComboBox() {
         ComboBox<String> comboBox = new ComboBox<>();
-        for (Aeroport[] aeroportArray : Aeroport.aeroportsListe()) {
-            Aeroport aeroport = aeroportArray[0];
-            String aeroportString = aeroport.getPays() + " - " +
+        Aeroport a = new Aeroport();
+        List<Aeroport> aeroportArray = a.getAllAeroports();
+        for (Aeroport aeroport : aeroportArray) {
+            String aeroportString = //aeroport.getPays() + " - " +
                                      aeroport.getVille() + " - " +
                                      aeroport.getCodeIATA() + " - " +
                                      aeroport.getNom();
