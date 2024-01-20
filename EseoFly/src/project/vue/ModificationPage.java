@@ -30,8 +30,7 @@ public class ModificationPage {
         Label numeroVolLabel = new Label("Numéro de vol :");
         Label numeroVol = new Label ("num vol à récup");
 
-        Label nombrePlaceLabel = new Label("Nombre de places :");
-        TextField nombrePlaceField = new TextField();
+        Label modeleLabel = new Label("Modele Avion :");
         
         Label prixLabel = new Label("Prix du billet standard (€) :");
         TextField prixField = new TextField();
@@ -50,10 +49,13 @@ public class ModificationPage {
         // Creation d'une liste déroulante 
         HBox aeroportsHBox = new HBox(10);
         HBox aeroportsHBoxBis = new HBox(10);
+        HBox modeleHBox = new HBox(10);
         ComboBox<String> aeroportsComboBox = GardePage.createAeroportsComboBox();
         ComboBox<String> aeroportsComboBoxBis = GardePage.createAeroportsComboBox();
+        ComboBox<String> modeleComboBox = GardePage.createComboBoxModeleAvion();
         aeroportsHBox.getChildren().add(aeroportsComboBox);
         aeroportsHBoxBis.getChildren().add(aeroportsComboBoxBis);
+        modeleHBox.getChildren().add(modeleComboBox);
 
         // Creation du calendrier 
         DatePicker datePicker = new DatePicker();
@@ -82,7 +84,7 @@ public class ModificationPage {
         gridPane.setVgap(10);
         gridPane.setHgap(10);
         gridPane.addRow(0, numeroVolLabel, numeroVol);
-        gridPane.addRow(1, nombrePlaceLabel, nombrePlaceField);
+        gridPane.addRow(1, modeleLabel, modeleHBox);
         gridPane.addRow(2, aeroportDepartLabel, aeroportsHBox);
         gridPane.addRow(3, aeroportArriveeLabel,aeroportsHBoxBis);
         gridPane.addRow(4,heureHbox, root);
@@ -108,7 +110,7 @@ public class ModificationPage {
             //System.out.println("Heure sélectionnée : " + formattedTime);
         });
         
-        boutonSauvegarde.setOnAction(e -> handleSauvegarde(numeroVol.getText(),nombrePlaceField.getText(),
+        boutonSauvegarde.setOnAction(e -> handleSauvegarde(numeroVol.getText(),modeleComboBox.getValue(),
         		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(), datePicker.getValue(), formattedTime));
 		
 		Scene scene = new Scene(borderPane, 600, 400);

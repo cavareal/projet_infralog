@@ -180,6 +180,11 @@ public class Vol {
 		vols = daoVol.searchVols(nom, prenom, numeroVol, date, aeroport, depart, arrivee);
 		return vols;
 	}
+
+	public void update(Vol vol, short utcDepart, short utcArrivee) {
+		DAOVol daoVol = new DAOVol();
+		daoVol.updateVol(vol, utcDepart, utcArrivee);
+	}
 	
 }
 

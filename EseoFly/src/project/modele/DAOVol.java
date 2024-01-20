@@ -90,6 +90,36 @@ public class DAOVol {
         }
 
     }
+    
+    public void updateVol(Vol vol, short utcDepart, short utcArrivee) {
+        String query = "UPDATE fly_book_eseo.Vol SET depart=?, arrivee=?, dateHeureLocaleDepart=?, dateHeureLocaleArrivee=?, modeleAvion=?, dureeVol=?, prixStandard=? WHERE numeroVol=?";
+        
+        try (PreparedStatement preparedStatement = this.connexion.prepareStatement(query)) {
+            preparedStatement.setString(1, vol.getDepart());
+            preparedStatement.setString(2, vol.getArrivee());
+            preparedStatement.setTimestamp(3, vol.getDateHeureLocaleDepart());
+
+            // Utilisation de la formule pour calculer la date et heure d'arrivée
+            int utcDifference = utcArrivee - utcDepart;
+            Timestamp dateArrivee = new Timestamp(vol.getDateHeureLocaleDepart().getTime() + TimeUnit.HOURS.toMillis(utcDifference) + vol.getDureeVol().getTime());
+
+            preparedStatement.setTimestamp(4, dateArrivee);
+            preparedStatement.setString(5, vol.getModeleAvion());
+            preparedStatement.setTime(6, vol.getDureeVol());
+            preparedStatement.setInt(7, vol.getPrixStandard());
+            preparedStatement.setString(8, vol.getNumeroVol());
+
+            int lignesAffectees = preparedStatement.executeUpdate();
+
+            if (lignesAffectees > 0) {
+                System.out.println("Mise à jour réussie");
+            } else {
+                System.out.println("Aucune ligne mise à jour");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public Vol getVolByNumero(String numeroVol) {
