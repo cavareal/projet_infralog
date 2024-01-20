@@ -18,16 +18,10 @@ public class AffichageVol {
 	final static Color stroke = Color.BLACK;
 	int stockeWidth = 1;
 	
-//	public AffichageVol() {
-//		this.background = Color.LIGHTGREY;
-//		
-//	}
-	
     protected static StackPane createFlightRectangle(Vol vol) {
     	
 //    	// RECUPERATION DES VRAIES INFOS 
     	
-    	//Vol vol = new Vol("FR76","12-01-2014","06:13","CDG","LUX",120, 87);
     	Timestamp dateTimeArrivee = vol.getDateHeureLocaleArrivee() ;
 
         // Conversion de la chaîne en LocalDateTime

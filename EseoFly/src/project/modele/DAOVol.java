@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import defaut.Main;
+import project.controleur.AjoutGestion;
 
 public class DAOVol {
 
@@ -15,7 +16,6 @@ public class DAOVol {
     	connexion = Main.getDAOInstance().getConnexion();
     }
     
-    @SuppressWarnings("deprecation")
 	protected List<Vol> getAllVols() {
         List<Vol> vols = new ArrayList<>();
         String query = "SELECT * FROM fly_book_eseo.Vol";
@@ -62,7 +62,7 @@ public class DAOVol {
     
     
     public void addVol(Vol vol,short utcDepart, short utcArrivee) {
-        String query = "INSERT INTO Vol (numeroVol, depart, arrivee, dateHeureLocaleDepart, dateHeureLocaleArrivee, modeleAvion, dureeVol, prixStandard) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO fly_book_eseo.Vol (numeroVol, depart, arrivee, dateHeureLocaleDepart, dateHeureLocaleArrivee, modeleAvion, dureeVol, prixStandard) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         boolean succes = false;
 
         try (PreparedStatement preparedStatement = this.connexion.prepareStatement(query)) {
@@ -94,7 +94,7 @@ public class DAOVol {
 
     public Vol getVolByNumero(String numeroVol) {
         Vol volTrouve = null;
-        String query = "SELECT * FROM Vol WHERE numeroVol = ? COLLATE utf8_general_ci";
+        String query = "SELECT * FROM fly_book_eseo.Vol WHERE numeroVol = ? COLLATE utf8_general_ci";
 
         try (PreparedStatement preparedStatement = this.connexion.prepareStatement(query)) {
             preparedStatement.setString(1, numeroVol);
@@ -117,5 +117,85 @@ public class DAOVol {
 
         return volTrouve;
     }
+    
+    protected List<Vol> searchVols(String nom, String prenom, String numeroVol, String date, 
+    	    String aeroport, boolean depart, boolean arrivee) {
+    	    List<Vol> resultats = new ArrayList<>();
+    	    
+    	    String query = "SELECT * FROM fly_book_eseo.Vol V WHERE 1=1";
+    	    
+    	    if (!nom.equals("")) {
+    	        query += " AND EXISTS (SELECT * FROM fly_book_eseo.Billet WHERE V.numeroVol = Billet.numeroVol AND Billet.nomPassager = ?)";
+    	    }
 
+    	    if (!prenom.equals("")) {
+    	        query += " AND (B.prenomPassager = ? OR B.prenomPassager IS NULL)";
+    	    }
+
+    	    if (!numeroVol.equals("")) {
+    	        query +=" AND V.numeroVol = ?";
+    	    }
+
+    	    if (!date.equals("")) {
+    	        query +=" AND V.dateHeureLocaleDepart >= ?";
+    	    }
+
+    	    if (!aeroport.equals("")) {
+    	    	aeroport = AjoutGestion.extraireCodeIATA(aeroport);
+    	        if (depart) {
+    	            query +=" AND V.depart = ?";
+    	        }
+    	        if (arrivee) {
+    	            query +=" AND V.arrivee = ?";
+    	        }
+    	    }
+    	    System.out.println(query);
+    	    try (PreparedStatement preparedStatement = connexion.prepareStatement(query)) {
+
+    	        int parameterIndex = 1;
+
+    	        if (!nom.equals("")) {
+    	            preparedStatement.setString(parameterIndex++, nom);
+    	        }
+
+    	        if (!prenom.equals("")) {
+    	            preparedStatement.setString(parameterIndex++, prenom);
+    	        }
+
+    	        if (!numeroVol.equals("")) {
+    	            preparedStatement.setString(parameterIndex++, numeroVol);
+    	        }
+
+    	        if (!date.equals("")) {
+    	            Timestamp timestamp = Timestamp.valueOf(date + " 00:00:00");
+    	            preparedStatement.setTimestamp(parameterIndex++, timestamp);
+    	        }
+
+    	        if (!aeroport.equals("")) {
+    	            if (depart || arrivee) {
+    	                preparedStatement.setString(parameterIndex++, aeroport);
+    	            }
+    	        }
+
+    	        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+    	            while (resultSet.next()) {
+    	                // Créer des objets Vol et les ajouter à la liste des résultats
+    	                Vol vol = new Vol();
+    	                vol.setNumeroVol(resultSet.getString("numeroVol"));
+    	                vol.setDepart(resultSet.getString("depart"));
+    	                vol.setArrivee(resultSet.getString("arrivee"));
+    	                vol.setDateHeureLocaleDepart(resultSet.getTimestamp("dateHeureLocaleDepart"));
+    	                vol.setDateHeureLocaleArrivee(resultSet.getTimestamp("dateHeureLocaleArrivee"));
+    	                vol.setModeleAvion(resultSet.getString("modeleAvion"));
+    	                vol.setDureeVol(resultSet.getTime("dureeVol"));
+    	                vol.setNbPlaceAchetee(getNombreDePlaceAchetee(resultSet.getString("numeroVol")));
+    	                vol.setPrixStandard(resultSet.getInt("prixStandard"));
+    	                resultats.add(vol);
+    	            }
+    	        }
+    	    } catch (SQLException e) {
+    	        e.printStackTrace();
+    	    }
+    	    return resultats;
+    }
 }

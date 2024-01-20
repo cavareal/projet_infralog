@@ -173,5 +173,13 @@ public class Vol {
 		daoVol.addVol(vol, utcDepart, utcArrivee);
 	}
 	
+	public List<Vol> search(String nom, String prenom, String numeroVol, String date, 
+			String aeroport, boolean depart, boolean arrivee) {
+		DAOVol daoVol = new DAOVol();
+		List<Vol> vols = new ArrayList<>();
+		vols = daoVol.searchVols(nom, prenom, numeroVol, date, aeroport, depart, arrivee);
+		return vols;
+	}
+	
 }
 

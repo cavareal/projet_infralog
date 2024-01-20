@@ -69,7 +69,7 @@ public class AjoutGestion {
         }
     }
     
-    private static String extraireCodeIATA(String aeroportString) {
+    public static String extraireCodeIATA(String aeroportString) {
         String[] elements = aeroportString.split(" - ");
         if (elements.length >= 3) {
             return elements[1]; // Le code IATA est le deuxième élément dans la chaîne séparée par " - "

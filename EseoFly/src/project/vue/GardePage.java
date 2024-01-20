@@ -2,13 +2,13 @@ package project.vue;
 
 import javafx.stage.Stage;
 import project.controleur.AjoutGestion;
-import project.controleur.RechercheGestion;
 import project.modele.Aeroport;
 import project.modele.ModeleAvion;
 import project.modele.Vol;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.geometry.Insets;
@@ -263,7 +263,21 @@ public class GardePage {
         scrollPane.setFitToWidth(true);
         VBox mainVBox = new VBox(borderPane, scrollPane);
         
-        searchButton.setOnAction(e -> RechercheGestion.handleRecherche());
+        
+        searchButton.setOnAction(e -> {
+        	System.out.println("nom ici : " + nomField.getText());
+            String nom = nomField.getText();
+            String prenom = prenomField.getText();
+            String numeroVol = numeroVolField.getText();
+            String date = datePicker.getValue() != null ? datePicker.getValue().toString() : "";
+            String aeroport = aeroportsComboBox.getValue() != null ? aeroportsComboBox.getValue() : "";
+            boolean depart = checkBoxDepart.isSelected();
+            boolean arrivee = checkBoxArrivee.isSelected();
+        	VBox newFlightInfoVBox = createFlightSearchVBox(nom, prenom, numeroVol,date,aeroport,
+        			depart, arrivee);
+            // Remplacez complètement le contenu du ScrollPane par la nouvelle VBox
+            scrollPane.setContent(newFlightInfoVBox); 
+        });
         
         // Défilement de la page
 
@@ -286,6 +300,23 @@ public class GardePage {
         
         return vbox;
     }
+    
+    private static VBox createFlightSearchVBox(String nom, String prenom, String numeroVol, String date, 
+			String aeroport, boolean depart, boolean arrivee) {
+        VBox vbox = new VBox(10); // Espacement vertical entre les rectangles
+        Vol v = new Vol();
+        List<Vol> listeVols = v.search(nom, prenom, numeroVol, date, aeroport, depart, arrivee);
+        // NON PERMANANT : Boucle pour remplir l'histo et voir si le scroll fonctionne
+        for (Vol vol : listeVols) {
+        	StackPane rectangleinfo = AffichageVol.createFlightRectangle(vol);
+            vbox.getChildren().add(rectangleinfo);
+          //getChildren() = liste observable des enfants actuellement présents dans la VBox
+        }
+        
+        return vbox;
+    }
+    
+    
     
     protected static ComboBox<Integer> createComboBox(int start, int end) {
         ComboBox<Integer> comboBox = new ComboBox<>();
