@@ -4,14 +4,21 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import defaut.Main;
+
 public class DAOVol {
 
     private Connection connexion;
-
-    public List<Vol> getAllVols() {
+    
+    public DAOVol() {
+    	connexion = Main.getDAOInstance().getConnexion();
+    }
+    
+    @SuppressWarnings("deprecation")
+	protected List<Vol> getAllVols() {
         List<Vol> vols = new ArrayList<>();
-        String query = "SELECT * FROM Vol";
-
+        String query = "SELECT * FROM fly_book_eseo.Vol";
+        
         try (PreparedStatement preparedStatement = this.connexion.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
@@ -23,15 +30,36 @@ public class DAOVol {
                 vol.setDateHeureLocaleArrivee(resultSet.getTimestamp("dateHeureLocaleArrivee"));
                 vol.setModeleAvion(resultSet.getString("modeleAvion"));
                 vol.setDureeVol(resultSet.getTime("dureeVol"));
+                vol.setNbPlaceAchetee(getNombreDePlaceAchetee(resultSet.getString("numeroVol")));
                 vols.add(vol);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        System.out.println(vols.size());
         return vols;
     }
-
+    
+    private int getNombreDePlaceAchetee(String numeroVol){
+    	int nombreDePlacesVendues = 0;
+        String query = "SELECT COUNT(*) AS nombreDePlacesVendues "
+                + "FROM fly_book_eseo.Billet "
+                + "JOIN fly_book_eseo.Vol ON fly_book_eseo.Billet.numeroVol = fly_book_eseo.Vol.numeroVol "
+                + "WHERE fly_book_eseo.Vol.numeroVol = ?";
+        try (PreparedStatement preparedStatement = this.connexion.prepareStatement(query)) {
+            preparedStatement.setString(1, numeroVol);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    nombreDePlacesVendues = resultSet.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nombreDePlacesVendues;
+    }
+    
+    
     public boolean addVol(Vol vol) {
         String query = "INSERT INTO Vol (numeroVol, depart, arrivee, dateHeureLocaleDepart, dateHeureLocaleArrivee, "
         		+ "modeleAvion, dureeVol) VALUES (?, ?, ?, ?, ?, ?, ?)";

@@ -4,15 +4,21 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import defaut.Main;
+
 public class DAOAeroport {
     private Connection connexion;
+    
+    public DAOAeroport() {
+    	connexion = Main.getDAOInstance().getConnexion();
+    }
 
     public boolean ajouterAeroport(project.modele.Aeroport aeroport) {
         String query = "INSERT INTO Aeroport (acronyme, ville, pays, nom, utc) VALUES (?, ?, ?, ?, ?)";
         boolean succes = false;
 
         try (PreparedStatement preparedStatement = this.connexion.prepareStatement(query)) {
-            preparedStatement.setString(1, aeroport.getAcronyme());
+            preparedStatement.setString(1, aeroport.getCodeIATA());
             preparedStatement.setString(2, aeroport.getVille());
             preparedStatement.setString(3, aeroport.getPays());
             preparedStatement.setString(4, aeroport.getNom());
@@ -40,7 +46,7 @@ public class DAOAeroport {
 
             while (resultSet.next()) {
                 Aeroport aeroport = new Aeroport();
-                aeroport.setAcronyme(resultSet.getString("acronyme"));
+                aeroport.setCodeIATA(resultSet.getString("acronyme"));
                 aeroport.setVille(resultSet.getString("ville"));
                 aeroport.setPays(resultSet.getString("pays"));
                 aeroport.setNom(resultSet.getString("nom"));

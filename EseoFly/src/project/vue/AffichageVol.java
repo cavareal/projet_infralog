@@ -1,5 +1,6 @@
 package project.vue;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -22,42 +23,39 @@ public class AffichageVol {
 //		
 //	}
 	
-    protected static StackPane createFlightRectangle() {
+    protected static StackPane createFlightRectangle(Vol vol) {
     	
 //    	// RECUPERATION DES VRAIES INFOS 
-//    	
-//    	//Vol vol = new Vol("FR76","12-01-2014","06:13","CDG","LUX",120, 87);
-//    	Vol vol;
-//    	String dateTimeArrivee = vol.getDate() + " " + "13:58" ;
-//
-//        // Conversion de la chaîne en LocalDateTime en utilisant un format spécifié
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    	
+    	//Vol vol = new Vol("FR76","12-01-2014","06:13","CDG","LUX",120, 87);
+    	Timestamp dateTimeArrivee = vol.getDateHeureLocaleArrivee() ;
+
+        // Conversion de la chaîne en LocalDateTime
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 //        LocalDateTime dateTime = LocalDateTime.parse(dateTimeArrivee, formatter);
-//
-//        // Comparaison avec la date et l'heure actuelles
-//        LocalDateTime currentDateTime = LocalDateTime.now();
-//        
-//        Rectangle rectangle = new Rectangle(350,50);
-//
-//        if (dateTime.isBefore(currentDateTime)) {
-//        	rectangle.setFill(Color.LIGHTGRAY);
-//        } else if (dateTime.isAfter(currentDateTime)) {
-//        	rectangle.setFill(Color.LIGHTBLUE);
-//        } else {
-//        	rectangle.setFill(Color.LIGHTBLUE);
-//        }
-// 
-//        rectangle.setStroke(Color.BLACK);
-//        rectangle.setStrokeWidth(1);
-//        
-//        // RECUPERATION DES DONNEES DE VOL
-//        Text text = new Text(vol.getNumeroVol() + "    " + vol.getDate() +"    " + vol.getHeureDecollage() + "\n"
-//        		+ vol.getAeroportDepart() + " To " + vol.getAeroportArrive() + "\n" 
-//        		+ "Nombre de places : "+ vol.getNbPlace() + "   "+ "Places vendues : " + vol.getNbPlaceAchetee());
-//        text.setWrappingWidth(280); // Largeur maximale avant le retour à la ligne
         
-    	Text text = new Text("coucou");
-    	Rectangle rectangle = new Rectangle();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime dateTime = dateTimeArrivee.toLocalDateTime();
+        
+        Rectangle rectangle = new Rectangle(350,50);
+
+        if (dateTime.isBefore(currentDateTime)) {
+        	rectangle.setFill(Color.LIGHTGRAY);
+        } else if (dateTime.isAfter(currentDateTime)) {
+        	rectangle.setFill(Color.LIGHTBLUE);
+        } else {
+        	rectangle.setFill(Color.LIGHTBLUE);
+        }
+        
+        rectangle.setStroke(Color.BLACK);
+        rectangle.setStrokeWidth(1);
+        
+        // RECUPERATION DES DONNEES DE VOL
+        Text text = new Text(vol.getNumeroVol() + "    " + vol.getDateDepart() +"    " + vol.getHeureDepart() + "\n"
+        		+ vol.getDepart() + " To " + vol.getArrivee() + "\n" 
+        		+ "Modele : "+ vol.getModeleAvion()+ "   "+ "Places vendues : " + vol.getNbPlaceAchetee());
+        text.setWrappingWidth(280); // Largeur maximale avant le retour à la ligne
+        
         // StackPane pour superposer le rectangle et le texte 
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(rectangle, text);

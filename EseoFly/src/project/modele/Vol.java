@@ -3,6 +3,11 @@ package project.modele;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Vol {
 
@@ -10,36 +15,30 @@ public class Vol {
 //		private Date date;
 	private Time heureDepart;
 	private Time heureArrivee;
-	private Date dateDepart;
-	private Date dateArrivee;
+	private LocalDate dateDepart;
+	private LocalDate dateArrivee;
 
 	private String depart;
 	private String arrivee;
-	private int nbPlace;
 	private int nbPlaceAchetee;
 	private Time dureeVol;
 	private int utc;
 	private String modeleAvion;
-//
-	private String heureDecollage;
-	private String date;
+	
 	private Timestamp dateHeureLocaleDepart;
 	private Timestamp dateHeureLocaleArrivee;
-
 
 	public Vol(){
 	}
 
 	public Vol (String numeroVol, Timestamp dateHeureLocaleDepart, Timestamp dateHeureLocaleArrivee, String depart,
-				String arrivee, int nbPlace, int nbPlaceAchetee ) {
+				String arrivee, int nbPlaceAchetee ) {
 		this.numeroVol = numeroVol;
 		this.dateHeureLocaleDepart = dateHeureLocaleDepart;
 		this.dateHeureLocaleArrivee = dateHeureLocaleArrivee;
 		this.arrivee = arrivee;
 		this.depart = depart;
-		this.nbPlace = nbPlace;
 		this.nbPlaceAchetee = nbPlaceAchetee;
-
 	}
 
 
@@ -83,14 +82,6 @@ public class Vol {
 		this.arrivee = arrivee;
 	}
 
-	public int getNbPlace() {
-		return nbPlace;
-	}
-
-	public void setNbPlace(int nbPlace) {
-		this.nbPlace = nbPlace;
-	}
-
 	public int getNbPlaceAchetee() {
 		return nbPlaceAchetee;
 	}
@@ -124,11 +115,11 @@ public class Vol {
 		this.heureArrivee = heureArrivee;
 	}
 
-	public Date getDateDepart() {
+	public LocalDate getDateDepart() {
 		return dateDepart;
 	}
 
-	public void setDateDepart(Date dateDepart) {
+	public void setDateDepart(LocalDate dateDepart) {
 		this.dateDepart = dateDepart;
 	}
 
@@ -140,45 +131,45 @@ public class Vol {
 		this.modeleAvion = modeleAvion;
 	}
 
-	public Date getDateArrivee() {
+	public LocalDate getDateArrivee() {
 		return dateArrivee;
 	}
 
-	public void setDateArrivee(Date dateArrivee) {
+	public void setDateArrivee(LocalDate dateArrivee) {
 		this.dateArrivee = dateArrivee;
-	}
-
-	public String getHeureDecollage() {
-		return heureDecollage;
-	}
-
-	public void setHeureDecollage(String heureDecollage) {
-		this.heureDecollage = heureDecollage;
-	}
-
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-	public void setDateHeureLocaleDepart(Timestamp dateHeureLocaleDepart) {
-		this.dateHeureLocaleDepart = dateHeureLocaleDepart;
 	}
 
 	public Timestamp getDateHeureLocaleDepart() {
 		return dateHeureLocaleDepart;
 	}
 
-	public void setDateHeureLocaleArrivee(Timestamp dateHeureLocaleArrivee) {
-		this.dateHeureLocaleArrivee = dateHeureLocaleArrivee;
-	}
 
 	public Timestamp getDateHeureLocaleArrivee() {
 		return dateHeureLocaleArrivee;
 	}
+	
+	public void setDateHeureLocaleDepart(Timestamp dateHeureLocaleDepart) {
+		this.dateHeureLocaleDepart = dateHeureLocaleDepart;
+        Instant instantDepart = dateHeureLocaleDepart.toInstant();
+        this.heureDepart = new Time(instantDepart.toEpochMilli());
+        this.dateDepart = instantDepart.atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    public void setDateHeureLocaleArrivee(Timestamp dateHeureLocaleArrivee) {
+    	this.dateHeureLocaleArrivee = dateHeureLocaleArrivee;
+        Instant instantArrivee = dateHeureLocaleArrivee.toInstant();
+        this.heureArrivee = new Time(instantArrivee.toEpochMilli());
+        this.dateArrivee = instantArrivee.atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+	
+	public List<Vol> getAllVols() {
+		List<Vol> vols = new ArrayList<>();
+		DAOVol daoVol = new DAOVol();
+		vols = daoVol.getAllVols();
+		return vols;
+	}
+
+	
+	
 }
 
