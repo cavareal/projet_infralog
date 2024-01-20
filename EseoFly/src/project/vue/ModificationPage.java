@@ -16,12 +16,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import project.modele.Vol;
 
 public class ModificationPage {
 	
 	private static String formattedTime;
 	
-	public static void fenetreModification(Stage stage) {
+	public void fenetreModification(Stage stage, Vol vol) {
 		
 		stage.setTitle("Modification du vol");
 		stage.getIcons().add(new Image("file:icon_flybookeseo.png"));
