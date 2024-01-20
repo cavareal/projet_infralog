@@ -1,6 +1,8 @@
 package project.modele;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import defaut.Main;
 
@@ -13,7 +15,7 @@ public class DAOModeleAvion {
     }
 
     public boolean addModeleAvion(ModeleAvion modeleAvion) {
-        String query = "INSERT INTO ModeleAvion (modele, nbColonnes, nbPassager, nbPremiereClasse) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO fly_book_eseo.ModeleAvion (modele, nbColonnes, nbPassager, nbPremiereClasse) VALUES (?, ?, ?, ?)";
         boolean succes = false;
 
         try (PreparedStatement preparedStatement = this.connexion.prepareStatement(query)) {
@@ -32,5 +34,25 @@ public class DAOModeleAvion {
         }
 
         return succes;
+    }
+    
+    protected List<ModeleAvion> getAllModele() {
+        List<ModeleAvion> modele = new ArrayList<>();
+        String query = "SELECT * FROM fly_book_eseo.ModeleAvion";
+
+        try (PreparedStatement preparedStatement = this.connexion.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                ModeleAvion mod = new ModeleAvion();
+                mod.setModele(resultSet.getString("modele"));
+                modele.add(mod);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return modele;
     }
 }
