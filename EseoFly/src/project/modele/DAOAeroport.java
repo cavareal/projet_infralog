@@ -37,7 +37,7 @@ public class DAOAeroport {
     }
 
 
-    public List<Aeroport> getAllAeroport() {
+    protected List<Aeroport> getAllAeroport() {
         List<Aeroport> aeroports = new ArrayList<>();
         String query = "SELECT * FROM Aeroport";
 
@@ -51,7 +51,6 @@ public class DAOAeroport {
                 aeroport.setPays(resultSet.getString("pays"));
                 aeroport.setNom(resultSet.getString("nom"));
                 aeroport.setUtc(resultSet.getShort("utc"));
-
                 aeroports.add(aeroport);
             }
 
