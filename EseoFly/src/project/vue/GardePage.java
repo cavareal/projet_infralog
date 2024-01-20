@@ -2,6 +2,7 @@ package project.vue;
 
 import javafx.stage.Stage;
 import project.controleur.AjoutGestion;
+import project.controleur.ConnexionGestion;
 import project.controleur.RechercheGestion;
 import project.modele.Aeroport;
 import project.modele.ModeleAvion;
@@ -21,6 +22,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.layout.StackPane;
 
 public class GardePage {
@@ -123,6 +125,11 @@ public class GardePage {
         heureHboxDuree.getChildren().addAll(heureLabelDuree, hourComboBoxDuree, 
         		minuteLabelDuree,minuteComboBoxDuree);
         
+        Label problemeChamps = new Label("Tous les champs ne sont pas remplis");
+        Label problemeDestination = new Label("La destination d'arrivée et de départ sont identiques");
+        problemeChamps.setTextFill(Color.RED);
+        problemeDestination.setTextFill(Color.RED);
+        
         Button boutonAjout = new Button("Ajouter");
         
         // MISE EN PAGE AVEC GRIDPANE
@@ -137,10 +144,30 @@ public class GardePage {
         gridPane.addRow(5, dureeLabel, heureHboxDuree, prixLabel, prixField);
                 
         BorderPane borderPane = new BorderPane();
-        borderPane.setPadding(new Insets(0,0, 220,0));
-        borderPane.setCenter(gridPane);
-        borderPane.setBottom(boutonAjout);
+        borderPane.setPadding(new Insets(0,0, 200,0));
+        borderPane.setTop(gridPane);
+        borderPane.setCenter(boutonAjout);
         borderPane.setAlignment(boutonAjout, Pos.CENTER);
+        
+        boutonAjout.setOnAction(e -> {
+        	if (numeroVolField.getText() == null || numeroVolField.getText().isEmpty()
+        			|| modeleComboBox.getValue() == null
+        			|| aeroportsComboBox.getValue() == null
+        	        || aeroportsComboBoxBis.getValue() == null
+        	        || datePicker.getValue() == null
+        	        || prixField.getText().isEmpty()) { 
+        		borderPane.setBottom(problemeChamps);
+            	borderPane.setAlignment(problemeChamps, Pos.CENTER);
+        		
+        	}
+        	else if (aeroportsComboBox.getValue().equals(aeroportsComboBoxBis.getValue())) {
+            	borderPane.setBottom(problemeDestination);
+            	borderPane.setAlignment(problemeDestination, Pos.CENTER);
+            }
+        	else {
+        		
+        	}
+        });
 
         // MISE A JOUR DU CONTENU 
         ajouterVolTab.setContent(borderPane);
@@ -157,9 +184,10 @@ public class GardePage {
             //System.out.println("Heure sélectionnée : " + formattedTime);
         });
         
-        boutonAjout.setOnAction(e -> AjoutGestion.handleAjout(numeroVolField.getText(),modeleComboBox.getValue(),
-        		aeroportsComboBox.getValue(), aeroportsComboBox.getValue(), datePicker.getValue(), formattedTime));
+//        boutonAjout.setOnAction(e -> AjoutGestion.handleAjout(numeroVolField.getText(),modeleComboBox.getValue(),
+//        		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(), datePicker.getValue(), formattedTime));
 
+        
         return ajouterVolTab;
     }
 
