@@ -3,14 +3,19 @@ package project.modele;
 public class Aeroport {
     private String pays;
     private String ville;
-    private String codeIATA;
+    private String acronyme;
     private String nom;
+    private short utc;
 
-    public Aeroport(String pays, String ville, String codeIATA, String nom) {
+    public Aeroport(String pays, String ville, String acronyme, String nom) {
         this.pays = pays;
         this.ville = ville;
-        this.codeIATA = codeIATA;
+        this.acronyme = acronyme;
         this.nom = nom;
+    }
+
+    public Aeroport() {
+
     }
 
     public String getPays() {
@@ -21,13 +26,22 @@ public class Aeroport {
         return ville;
     }
 
-    public String getCodeIATA() {
-        return codeIATA;
+    public String getAcronyme() {
+        return acronyme;
     }
 
     public String getNom() {
         return nom;
     }
+
+    public short getUtc() {
+        return utc;
+    }
+
+    public void setUtc(short utc) {
+        this.utc = utc;
+    }
+
 
     public static Aeroport[][] aeroportsListe(){
         Aeroport[][] aeroports = {
@@ -46,6 +60,22 @@ public class Aeroport {
         };
         
         return aeroports;
+    }
+
+    public void setAcronyme(String acronyme) {
+        this.acronyme = acronyme;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
+
+    public void setPays(String pays) {
+        this.pays = pays;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 }
 
