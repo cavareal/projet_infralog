@@ -60,5 +60,23 @@ public class DAOAeroport {
 
         return aeroports;
     }
+    
+//    protected short getAeroportByAcronyme(String acronyme) {
+//        short utc = 0;
+//        String query = "SELECT * FROM fly_book_eseo.Aeroport WHERE acronyme = ?";
+//
+//        try (PreparedStatement preparedStatement = this.connexion.prepareStatement(query)) {
+//            preparedStatement.setString(1, acronyme);
+//            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+//                if (resultSet.next()) {
+//                	utc = resultSet.getShort("utc");
+//                }
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return utc;
+//    }
 
 }
