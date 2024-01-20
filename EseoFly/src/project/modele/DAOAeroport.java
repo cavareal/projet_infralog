@@ -14,7 +14,7 @@ public class DAOAeroport {
     }
 
     public boolean ajouterAeroport(project.modele.Aeroport aeroport) {
-        String query = "INSERT INTO Aeroport (acronyme, ville, pays, nom, utc) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO fly_book_eseo.Aeroport (acronyme, ville, pays, nom, utc) VALUES (?, ?, ?, ?, ?)";
         boolean succes = false;
 
         try (PreparedStatement preparedStatement = this.connexion.prepareStatement(query)) {
@@ -39,7 +39,7 @@ public class DAOAeroport {
 
     protected List<Aeroport> getAllAeroport() {
         List<Aeroport> aeroports = new ArrayList<>();
-        String query = "SELECT * FROM Aeroport";
+        String query = "SELECT * FROM fly_book_eseo.Aeroport";
 
         try (PreparedStatement preparedStatement = this.connexion.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery()) {

@@ -36,7 +36,6 @@ public class DAOVol {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(vols.size());
         return vols;
     }
     

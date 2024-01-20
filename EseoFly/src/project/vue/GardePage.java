@@ -4,27 +4,24 @@ import javafx.stage.Stage;
 import project.controleur.AjoutGestion;
 import project.controleur.RechercheGestion;
 import project.modele.Aeroport;
+import project.modele.ModeleAvion;
 import project.modele.Vol;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.paint.Color;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
 
 public class GardePage {
 	
@@ -76,11 +73,10 @@ public class GardePage {
         Tab ajouterVolTab = new Tab("Ajouter un Vol");
         
         // CREATIONS COMPOSANTS  
-        Label numeroVolLabel = new Label("Numéro de vol :");
+        Label numeroVolLabel = new Label("Numéro de Vol :");
         TextField numeroVolField = new TextField();
 
-        Label nombrePlaceLabel = new Label("Nombre de places :");
-        TextField nombrePlaceField = new TextField();
+        Label nombrePlaceLabel = new Label("Modele d'avion :");
         
         Label prixLabel = new Label("Prix du billet standard (€) :");
         TextField prixField = new TextField();
@@ -100,10 +96,13 @@ public class GardePage {
         // Creation d'une liste déroulante 
         HBox aeroportsHBox = new HBox(10);
         HBox aeroportsHBoxBis = new HBox(10);
+        HBox modeleHBox = new HBox(10);
         ComboBox<String> aeroportsComboBox = createAeroportsComboBox();
         ComboBox<String> aeroportsComboBoxBis = createAeroportsComboBox();
+        ComboBox<String> modeleComboBox = createComboBoxModeleAvion();
         aeroportsHBox.getChildren().add(aeroportsComboBox);
         aeroportsHBoxBis.getChildren().add(aeroportsComboBoxBis);
+        modeleHBox.getChildren().add(modeleComboBox);
 
         // Creation du calendrier 
         DatePicker datePicker = new DatePicker();
@@ -131,7 +130,7 @@ public class GardePage {
         gridPane.setPadding(new Insets(20, 20, 20, 20));
         gridPane.setVgap(10);
         gridPane.setHgap(10);
-        gridPane.addRow(0, numeroVolLabel, numeroVolField, nombrePlaceLabel, nombrePlaceField);
+        gridPane.addRow(0, numeroVolLabel, numeroVolField, nombrePlaceLabel, modeleHBox);
         gridPane.addRow(2, aeroportDepartLabel, aeroportsHBox);
         gridPane.addRow(3, aeroportArriveeLabel,aeroportsHBoxBis);
         gridPane.addRow(4,decollageLabel,heureHbox, dateLabel,root);
@@ -158,8 +157,8 @@ public class GardePage {
             //System.out.println("Heure sélectionnée : " + formattedTime);
         });
         
-        boutonAjout.setOnAction(e -> AjoutGestion.handleAjout(numeroVolField.getText(),nombrePlaceField.getText(),
-        		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(), datePicker.getValue(), formattedTime));
+        boutonAjout.setOnAction(e -> AjoutGestion.handleAjout(numeroVolField.getText(),modeleComboBox.getValue(),
+        		aeroportsComboBox.getValue(), aeroportsComboBox.getValue(), datePicker.getValue(), formattedTime));
 
         return ajouterVolTab;
     }
@@ -262,6 +261,17 @@ public class GardePage {
             comboBox.getItems().add(i);
         }
         comboBox.getSelectionModel().select(0); // Sélection de la première valeur par défaut
+        return comboBox;
+    }
+    
+    protected static ComboBox<String> createComboBoxModeleAvion() {
+        ComboBox<String> comboBox = new ComboBox<>();
+        ModeleAvion moda = new ModeleAvion();
+        List<ModeleAvion> modList = moda.getAllModele();
+        for (ModeleAvion mod : modList) {
+        	String modele = mod.getModele();
+        	comboBox.getItems().add(modele);
+        }
         return comboBox;
     }
     

@@ -1,5 +1,8 @@
 package project.modele;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ModeleAvion {
     private String modele;
     private int nbColonnes;
@@ -12,10 +15,18 @@ public class ModeleAvion {
         this.nbPassager = nbPassager;
         this.nbPremiereClasse = nbPremiereClasse;
     }
+    
+    public ModeleAvion() {
+    	
+    }
 
     // Accesseurs
     public String getModele() {
         return modele;
+    }
+    
+    public void setModele(String mod) {
+        this.modele=mod;
     }
 
     public int getNbPremiereClasse() {
@@ -41,28 +52,13 @@ public class ModeleAvion {
     public void setNbColonnes(int nbColonnes) {
         this.nbColonnes = nbColonnes;
     }
-
-//    public int getNbColonnes() {
-//        String requete = String.format("SELECT nbColonnes FROM ModeleAvion WHERE modele = '%s'", modele);
-//        JsonObject result = connexionDB.executionRequeteSQL(TypeRequeteSQL.SELECT, "ModeleAvion", requete);
-//        nbColonnes = result.getAsInt();
-//        return nbColonnes;
-//    }
-//
-//    public int getNbPassager() {
-//        String requete = String.format("SELECT nbPassager FROM ModeleAvion WHERE modele = '%s'", modele);
-//        JsonObject result = connexionDB.executionRequeteSQL(TypeRequeteSQL.SELECT, "ModeleAvion", requete);
-//        nbPassager = result.getAsInt();
-//        return nbPassager;
-//    }
-//
-//    public int getNbPremiereClasse() {
-//        String requete = String.format("SELECT nbPremiereClasse FROM ModeleAvion WHERE modele = '%s'", modele);
-//        JsonObject result = connexionDB.executionRequeteSQL(TypeRequeteSQL.SELECT, "ModeleAvion", requete);
-//        nbPremiereClasse = result.getAsInt();
-//        return nbPremiereClasse;
-//    }
-
+    
+    public List<ModeleAvion> getAllModele(){
+    	List<ModeleAvion> mod = new ArrayList<>();
+    	DAOModeleAvion dao = new DAOModeleAvion();
+    	mod = dao.getAllModele();
+    	return mod ;
+    }
 
 
 }
