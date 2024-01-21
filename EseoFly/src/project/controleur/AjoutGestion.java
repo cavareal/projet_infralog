@@ -13,7 +13,8 @@ public class AjoutGestion {
 	
 	private static Vol vol;
 	
-    public static void handleAjout(String numeroVol, String modeleAvion,
+    @SuppressWarnings("static-access")
+	public static void handleAjout(String numeroVol, String modeleAvion,
     		String aeroportDepartField, String aeroportArriveeField, String prix,
     		LocalDate date,String heureDecollage, String duration) {
     	// Gestion de l'ajout des vols dans la BDD
@@ -54,6 +55,7 @@ public class AjoutGestion {
     			iataArrivee, Integer.parseInt(prix));
     	vol.setDureeVol(heure);
     	vol.addVol(vol, utcDepart, utcArrivee);
+    	vol.removeNumeroVol(numeroVol);
     	
     }
     

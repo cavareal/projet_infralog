@@ -26,6 +26,8 @@ public class Vol {
 	private Timestamp dateHeureLocaleDepart;
 	private Timestamp dateHeureLocaleArrivee;
 	private int prixStandard;
+	
+	private static List<String> numerosVol = new ArrayList<>();
 
 	public Vol(){
 	}
@@ -152,13 +154,6 @@ public class Vol {
         this.heureArrivee = new Time(instantArrivee.toEpochMilli());
         this.dateArrivee = instantArrivee.atZone(ZoneId.systemDefault()).toLocalDate();
     }
-	
-	public List<Vol> getAllVols() {
-		List<Vol> vols = new ArrayList<>();
-		DAOVol daoVol = new DAOVol();
-		vols = daoVol.getAllVols();
-		return vols;
-	}
 
 	public int getPrixStandard() {
 		return prixStandard;
@@ -166,6 +161,22 @@ public class Vol {
 
 	public void setPrixStandard(int prixStandard) {
 		this.prixStandard = prixStandard;
+	}
+	
+	public static List<Vol> getAllVols() {
+		List<Vol> vols = new ArrayList<>();
+		DAOVol daoVol = new DAOVol();
+		vols = daoVol.getAllVols();
+		return vols;
+	}
+	
+	public List<String> getNumerosVol() {
+		return numerosVol;
+	}
+
+	public static List<String> removeNumeroVol(String numeroVolToRemove) {
+	    numerosVol.remove(numeroVolToRemove);
+	    return numerosVol;
 	}
 
 	public void addVol(Vol vol,short utcDepart, short utcArrivee) {
@@ -185,7 +196,27 @@ public class Vol {
 		vols = daoVol.searchVols(nom, prenom, numeroVol, date, aeroport, depart, arrivee);
 		return vols;
 	}
+	
+	public static List<String> generateNumerosVol() {
+	    List<Vol> vols = getAllVols();
 
+	    for (int i = 0; i <= 999; i++) {
+	    	String numeroVol = "B737" + String.format("%03d", i);
+	        if (!containsNumeroVol(vols, numeroVol)) {
+	            numerosVol.add(numeroVol);
+	        }
+	    }
+	    return numerosVol;
+	}
+
+	private static boolean containsNumeroVol(List<Vol> vols, String numeroVol) {
+	    for (Vol vol : vols) {
+	        if (vol.getNumeroVol().equals(numeroVol)) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
 
 	
 }
