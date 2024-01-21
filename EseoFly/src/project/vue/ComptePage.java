@@ -20,9 +20,9 @@ public class ComptePage {
 		stage.setTitle("Mon Compte");
 		stage.getIcons().add(new Image("file:icon_flybookeseo.png"));
         
-        Label firstNameLabel = new Label("Prénom : " +((ConnexionGestion.getEmploye()).getDonnees())[3]);
-        Label surnameLabel = new Label("Nom : " +((ConnexionGestion.getEmploye()).getDonnees())[2]);
-        Label emailLabel = new Label("Email : " +((ConnexionGestion.getEmploye()).getDonnees())[0]);
+		 Label firstNameLabel = new Label("Prénom : " +((ConnexionGestion.getEmploye()).getPrenom()));
+	        Label surnameLabel = new Label("Nom : " +((ConnexionGestion.getEmploye()).getNom()));
+	        Label emailLabel = new Label("Email : " +((ConnexionGestion.getEmploye()).getEmail()));
         
         Button deconnexionBouton =  new Button("Déconnexion"); 
         

@@ -64,4 +64,8 @@ public class ConnexionGestion {
 	public static Employe getEmploye() {
 		return employe;
 	}
+	
+	public static void setEmploye(Employe employe) {
+        ConnexionGestion.employe = employe;
+    }
 }

@@ -16,7 +16,7 @@ public class DAOEmploye{
     public String[] getEmploye(String email, String password) {
     	String[] tableau = new String[6]; // [email, isAdmin, nom, prenom, password, estInsrit];
     	
-        String query = "SELECT * FROM Employe WHERE email = ? AND motDePasse = ?";
+        String query = "SELECT * FROM fly_book_eseo.Employe WHERE email = ? AND motDePasse = ?";
         boolean estInscrit = false;
         
         try (PreparedStatement preparedStatement = this.connexion.prepareStatement(query)) {
@@ -42,7 +42,7 @@ public class DAOEmploye{
     }
 
     public boolean getEmployeExistantByEmail(String email) {
-        String query = "SELECT * FROM Employe WHERE email = ?";
+        String query = "SELECT * FROM fly_book_eseo.Employe WHERE email = ?";
         boolean estInscrit = false;
 
         try (PreparedStatement preparedStatement = this.connexion.prepareStatement(query)) {
@@ -61,7 +61,7 @@ public class DAOEmploye{
 
 
     public boolean addEmploye(Employe employe) {
-        String requete = "INSERT INTO Employe (email, administrateur, nom, prenom, motDePasse) VALUES (?, ?, ?, ?, ?)";
+        String requete = "INSERT INTO fly_book_eseo.Employe (email, administrateur, nom, prenom, motDePasse) VALUES (?, ?, ?, ?, ?)";
         boolean employeAjoute = false;
 
         try (PreparedStatement preparedStatement = this.connexion.prepareStatement(requete)) {
@@ -70,12 +70,15 @@ public class DAOEmploye{
             preparedStatement.setString(3, employe.getNom());
             preparedStatement.setString(4, employe.getPrenom());
             preparedStatement.setString(5, employe.getMotDePasse());
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                employeAjoute = true;
 
-            }} catch (SQLException e) {
-                e.printStackTrace();
+            int lignesAffectees = preparedStatement.executeUpdate();
+
+            if (lignesAffectees > 0) {
+                employeAjoute = true;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return employeAjoute;
     }

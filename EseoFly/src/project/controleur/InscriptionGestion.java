@@ -3,9 +3,10 @@ package project.controleur;
 import javafx.stage.Stage;
 import project.modele.DAOEmploye;
 import project.modele.Employe;
+import project.vue.GardePage;
+
 
 public class InscriptionGestion {
-
 
 	public static boolean confirmationMotDePasse(String motDePasse, String motDePasseConfirmation){
 		boolean motDePasseIdentique = false;
@@ -50,7 +51,6 @@ public class InscriptionGestion {
 		boolean estEmailDejaUtilise = false;
         try {
             DAOEmploye daoEmploye = new DAOEmploye();
-			System.out.println(daoEmploye.getEmployeExistantByEmail(email));
             if (daoEmploye.getEmployeExistantByEmail(email)) {
                 estEmailDejaUtilise = true;
             }
@@ -66,15 +66,16 @@ public class InscriptionGestion {
 			DAOEmploye daoEmploye = new DAOEmploye();
 			Employe employe = new Employe(nom, prenom, email, motDePasse, administrateur);
 			utilisateurInscrit = daoEmploye.addEmploye(employe);
+			ConnexionGestion.setEmploye(employe);
 		} catch (Exception e){
 			e.printStackTrace();
 		}
 		return utilisateurInscrit;
     }
 
-	public static void redirection2(Stage primaryStage) {
-		ConnexionGestion.redirection(primaryStage);
-	}
+	public static void redirection2(Stage stage) {
+		GardePage.pageDeGarde(new Stage());
+		stage.close();	}
 
 
 }
