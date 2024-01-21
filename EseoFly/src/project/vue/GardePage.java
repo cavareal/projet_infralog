@@ -8,7 +8,6 @@ import project.modele.Vol;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.geometry.Insets;
@@ -129,8 +128,10 @@ public class GardePage {
         
         Label problemeChamps = new Label("Tous les champs ne sont pas remplis");
         Label problemeDestination = new Label("La destination d'arrivée et de départ sont identiques");
+        Label envoiOk = new Label("Ajout pris en compte, veuillez rafraichir la page");
         problemeChamps.setTextFill(Color.RED);
         problemeDestination.setTextFill(Color.RED);
+        envoiOk.setTextFill(Color.GREEN);
         
         Button boutonAjout = new Button("Ajouter");
         
@@ -183,6 +184,8 @@ public class GardePage {
                 		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(),
                 		prixField.getText(), datePicker.getValue(), formattedTimeDecollage,
                 		formattedTimDuration );
+        		borderPane.setBottom(envoiOk);
+            	borderPane.setAlignment(envoiOk, Pos.CENTER);
         	}
         });
 
