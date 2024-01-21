@@ -1,14 +1,21 @@
 package project.modele;
 
 public class Employe {
-	
-    private String email;
-    private boolean administrateur;
     private String nom;
     private String prenom;
-    private String motDePasse; 
+    private String email;
+    private String motDePasse;
+    private boolean administrateur;
+
     private String[] donnees = new String[6];
 
+    public Employe(String nom, String prenom, String email, String motDePasse, boolean administrateur) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.motDePasse = motDePasse;
+        this.administrateur = administrateur;
+    }
 
     public Employe(String email, String motDePasse) {
     	DAOEmploye daoEmploye = new DAOEmploye();
