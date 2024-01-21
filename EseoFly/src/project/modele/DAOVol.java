@@ -18,7 +18,7 @@ public class DAOVol {
     
 	protected List<Vol> getAllVols() {
         List<Vol> vols = new ArrayList<>();
-        String query = "SELECT * FROM fly_book_eseo.Vol";
+        String query = "SELECT * FROM fly_book_eseo.Vol ORDER BY dateHeureLocaleDepart";
         
         try (PreparedStatement preparedStatement = this.connexion.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -177,6 +177,7 @@ public class DAOVol {
     	            query +=" AND V.arrivee = ?";
     	        }
     	    }
+    	    query += " ORDER BY dateHeureLocaleDepart";
     	    try (PreparedStatement preparedStatement = connexion.prepareStatement(query)) {
 
     	        int parameterIndex = 1;
