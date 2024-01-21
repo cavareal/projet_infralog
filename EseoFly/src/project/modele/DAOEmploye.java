@@ -41,32 +41,43 @@ public class DAOEmploye{
         return tableau;
     }
 
+    public boolean getEmployeExistantByEmail(String email) {
+        String query = "SELECT * FROM Employe WHERE email = ?";
+        boolean estInscrit = false;
 
-    public boolean addEmploye(Employe employe) {
-        String requete = "INSERT INTO Employe (email, administrateur, nom, prenom, motDePasse) VALUES (?, ?, ?, ?, ?)";
-        boolean succes = false;
-
-        try (PreparedStatement preparedStatement = this.connexion.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1, employe.getEmail());
-            preparedStatement.setBoolean(2, employe.isAdministrateur());
-            preparedStatement.setString(3, employe.getNom());
-            preparedStatement.setString(4, employe.getPrenom());
-            preparedStatement.setString(5, employe.getMotDePasse());
-
-            int lignesAffectees = preparedStatement.executeUpdate();
-
-            if (lignesAffectees > 0) {
-                ResultSet clesGenerees = preparedStatement.getGeneratedKeys();
-                if (clesGenerees.next()) {
-                    //employe.setId(clesGenerees.getShort(1));
-                    succes = true;
+        try (PreparedStatement preparedStatement = this.connexion.prepareStatement(query)) {
+            preparedStatement.setString(1, email);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    estInscrit = true;
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return succes;
+        return estInscrit;
+    }
+
+
+    public boolean addEmploye(Employe employe) {
+        String requete = "INSERT INTO Employe (email, administrateur, nom, prenom, motDePasse) VALUES (?, ?, ?, ?, ?)";
+        boolean employeAjoute = false;
+
+        try (PreparedStatement preparedStatement = this.connexion.prepareStatement(requete)) {
+            preparedStatement.setString(1, employe.getEmail());
+            preparedStatement.setBoolean(2, employe.isAdministrateur());
+            preparedStatement.setString(3, employe.getNom());
+            preparedStatement.setString(4, employe.getPrenom());
+            preparedStatement.setString(5, employe.getMotDePasse());
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                employeAjoute = true;
+
+            }} catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        return employeAjoute;
     }
 
 
