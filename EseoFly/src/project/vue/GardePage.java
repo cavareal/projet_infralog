@@ -163,7 +163,7 @@ public class GardePage {
 
             formattedTimeDecollage = decollage.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"));
             formattedTimDuration = duree.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"));
-            //System.out.println("Heure sélectionnée : " + formattedTime);
+            
         	if (numeroVolField.getText() == null || numeroVolField.getText().isEmpty()
         			|| modeleComboBox.getValue() == null
         			|| aeroportsComboBox.getValue() == null

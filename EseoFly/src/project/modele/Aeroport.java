@@ -68,11 +68,28 @@ public class Aeroport {
         return aeroports;
     }
     
-//    public short getUtcAeroport(String iata) {
-//    	short utc = 0 ; 
-//    	DAOAeroport daoAeroport = new DAOAeroport();
-//    	utc = daoAeroport.getAeroportByAcronyme(iata);
-//    	return utc;
-//    }
+    public String getAeroportStringByCodeIATA(String codeIATA) {
+        List<Aeroport> aeroportList = getAllAeroports();
+
+        for (Aeroport aeroport : aeroportList) {
+            if (aeroport.getCodeIATA().equals(codeIATA)) {
+                return aeroport.getVille() + " - " +
+                       aeroport.getCodeIATA() + " - " +
+                       aeroport.getNom() + " - UTC" +
+                       aeroport.getUtc();
+            }
+        }
+        return "";
+    }
+    
+//  public short getUtcAeroport(String iata) {
+//	short utc = 0 ; 
+//	DAOAeroport daoAeroport = new DAOAeroport();
+//	utc = daoAeroport.getAeroportByAcronyme(iata);
+//	return utc;
+//}
+
 }
+    
+
 

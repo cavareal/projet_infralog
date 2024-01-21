@@ -71,7 +71,6 @@ public class DAOVol {
             preparedStatement.setString(3, vol.getArrivee());
             preparedStatement.setTimestamp(4, vol.getDateHeureLocaleDepart());
             
-            // Utilisation de la formule pour calculer la date et heure d'arrivée
             int utcDifference = utcArrivee - utcDepart;
             Timestamp dateArrivee = new Timestamp(vol.getDateHeureLocaleDepart().getTime() + TimeUnit.HOURS.toMillis(utcDifference) + vol.getDureeVol().getTime());
 
@@ -83,7 +82,7 @@ public class DAOVol {
             int lignesAffectees = preparedStatement.executeUpdate();
             
             if (lignesAffectees > 0) {
-                System.out.println("OK");
+                //System.out.println("OK");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -99,7 +98,6 @@ public class DAOVol {
             preparedStatement.setString(2, vol.getArrivee());
             preparedStatement.setTimestamp(3, vol.getDateHeureLocaleDepart());
 
-            // Utilisation de la formule pour calculer la date et heure d'arrivée
             int utcDifference = utcArrivee - utcDepart;
             Timestamp dateArrivee = new Timestamp(vol.getDateHeureLocaleDepart().getTime() + TimeUnit.HOURS.toMillis(utcDifference) + vol.getDureeVol().getTime());
 
@@ -112,9 +110,9 @@ public class DAOVol {
             int lignesAffectees = preparedStatement.executeUpdate();
 
             if (lignesAffectees > 0) {
-                System.out.println("Mise à jour réussie");
+                //System.out.println("Mise à jour réussie");
             } else {
-                System.out.println("Aucune ligne mise à jour");
+                //System.out.println("Aucune ligne mise à jour");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -179,7 +177,6 @@ public class DAOVol {
     	            query +=" AND V.arrivee = ?";
     	        }
     	    }
-    	    System.out.println(query);
     	    try (PreparedStatement preparedStatement = connexion.prepareStatement(query)) {
 
     	        int parameterIndex = 1;

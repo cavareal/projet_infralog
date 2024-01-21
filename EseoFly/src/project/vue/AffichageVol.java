@@ -62,7 +62,6 @@ public class AffichageVol {
     }
     
     private void handleRectangleClick(MouseEvent event) {
-        System.out.println("Rectangle cliqué ! Vous pouvez changer de vue ici.");
         ModificationPage modificationPage = new ModificationPage();
         modificationPage.fenetreModification(new Stage(), this.vol);
     }
