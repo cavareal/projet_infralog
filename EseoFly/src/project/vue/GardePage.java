@@ -163,7 +163,7 @@ public class GardePage {
 
             formattedTimeDecollage = decollage.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"));
             formattedTimDuration = duree.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"));
-            //System.out.println("Heure sélectionnée : " + formattedTime);
+            
         	if (numeroVolField.getText() == null || numeroVolField.getText().isEmpty()
         			|| modeleComboBox.getValue() == null
         			|| aeroportsComboBox.getValue() == null
@@ -293,7 +293,8 @@ public class GardePage {
         List<Vol> listeVols = v.getAllVols();
         // NON PERMANANT : Boucle pour remplir l'histo et voir si le scroll fonctionne
         for (Vol vol : listeVols) {
-        	StackPane rectangleinfo = AffichageVol.createFlightRectangle(vol);
+        	AffichageVol affichageVol = new AffichageVol(vol);
+        	StackPane rectangleinfo = affichageVol.createFlightRectangle();
             vbox.getChildren().add(rectangleinfo);
           //getChildren() = liste observable des enfants actuellement présents dans la VBox
         }
@@ -308,7 +309,8 @@ public class GardePage {
         List<Vol> listeVols = v.search(nom, prenom, numeroVol, date, aeroport, depart, arrivee);
         // NON PERMANANT : Boucle pour remplir l'histo et voir si le scroll fonctionne
         for (Vol vol : listeVols) {
-        	StackPane rectangleinfo = AffichageVol.createFlightRectangle(vol);
+        	AffichageVol affichageVol = new AffichageVol(vol);
+        	StackPane rectangleinfo = affichageVol.createFlightRectangle();
             vbox.getChildren().add(rectangleinfo);
           //getChildren() = liste observable des enfants actuellement présents dans la VBox
         }

@@ -173,6 +173,11 @@ public class Vol {
 		daoVol.addVol(vol, utcDepart, utcArrivee);
 	}
 	
+	public void update(Vol vol, short utcDepart, short utcArrivee) {
+		DAOVol daoVol = new DAOVol();
+		daoVol.updateVol(vol, utcDepart, utcArrivee);
+	}
+	
 	public List<Vol> search(String nom, String prenom, String numeroVol, String date, 
 			String aeroport, boolean depart, boolean arrivee) {
 		DAOVol daoVol = new DAOVol();
@@ -180,6 +185,8 @@ public class Vol {
 		vols = daoVol.searchVols(nom, prenom, numeroVol, date, aeroport, depart, arrivee);
 		return vols;
 	}
+
+
 	
 }
 

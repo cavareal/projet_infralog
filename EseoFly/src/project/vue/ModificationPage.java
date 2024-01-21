@@ -15,23 +15,28 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import project.controleur.AjoutGestion;
+import project.modele.Aeroport;
+import project.modele.Vol;
 
 public class ModificationPage {
 	
-	private static String formattedTime;
+	private static String formattedTimeDecollage;
+	private static String formattedTimDuration;
 	
-	public static void fenetreModification(Stage stage) {
+	@SuppressWarnings("deprecation")
+	public void fenetreModification(Stage stage, Vol vol) {
 		
 		stage.setTitle("Modification du vol");
 		stage.getIcons().add(new Image("file:icon_flybookeseo.png"));
 		
 		// CREATIONS COMPOSANTS  
         Label numeroVolLabel = new Label("Numéro de vol :");
-        Label numeroVol = new Label ("num vol à récup");
+        Label numeroVol = new Label (vol.getNumeroVol());
 
-        Label nombrePlaceLabel = new Label("Nombre de places :");
-        TextField nombrePlaceField = new TextField();
+        Label modeleLabel = new Label("Modele Avion :");
         
         Label prixLabel = new Label("Prix du billet standard (€) :");
         TextField prixField = new TextField();
@@ -50,14 +55,17 @@ public class ModificationPage {
         // Creation d'une liste déroulante 
         HBox aeroportsHBox = new HBox(10);
         HBox aeroportsHBoxBis = new HBox(10);
+        HBox modeleHBox = new HBox(10);
         ComboBox<String> aeroportsComboBox = GardePage.createAeroportsComboBox();
         ComboBox<String> aeroportsComboBoxBis = GardePage.createAeroportsComboBox();
+        ComboBox<String> modeleComboBox = GardePage.createComboBoxModeleAvion();
         aeroportsHBox.getChildren().add(aeroportsComboBox);
         aeroportsHBoxBis.getChildren().add(aeroportsComboBoxBis);
+        modeleHBox.getChildren().add(modeleComboBox);
 
         // Creation du calendrier 
         DatePicker datePicker = new DatePicker();
-        datePicker.setValue(LocalDate.now());
+        datePicker.setValue(vol.getDateDepart());
         datePicker.setShowWeekNumbers(true);
         
         // Creation du selecteur de l'heure 
@@ -76,13 +84,18 @@ public class ModificationPage {
         
         Button boutonSauvegarde = new Button("Sauvegarder");
         
+        Label problemeChamps = new Label("Tous les champs ne sont pas remplis");
+        Label problemeDestination = new Label("La destination d'arrivée et de départ sont identiques");
+        problemeChamps.setTextFill(Color.RED);
+        problemeDestination.setTextFill(Color.RED);
+        
         // MISE EN PAGE AVEC GRIDPANE
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(20, 20, 20, 20));
         gridPane.setVgap(10);
         gridPane.setHgap(10);
         gridPane.addRow(0, numeroVolLabel, numeroVol);
-        gridPane.addRow(1, nombrePlaceLabel, nombrePlaceField);
+        gridPane.addRow(1, modeleLabel, modeleHBox);
         gridPane.addRow(2, aeroportDepartLabel, aeroportsHBox);
         gridPane.addRow(3, aeroportArriveeLabel,aeroportsHBoxBis);
         gridPane.addRow(4,heureHbox, root);
@@ -92,43 +105,62 @@ public class ModificationPage {
         gridPane.addRow(7, boutonSauvegarde);
         BorderPane borderPane = new BorderPane();
         borderPane.setPadding(new Insets(20,20,20,20));
-        borderPane.setBottom(boutonSauvegarde);
-        borderPane.setCenter(gridPane);
+        borderPane.setCenter(boutonSauvegarde);
+        borderPane.setTop(gridPane);
         borderPane.setAlignment(boutonSauvegarde, Pos.CENTER);
         
-        // FORMATAGE DE LA DATE 
-        datePicker.setOnAction(event -> {
-            int selectedHour = hourComboBox.getValue();
-            int selectedMinute = minuteComboBox.getValue();
-            
-            LocalTime selectedTime = LocalTime.of(selectedHour, selectedMinute);
-
-            formattedTime = selectedTime.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"));
-            
-            //System.out.println("Heure sélectionnée : " + formattedTime);
-        });
         
-        boutonSauvegarde.setOnAction(e -> handleSauvegarde(numeroVol.getText(),nombrePlaceField.getText(),
-        		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(), datePicker.getValue(), formattedTime));
+        Aeroport aeroport = new Aeroport();
+        hourComboBox.setValue(vol.getHeureDepart().getHours());
+        minuteComboBox.setValue(vol.getHeureDepart().getMinutes());
+        hourComboBoxDuree.setValue(vol.getDureeVol().getHours());
+        minuteComboBoxDuree.setValue(vol.getDureeVol().getMinutes());
+        modeleComboBox.setValue(vol.getModeleAvion());
+        aeroportsComboBox.setValue(aeroport.getAeroportStringByCodeIATA(vol.getDepart()));
+        aeroportsComboBoxBis.setValue(aeroport.getAeroportStringByCodeIATA(vol.getArrivee()));
+        prixField.setText(String.valueOf(vol.getPrixStandard()));
+                
+        // FORMATAGE DE LA DATE 
+        
+        boutonSauvegarde.setOnAction(e -> {
+        	int heure = hourComboBox.getValue();
+            int minute = minuteComboBox.getValue();
+            int dureeHeure = hourComboBoxDuree.getValue();
+            int dureeMinute = minuteComboBoxDuree.getValue();
+            
+            LocalTime decollage = LocalTime.of(heure, minute);
+            LocalTime duree = LocalTime.of(dureeHeure, dureeMinute);
+
+            formattedTimeDecollage = decollage.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"));
+            formattedTimDuration = duree.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"));
+            
+        	if (modeleComboBox.getValue() == null
+        			|| aeroportsComboBox.getValue() == null
+        	        || aeroportsComboBoxBis.getValue() == null
+        	        || datePicker.getValue() == null
+        	        || prixField.getText().isEmpty()) { 
+        		borderPane.setBottom(problemeChamps);
+            	borderPane.setAlignment(problemeChamps, Pos.CENTER);
+        		
+        	}
+        	else if (aeroportsComboBox.getValue().equals(aeroportsComboBoxBis.getValue())) {
+            	borderPane.setBottom(problemeDestination);
+            	borderPane.setAlignment(problemeDestination, Pos.CENTER);
+            }
+        	else {
+        		AjoutGestion.handleModif(numeroVol.getText(),modeleComboBox.getValue(),
+                		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(),
+                		prixField.getText(), datePicker.getValue(), formattedTimeDecollage,
+                		formattedTimDuration );
+        		stage.close();
+        	}
+        });
 		
 		Scene scene = new Scene(borderPane, 600, 400);
 
         // Config de la scène
         stage.setScene(scene);
         stage.show();
-	}
-	
-	private static void handleSauvegarde(String numeroVolField, String nombrePlaceField,
-    		String aeroportDepartField, String aeroportArriveeField, LocalDate date, String heureDecollageField) {
-		// VERIF TOUS LES CHAMPS BIEN COMPLETER 
-		
-		// IMPOSSIBILITE DE CHANGER LE NUMERO DE VOL 
-		
-		// MODIF DE LA BDD
-		
-		// MAJ DE LA BDD 
-		
-		// FERMETURE DE LA FENETRE 
 	}
 	
 	
