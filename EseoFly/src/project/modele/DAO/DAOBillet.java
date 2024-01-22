@@ -9,7 +9,7 @@ import project.modele.Billet;
 
 public class DAOBillet {
 
-    private Connection connexion;
+    private final Connection connexion;
     
     public DAOBillet() {
     	connexion = Main.getDAOInstance().getConnexion();

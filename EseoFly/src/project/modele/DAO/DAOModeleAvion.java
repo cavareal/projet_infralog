@@ -9,7 +9,7 @@ import project.modele.ModeleAvion;
 
 
 public class DAOModeleAvion {
-    private Connection connexion;
+    private final Connection connexion;
     
     public DAOModeleAvion() {
     	connexion = Main.getDAOInstance().getConnexion();

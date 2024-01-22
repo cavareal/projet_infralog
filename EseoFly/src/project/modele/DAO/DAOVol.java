@@ -11,7 +11,7 @@ import project.modele.Vol;
 
 public class DAOVol {
 
-    private Connection connexion;
+    private final Connection connexion;
     
     public DAOVol() {
     	connexion = Main.getDAOInstance().getConnexion();

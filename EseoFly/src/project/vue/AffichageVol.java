@@ -25,13 +25,8 @@ public class AffichageVol {
 	
     protected StackPane createFlightRectangle() {
     	
-    	// RECUPERATION DES VRAIES INFOS     	
+    	// RECUPERATION DES INFOS
     	Timestamp dateTimeArrivee = vol.getDateHeureLocaleArrivee() ;
-
-        // Conversion de la chaîne en LocalDateTime
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-//        LocalDateTime dateTime = LocalDateTime.parse(dateTimeArrivee, formatter);
-        
         LocalDateTime currentDateTime = LocalDateTime.now();
         LocalDateTime dateTime = dateTimeArrivee.toLocalDateTime();
         
@@ -64,7 +59,7 @@ public class AffichageVol {
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(rectangle, text);
         //stackPane.setOnMouseClicked(AffichageVol::handleRectangleClick);
-        stackPane.setOnMouseClicked(event -> handleRectangleClick(event));
+        stackPane.setOnMouseClicked(this::handleRectangleClick);
         
         return stackPane;
     }

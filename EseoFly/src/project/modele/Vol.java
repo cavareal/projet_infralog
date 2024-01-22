@@ -54,14 +54,6 @@ public class Vol {
 		this.numeroVol = numeroVol;
 	}
 
-//		public Date getDate() {
-//			return date;
-//		}
-//
-//		public void setDate(Date date) {
-//			this.date = date;
-//		}
-
 	public Time getHeureDepart() {
 		return heureDepart;
 	}
@@ -166,7 +158,7 @@ public class Vol {
 	}
 	
 	public static List<Vol> getAllVols() {
-		List<Vol> vols = new ArrayList<>();
+		List<Vol> vols;
 		DAOVol daoVol = new DAOVol();
 		vols = daoVol.getAllVols();
 		return vols;
@@ -176,9 +168,8 @@ public class Vol {
 		return numerosVol;
 	}
 
-	public static List<String> removeNumeroVol(String numeroVolToRemove) {
+	public static void removeNumeroVol(String numeroVolToRemove) {
 	    numerosVol.remove(numeroVolToRemove);
-	    return numerosVol;
 	}
 
 	public Boolean addVol(Vol vol,short utcDepart, short utcArrivee) {
@@ -194,7 +185,7 @@ public class Vol {
 	public List<Vol> search(String nom, String prenom, String numeroVol, String date, 
 			String aeroport, boolean depart, boolean arrivee) {
 		DAOVol daoVol = new DAOVol();
-		List<Vol> vols = new ArrayList<>();
+		List<Vol> vols;
 		vols = daoVol.searchVols(nom, prenom, numeroVol, date, aeroport, depart, arrivee);
 		return vols;
 	}

@@ -9,20 +9,14 @@ import project.vue.GardePage;
 public class InscriptionGestion {
 
 	public static boolean confirmationMotDePasse(String motDePasse, String motDePasseConfirmation){
-		boolean motDePasseIdentique = false;
-		if (motDePasse.equals(motDePasseConfirmation)){
-			motDePasseIdentique = true;
-		}
-		return motDePasseIdentique;
+		boolean motDePasseIdentique = motDePasse.equals(motDePasseConfirmation);
+        return motDePasseIdentique;
 	}
 
 
 	public static boolean verifierConditionsMotDePasse(String motDePasse) {
-		boolean respectConditionsMotDePasse = true;
-		if (!motDePasse.matches(".*[A-Z].*")) {
-			respectConditionsMotDePasse = false;
-		}
-		if (!motDePasse.matches(".*[a-z].*")) {
+		boolean respectConditionsMotDePasse = motDePasse.matches(".*[A-Z].*");
+        if (!motDePasse.matches(".*[a-z].*")) {
 			respectConditionsMotDePasse = false;
 		}
 		if (!motDePasse.matches(".*[0-9].*")) {
@@ -43,8 +37,7 @@ public class InscriptionGestion {
 
 
 	public static boolean ensembleChampsRenseignes(String nom, String prenom, String email, String motDePasse, String motDePasseConfirmation) {
-		boolean champsRenseignes = !nom.isEmpty() && !prenom.isEmpty() && !email.isEmpty() && !motDePasse.isEmpty() && !motDePasseConfirmation.isEmpty();
-		return champsRenseignes;
+		return !nom.isEmpty() && !prenom.isEmpty() && !email.isEmpty() && !motDePasse.isEmpty() && !motDePasseConfirmation.isEmpty();
 	}
 
 	public static boolean emailDejaUtilise(String email){

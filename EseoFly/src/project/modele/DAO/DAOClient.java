@@ -10,7 +10,7 @@ import project.modele.Client;
 
 public class DAOClient {
 
-    private Connection connexion;
+    private final Connection connexion;
     
     public DAOClient() {
     	connexion = Main.getDAOInstance().getConnexion();

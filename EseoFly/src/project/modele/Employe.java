@@ -23,7 +23,7 @@ public class Employe {
     	DAOEmploye daoEmploye = new DAOEmploye();
     	donnees = daoEmploye.getEmploye(email, motDePasse);
         this.email = donnees[0];
-        this.administrateur = (donnees[1]=="1") ? true : false;
+        this.administrateur = donnees[1] == "1";
         this.nom = donnees[2];
         this.prenom = donnees[3];
         this.motDePasse = donnees[4];

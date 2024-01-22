@@ -51,8 +51,8 @@ public class InscriptionPage {
         Label emailDejaUtilise = new Label("L'email est déjà utilisé.");
         emailDejaUtilise.setTextFill(Color.RED);
 
-        Label problèmeInscription = new Label("Problème lors de l'inscription");
-        problèmeInscription.setTextFill(Color.RED);
+        Label problemeInscription = new Label("Problème lors de l'inscription");
+        problemeInscription.setTextFill(Color.RED);
 
         // Mise en page 
         GridPane gridPane = new GridPane();
@@ -78,32 +78,10 @@ public class InscriptionPage {
         gridPane.add(passwordField2, 1, 4);
         gridPane.add(registerButton, 1, 5);
 
-        // Gestion de l'événement de clic du bouton d'inscription
-//        registerButton.setOnAction(e -> handleRegistration(nameField.getText(), firstNameField.getText(),
-//                emailField.getText(), passwordField.getText(), primaryStage));
-//        registerButton.setOnAction(e ->{
-////                if (!InscriptionGestion.ensembleChampsRenseignes(nameField.getText(), firstNameField.getText(), emailField.getText(), passwordField.getText(), passwordField2.getText())){
-////                        gridPane.getChildren().removeIf(node -> GridPane.getRowIndex(node) != null && GridPane.getRowIndex(node) == 4);
-////                        gridPane.addRow(6,gapLabel2, champsNonRenseignes);
-////                }
-//                if (!InscriptionGestion.verifierAdresseEmail(emailField.getText())){
-//                        gridPane.getChildren().removeIf(node -> GridPane.getRowIndex(node) != null && GridPane.getRowIndex(node) == 4);
-//                        gridPane.addRow(6, emailInvalide);
-//                }
-//                else if (!InscriptionGestion.verifierConditionsMotDePasse(emailField.getText())){
-//                        gridPane.getChildren().removeIf(node -> GridPane.getRowIndex(node) != null && GridPane.getRowIndex(node) == 4);
-//                        gridPane.addRow(4, conditionsMotDePasseNonRespectees);
-//                }
-//                else{
-//                     InscriptionGestion.redirection2(primaryStage);
-//                }
-//
-//        });
-
             registerButton.setOnAction(e -> {
                     gridPane.getChildren().removeAll(champsNonRenseignes, emailInvalide, 
                     		conditionsMotDePasseNonRespectees, motDePasseNonIdentiques, 
-                    		emailDejaUtilise, problèmeInscription);
+                    		emailDejaUtilise, problemeInscription);
                     if (!InscriptionGestion.ensembleChampsRenseignes(nameField.getText(), 
                     		firstNameField.getText(), emailField.getText(), passwordField.getText(), 
                     		passwordField2.getText())) {
@@ -123,7 +101,7 @@ public class InscriptionPage {
                     }
                     else if (!InscriptionGestion.inscriptionEffectuee(nameField.getText(), firstNameField.getText(),
                     		emailField.getText(), passwordField.getText(),true)) {
-                            gridPane.add(problèmeInscription, 1, 6);
+                            gridPane.add(problemeInscription, 1, 6);
                     }
                     else {
                             InscriptionGestion.redirection2(primaryStage);

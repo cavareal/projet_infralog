@@ -8,7 +8,7 @@ import defaut.Main;
 import project.modele.Aeroport;
 
 public class DAOAeroport {
-    private Connection connexion;
+    private final Connection connexion;
     
     public DAOAeroport() {
     	connexion = Main.getDAOInstance().getConnexion();

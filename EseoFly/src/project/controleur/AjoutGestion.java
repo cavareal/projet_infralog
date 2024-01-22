@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Objects;
 
 import project.modele.Vol;
 
@@ -44,8 +45,8 @@ public class AjoutGestion {
         }
         
         
-        short utcDepart =  Short.parseShort(getUtcDepuisChaine(aeroportDepartField));
-        short utcArrivee = Short.parseShort(getUtcDepuisChaine(aeroportArriveeField)) ;
+        short utcDepart =  Short.parseShort(Objects.requireNonNull(getUtcDepuisChaine(aeroportDepartField)));
+        short utcArrivee = Short.parseShort(Objects.requireNonNull(getUtcDepuisChaine(aeroportArriveeField))) ;
         
         String iataDepart = extraireCodeIATA(aeroportDepartField);
         String iataArrivee = extraireCodeIATA(aeroportArriveeField);
@@ -91,8 +92,8 @@ public class AjoutGestion {
         }
         
         
-        short utcDepart =  Short.parseShort(getUtcDepuisChaine(aeroportDepartField));
-        short utcArrivee = Short.parseShort(getUtcDepuisChaine(aeroportArriveeField)) ;
+        short utcDepart =  Short.parseShort(Objects.requireNonNull(getUtcDepuisChaine(aeroportDepartField)));
+        short utcArrivee = Short.parseShort(Objects.requireNonNull(getUtcDepuisChaine(aeroportArriveeField))) ;
         
         String iataDepart = extraireCodeIATA(aeroportDepartField);
         String iataArrivee = extraireCodeIATA(aeroportArriveeField);

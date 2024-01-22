@@ -44,9 +44,7 @@ public class GardePage {
         MenuItem rechercheItem = new MenuItem("Recherche");
         
         Tab historiqueTab = createHistoriqueTab();
-        monCompteItem.setOnAction(event -> {
-        	ComptePage.fenetreCompte(new Stage(), secondStage);
-        });
+        monCompteItem.setOnAction(event -> ComptePage.fenetreCompte(new Stage(), secondStage));
         ajoutItem.setOnAction(event -> tabPane.getTabs().add(createAjouterVolTab()));
         historiqueItem.setOnAction(event -> tabPane.getTabs().add(historiqueTab));
         rechercheItem.setOnAction(event -> tabPane.getTabs().add(createRechercheTab()));
@@ -146,7 +144,7 @@ public class GardePage {
         borderPane.setPadding(new Insets(0,0, 200,0));
         borderPane.setTop(gridPane);
         borderPane.setCenter(boutonAjout);
-        borderPane.setAlignment(boutonAjout, Pos.CENTER);
+        BorderPane.setAlignment(boutonAjout, Pos.CENTER);
         
         
         boutonAjout.setOnAction(e -> {
@@ -169,21 +167,21 @@ public class GardePage {
         	        || prixField.getText().isEmpty()) { 
         		Label problemeChamps = new Label("Tous les champs ne sont pas remplis");
         		borderPane.setBottom(problemeChamps);
-            	borderPane.setAlignment(problemeChamps, Pos.CENTER);
+            	BorderPane.setAlignment(problemeChamps, Pos.CENTER);
                 problemeChamps.setTextFill(Color.RED);
         	}
         	else if (aeroportsComboBox.getValue().equals(aeroportsComboBoxBis.getValue())) {
         		Label problemeDestination = new Label("La destination d'arrivée et de départ sont identiques");
         		problemeDestination.setTextFill(Color.RED);
             	borderPane.setBottom(problemeDestination);
-            	borderPane.setAlignment(problemeDestination, Pos.CENTER);
+            	BorderPane.setAlignment(problemeDestination, Pos.CENTER);
             	
             }
         	else if(AjoutGestion.handleAjout(numVolComboBox.getValue(),modeleComboBox.getValue(),
             		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(),
             		prixField.getText(), datePicker.getValue(), formattedTimeDecollage,
             		formattedTimDuration )) {
-            	TabPane tabPane = (TabPane) ajouterVolTab.getTabPane();
+            	TabPane tabPane = ajouterVolTab.getTabPane();
                 tabPane.getTabs().remove(ajouterVolTab);
         	}
         	else if(!AjoutGestion.handleAjout(numVolComboBox.getValue(),modeleComboBox.getValue(),
@@ -193,16 +191,12 @@ public class GardePage {
         		Label problemeEnvoi = new Label("Probleme lors de l'ajout du vol à la base de donnée");
         		problemeEnvoi.setTextFill(Color.RED);
         		borderPane.setBottom(problemeEnvoi);
-            	borderPane.setAlignment(problemeEnvoi, Pos.CENTER);
+            	BorderPane.setAlignment(problemeEnvoi, Pos.CENTER);
         	}
         });
 
         // MISE A JOUR DU CONTENU 
         ajouterVolTab.setContent(borderPane);
-        
-//        boutonAjout.setOnAction(e -> AjoutGestion.handleAjout(numeroVolField.getText(),modeleComboBox.getValue(),
-//        		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(), datePicker.getValue(), formattedTime));
-
         
         return ajouterVolTab;
     }
@@ -266,7 +260,7 @@ public class GardePage {
         borderPane.setPadding(new Insets(20, 20, 10, 20)); 
         borderPane.setCenter(gridPane);
         borderPane.setBottom(searchButton);
-        borderPane.setAlignment(searchButton, Pos.CENTER);
+        BorderPane.setAlignment(searchButton, Pos.CENTER);
     	
         // VBox contenant les rectangles d'informations de vol
         VBox flightInfoVBox = createFlightInfoVBox();
@@ -300,7 +294,7 @@ public class GardePage {
     private static VBox createFlightInfoVBox() {
         VBox vbox = new VBox(10); // Espacement vertical entre les rectangles
         Vol v = new Vol();
-        List<Vol> listeVols = v.getAllVols();
+        List<Vol> listeVols = Vol.getAllVols();
         // NON PERMANANT : Boucle pour remplir l'histo et voir si le scroll fonctionne
         for (Vol vol : listeVols) {
         	AffichageVol affichageVol = new AffichageVol(vol);

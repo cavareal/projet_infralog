@@ -5,9 +5,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -39,8 +36,8 @@ public class ComptePage {
         borderPane.setPadding(new Insets(20,20,20,20));
         borderPane.setCenter(gridPane);
         borderPane.setBottom(deconnexionBouton); 
-        borderPane.setAlignment(gridPane, Pos.CENTER);
-        borderPane.setAlignment(deconnexionBouton, Pos.CENTER);
+        BorderPane.setAlignment(gridPane, Pos.CENTER);
+        BorderPane.setAlignment(deconnexionBouton, Pos.CENTER);
         
         deconnexionBouton.setOnAction(e -> {
             stage.close();

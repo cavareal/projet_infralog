@@ -8,7 +8,7 @@ import project.modele.Employe;
 
 public class DAOEmploye{
 
-    private Connection connexion;
+    private final Connection connexion;
     
     public DAOEmploye() {
     	connexion = Main.getDAOInstance().getConnexion();
@@ -29,7 +29,7 @@ public class DAOEmploye{
                     estInscrit = true;
                     boolean b =resultSet.getBoolean("administrateur");
                     tableau[0] = resultSet.getString("email");
-                    tableau[1] = (b==true) ? "1" : "0";
+                    tableau[1] = (b) ? "1" : "0";
                     tableau[2] = resultSet.getString("nom");
                     tableau[3] = resultSet.getString("prenom");
                     tableau[4] = resultSet.getString("motDePasse");

@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javafx.stage.Stage;
 import project.modele.Employe;
@@ -50,11 +49,8 @@ public class ConnexionGestion {
 	public static boolean verifyLogin2(String email, String password) {
 		employe = new Employe (email,password);
 		String[] donnees = employe.getDonnees();
-		if ("true".equals(donnees[5]) && email.equals(donnees[0]) && password.equals(donnees[4])) {
-			return true;
-		}
-        return false; 
-	}
+        return "true".equals(donnees[5]) && email.equals(donnees[0]) && password.equals(donnees[4]);
+    }
 	
 	public static void redirection(Stage stage) {
 		GardePage.pageDeGarde(new Stage());

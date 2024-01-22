@@ -56,7 +56,7 @@ public class ModeleAvion {
     }
     
     public List<ModeleAvion> getAllModele(){
-    	List<ModeleAvion> mod = new ArrayList<>();
+    	List<ModeleAvion> mod;
     	DAOModeleAvion dao = new DAOModeleAvion();
     	mod = dao.getAllModele();
     	return mod ;

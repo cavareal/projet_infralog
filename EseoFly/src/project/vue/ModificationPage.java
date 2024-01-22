@@ -1,6 +1,5 @@
 package project.vue;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 import javafx.geometry.Insets;
@@ -107,7 +106,7 @@ public class ModificationPage {
         borderPane.setPadding(new Insets(20,20,20,20));
         borderPane.setCenter(boutonSauvegarde);
         borderPane.setTop(gridPane);
-        borderPane.setAlignment(boutonSauvegarde, Pos.CENTER);
+        BorderPane.setAlignment(boutonSauvegarde, Pos.CENTER);
         
         
         Aeroport aeroport = new Aeroport();
@@ -140,12 +139,12 @@ public class ModificationPage {
         	        || datePicker.getValue() == null
         	        || prixField.getText().isEmpty()) { 
         		borderPane.setBottom(problemeChamps);
-            	borderPane.setAlignment(problemeChamps, Pos.CENTER);
+            	BorderPane.setAlignment(problemeChamps, Pos.CENTER);
         		
         	}
         	else if (aeroportsComboBox.getValue().equals(aeroportsComboBoxBis.getValue())) {
             	borderPane.setBottom(problemeDestination);
-            	borderPane.setAlignment(problemeDestination, Pos.CENTER);
+            	BorderPane.setAlignment(problemeDestination, Pos.CENTER);
             }
         	else {
         		AjoutGestion.handleModif(numeroVol.getText(),modeleComboBox.getValue(),

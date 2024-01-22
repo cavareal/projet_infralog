@@ -17,7 +17,7 @@ public class Main extends Application {
     }
 
 	@Override
-    public void start(Stage primaryStage) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void start(Stage primaryStage) {
         primaryStage.setTitle("Connexion");
         
         ConnexionPage.fenetreConnexion(primaryStage);
