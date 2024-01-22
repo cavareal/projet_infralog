@@ -3,7 +3,7 @@ package defaut;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import project.modele.DAO;
+import project.modele.DAO.DAO;
 import project.vue.ConnexionPage; 
 
 
@@ -17,7 +17,7 @@ public class Main extends Application {
     }
 
 	@Override
-    public void start(Stage primaryStage) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void start(Stage primaryStage) {
         primaryStage.setTitle("Connexion");
         
         ConnexionPage.fenetreConnexion(primaryStage);

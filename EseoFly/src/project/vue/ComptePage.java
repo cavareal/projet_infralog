@@ -5,9 +5,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -20,9 +17,9 @@ public class ComptePage {
 		stage.setTitle("Mon Compte");
 		stage.getIcons().add(new Image("file:icon_flybookeseo.png"));
         
-        Label firstNameLabel = new Label("Prénom : " +((ConnexionGestion.getEmploye()).getDonnees())[3]);
-        Label surnameLabel = new Label("Nom : " +((ConnexionGestion.getEmploye()).getDonnees())[2]);
-        Label emailLabel = new Label("Email : " +((ConnexionGestion.getEmploye()).getDonnees())[0]);
+		 Label firstNameLabel = new Label("Prénom : " +((ConnexionGestion.getEmploye()).getPrenom()));
+	        Label surnameLabel = new Label("Nom : " +((ConnexionGestion.getEmploye()).getNom()));
+	        Label emailLabel = new Label("Email : " +((ConnexionGestion.getEmploye()).getEmail()));
         
         Button deconnexionBouton =  new Button("Déconnexion"); 
         
@@ -39,8 +36,8 @@ public class ComptePage {
         borderPane.setPadding(new Insets(20,20,20,20));
         borderPane.setCenter(gridPane);
         borderPane.setBottom(deconnexionBouton); 
-        borderPane.setAlignment(gridPane, Pos.CENTER);
-        borderPane.setAlignment(deconnexionBouton, Pos.CENTER);
+        BorderPane.setAlignment(gridPane, Pos.CENTER);
+        BorderPane.setAlignment(deconnexionBouton, Pos.CENTER);
         
         deconnexionBouton.setOnAction(e -> {
             stage.close();

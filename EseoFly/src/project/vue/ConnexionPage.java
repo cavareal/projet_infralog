@@ -9,7 +9,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -21,8 +20,6 @@ public class ConnexionPage{
 		//Changement du favIcon
 		primaryStage.getIcons().add(new Image("file:icon_flybookeseo.png"));
 		
-		
-		 
 		// Création des éléments de l'IHM
         Label emailLabel = new Label("Email:");
         TextField emailField = new TextField();
@@ -82,35 +79,12 @@ public class ConnexionPage{
         primaryStage.setScene(scene);
         primaryStage.show(); // Affichage de la fenêtre
 	}
-	
-//    private static void handleLogin(String email, String password, Stage primaryStage) {
-//    	
-//    	// METHODE DE VERIFICATION
-//        // Ici simple affichage de email et du mdp dans la console PB DE SECU 
-//        System.out.println("Email: " + email);
-//        System.out.println("Mot de passe: " + password);
-//        
-//        
-//        if (ConnexionGestion.connexion(email, password)) {
-//        	// METHODE DE CHANGEMENT DE PAGE
-//            ConnexionGestion.redirection(primaryStage);
-//            System.out.println("PASS");
-//        }
-//       
-		
-//        // METHODE DE CHANGEMENT DE PAGE
-//        //ConnexionGestion.redirection(primaryStage);
-//        //efrthyuki
-//        
-//    }
-    
+
     private static void handleRegistration(Stage primaryStage) {
         	
     	// METHODE DE CHANGEMENT DE PAGE
-        
-        // Appelle la méthode start pour afficher la nouvelle page
         InscriptionPage.fenetreInscription(new Stage());
-        // Ferme la scène actuelle (page de connexion)
+        // Ferme la Stage
         primaryStage.close();
     }
 

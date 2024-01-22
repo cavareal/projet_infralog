@@ -3,6 +3,8 @@ package project.modele;
 import java.util.ArrayList;
 import java.util.List;
 
+import project.modele.DAO.DAOModeleAvion;
+
 public class ModeleAvion {
     private String modele;
     private int nbColonnes;
@@ -54,7 +56,7 @@ public class ModeleAvion {
     }
     
     public List<ModeleAvion> getAllModele(){
-    	List<ModeleAvion> mod = new ArrayList<>();
+    	List<ModeleAvion> mod;
     	DAOModeleAvion dao = new DAOModeleAvion();
     	mod = dao.getAllModele();
     	return mod ;

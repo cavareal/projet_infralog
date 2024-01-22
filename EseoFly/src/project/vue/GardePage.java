@@ -2,7 +2,6 @@ package project.vue;
 
 import javafx.stage.Stage;
 import project.controleur.AjoutGestion;
-import project.controleur.RechercheGestion;
 import project.modele.Aeroport;
 import project.modele.ModeleAvion;
 import project.modele.Vol;
@@ -10,7 +9,6 @@ import project.modele.Vol;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -46,9 +44,7 @@ public class GardePage {
         MenuItem rechercheItem = new MenuItem("Recherche");
         
         Tab historiqueTab = createHistoriqueTab();
-        monCompteItem.setOnAction(event -> {
-        	ComptePage.fenetreCompte(new Stage(), secondStage);
-        });
+        monCompteItem.setOnAction(event -> ComptePage.fenetreCompte(new Stage(), secondStage));
         ajoutItem.setOnAction(event -> tabPane.getTabs().add(createAjouterVolTab()));
         historiqueItem.setOnAction(event -> tabPane.getTabs().add(historiqueTab));
         rechercheItem.setOnAction(event -> tabPane.getTabs().add(createRechercheTab()));
@@ -78,9 +74,8 @@ public class GardePage {
         
         // CREATIONS COMPOSANTS  
         Label numeroVolLabel = new Label("Numéro de Vol :");
-        TextField numeroVolField = new TextField();
 
-        Label nombrePlaceLabel = new Label("Modele d'avion :");
+        Label nombrePlaceLabel = new Label("Modèle d'avion :");
         
         Label prixLabel = new Label("Prix du billet standard (€) :");
         TextField prixField = new TextField();
@@ -98,6 +93,10 @@ public class GardePage {
         Label aeroportArriveeLabel = new Label("Aéroport d'arrivée :");
         
         // Creation d'une liste déroulante 
+        HBox numVolHBox = new HBox(10);
+        ComboBox<String> numVolComboBox = createNumeroVolComboBox();
+        numVolHBox.getChildren().add(numVolComboBox);
+        
         HBox aeroportsHBox = new HBox(10);
         HBox aeroportsHBoxBis = new HBox(10);
         HBox modeleHBox = new HBox(10);
@@ -127,10 +126,6 @@ public class GardePage {
         heureHboxDuree.getChildren().addAll(heureLabelDuree, hourComboBoxDuree, 
         		minuteLabelDuree,minuteComboBoxDuree);
         
-        Label problemeChamps = new Label("Tous les champs ne sont pas remplis");
-        Label problemeDestination = new Label("La destination d'arrivée et de départ sont identiques");
-        problemeChamps.setTextFill(Color.RED);
-        problemeDestination.setTextFill(Color.RED);
         
         Button boutonAjout = new Button("Ajouter");
         
@@ -139,7 +134,7 @@ public class GardePage {
         gridPane.setPadding(new Insets(20, 20, 20, 20));
         gridPane.setVgap(10);
         gridPane.setHgap(10);
-        gridPane.addRow(0, numeroVolLabel, numeroVolField, nombrePlaceLabel, modeleHBox);
+        gridPane.addRow(0, numeroVolLabel, numVolHBox, nombrePlaceLabel, modeleHBox);
         gridPane.addRow(2, aeroportDepartLabel, aeroportsHBox);
         gridPane.addRow(3, aeroportArriveeLabel,aeroportsHBoxBis);
         gridPane.addRow(4,decollageLabel,heureHbox, dateLabel,root);
@@ -149,7 +144,7 @@ public class GardePage {
         borderPane.setPadding(new Insets(0,0, 200,0));
         borderPane.setTop(gridPane);
         borderPane.setCenter(boutonAjout);
-        borderPane.setAlignment(boutonAjout, Pos.CENTER);
+        BorderPane.setAlignment(boutonAjout, Pos.CENTER);
         
         
         boutonAjout.setOnAction(e -> {
@@ -163,35 +158,45 @@ public class GardePage {
 
             formattedTimeDecollage = decollage.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"));
             formattedTimDuration = duree.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"));
-            //System.out.println("Heure sélectionnée : " + formattedTime);
-        	if (numeroVolField.getText() == null || numeroVolField.getText().isEmpty()
+            
+        	if (numVolComboBox.getValue() == null
         			|| modeleComboBox.getValue() == null
         			|| aeroportsComboBox.getValue() == null
         	        || aeroportsComboBoxBis.getValue() == null
         	        || datePicker.getValue() == null
         	        || prixField.getText().isEmpty()) { 
+        		Label problemeChamps = new Label("Tous les champs ne sont pas remplis");
         		borderPane.setBottom(problemeChamps);
-            	borderPane.setAlignment(problemeChamps, Pos.CENTER);
-        		
+            	BorderPane.setAlignment(problemeChamps, Pos.CENTER);
+                problemeChamps.setTextFill(Color.RED);
         	}
         	else if (aeroportsComboBox.getValue().equals(aeroportsComboBoxBis.getValue())) {
+        		Label problemeDestination = new Label("La destination d'arrivée et de départ sont identiques");
+        		problemeDestination.setTextFill(Color.RED);
             	borderPane.setBottom(problemeDestination);
-            	borderPane.setAlignment(problemeDestination, Pos.CENTER);
+            	BorderPane.setAlignment(problemeDestination, Pos.CENTER);
+            	
             }
-        	else {
-        		AjoutGestion.handleAjout(numeroVolField.getText(),modeleComboBox.getValue(),
-                		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(),
-                		prixField.getText(), datePicker.getValue(), formattedTimeDecollage,
-                		formattedTimDuration );
+        	else if(AjoutGestion.handleAjout(numVolComboBox.getValue(),modeleComboBox.getValue(),
+            		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(),
+            		prixField.getText(), datePicker.getValue(), formattedTimeDecollage,
+            		formattedTimDuration )) {
+            	TabPane tabPane = ajouterVolTab.getTabPane();
+                tabPane.getTabs().remove(ajouterVolTab);
+        	}
+        	else if(!AjoutGestion.handleAjout(numVolComboBox.getValue(),modeleComboBox.getValue(),
+            		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(),
+            		prixField.getText(), datePicker.getValue(), formattedTimeDecollage,
+            		formattedTimDuration )) {
+        		Label problemeEnvoi = new Label("Probleme lors de l'ajout du vol à la base de donnée");
+        		problemeEnvoi.setTextFill(Color.RED);
+        		borderPane.setBottom(problemeEnvoi);
+            	BorderPane.setAlignment(problemeEnvoi, Pos.CENTER);
         	}
         });
 
         // MISE A JOUR DU CONTENU 
         ajouterVolTab.setContent(borderPane);
-        
-//        boutonAjout.setOnAction(e -> AjoutGestion.handleAjout(numeroVolField.getText(),modeleComboBox.getValue(),
-//        		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(), datePicker.getValue(), formattedTime));
-
         
         return ajouterVolTab;
     }
@@ -212,7 +217,7 @@ public class GardePage {
         return historiqueTab;
     }
     
-    private static Tab createRechercheTab() { // VOL POSTERIEUR A L HEURE COURANTE
+    private static Tab createRechercheTab() { 
     	Tab RechercheTab = new Tab("Recherche");
     	
     	Label nomLabel = new Label("Nom : ");
@@ -237,7 +242,7 @@ public class GardePage {
         HBox aeroportsHBox = new HBox(10);
         ComboBox<String> aeroportsComboBox = createAeroportsComboBox();
         aeroportsHBox.getChildren().add(aeroportsComboBox);
-        CheckBox checkBoxArrivee = new CheckBox("Arrivé");
+        CheckBox checkBoxArrivee = new CheckBox("Arrivée");
         CheckBox checkBoxDepart = new CheckBox("Départ");
         
         Button searchButton = new Button("Rechercher");
@@ -255,7 +260,7 @@ public class GardePage {
         borderPane.setPadding(new Insets(20, 20, 10, 20)); 
         borderPane.setCenter(gridPane);
         borderPane.setBottom(searchButton);
-        borderPane.setAlignment(searchButton, Pos.CENTER);
+        BorderPane.setAlignment(searchButton, Pos.CENTER);
     	
         // VBox contenant les rectangles d'informations de vol
         VBox flightInfoVBox = createFlightInfoVBox();
@@ -263,7 +268,20 @@ public class GardePage {
         scrollPane.setFitToWidth(true);
         VBox mainVBox = new VBox(borderPane, scrollPane);
         
-        searchButton.setOnAction(e -> RechercheGestion.handleRecherche());
+        
+        searchButton.setOnAction(e -> {
+            String nom = nomField.getText();
+            String prenom = prenomField.getText();
+            String numeroVol = numeroVolField.getText();
+            String date = datePicker.getValue() != null ? datePicker.getValue().toString() : "";
+            String aeroport = aeroportsComboBox.getValue() != null ? aeroportsComboBox.getValue() : "";
+            boolean depart = checkBoxDepart.isSelected();
+            boolean arrivee = checkBoxArrivee.isSelected();
+        	VBox newFlightInfoVBox = createFlightSearchVBox(nom, prenom, numeroVol,date,aeroport,
+        			depart, arrivee);
+            // Remplacez complètement le contenu du ScrollPane par la nouvelle VBox
+            scrollPane.setContent(newFlightInfoVBox); 
+        });
         
         // Défilement de la page
 
@@ -276,16 +294,35 @@ public class GardePage {
     private static VBox createFlightInfoVBox() {
         VBox vbox = new VBox(10); // Espacement vertical entre les rectangles
         Vol v = new Vol();
-        List<Vol> listeVols = v.getAllVols();
+        List<Vol> listeVols = Vol.getAllVols();
         // NON PERMANANT : Boucle pour remplir l'histo et voir si le scroll fonctionne
         for (Vol vol : listeVols) {
-        	StackPane rectangleinfo = AffichageVol.createFlightRectangle(vol);
+        	AffichageVol affichageVol = new AffichageVol(vol);
+        	StackPane rectangleinfo = affichageVol.createFlightRectangle();
             vbox.getChildren().add(rectangleinfo);
           //getChildren() = liste observable des enfants actuellement présents dans la VBox
         }
         
         return vbox;
     }
+    
+    private static VBox createFlightSearchVBox(String nom, String prenom, String numeroVol, String date, 
+			String aeroport, boolean depart, boolean arrivee) {
+        VBox vbox = new VBox(10); // Espacement vertical entre les rectangles
+        Vol v = new Vol();
+        List<Vol> listeVols = v.search(nom, prenom, numeroVol, date, aeroport, depart, arrivee);
+        // NON PERMANANT : Boucle pour remplir l'histo et voir si le scroll fonctionne
+        for (Vol vol : listeVols) {
+        	AffichageVol affichageVol = new AffichageVol(vol);
+        	StackPane rectangleinfo = affichageVol.createFlightRectangle();
+            vbox.getChildren().add(rectangleinfo);
+          //getChildren() = liste observable des enfants actuellement présents dans la VBox
+        }
+        
+        return vbox;
+    }
+    
+    
     
     protected static ComboBox<Integer> createComboBox(int start, int end) {
         ComboBox<Integer> comboBox = new ComboBox<>();
@@ -322,10 +359,17 @@ public class GardePage {
         return comboBox;
     }
     
+    protected static ComboBox<String> createNumeroVolComboBox() {
+    	List<String> numVolArray = Vol.generateNumerosVol();
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.getItems().addAll(numVolArray);
+
+        return comboBox;
+    }
+    
     private static void refreshScrollPaneContent() {
     	// Obtenez une nouvelle VBox avec le contenu mis à jour
         VBox newFlightInfoVBox = createFlightInfoVBox();
-        System.out.println("on passe");
         // Remplacez complètement le contenu du ScrollPane par la nouvelle VBox
         scrollPane.setContent(newFlightInfoVBox);
     }

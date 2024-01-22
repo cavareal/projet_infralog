@@ -1,14 +1,15 @@
-package project.modele;
+package project.modele.DAO;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import defaut.Main;
+import project.modele.Billet;
 
 public class DAOBillet {
 
-    private Connection connexion;
+    private final Connection connexion;
     
     public DAOBillet() {
     	connexion = Main.getDAOInstance().getConnexion();

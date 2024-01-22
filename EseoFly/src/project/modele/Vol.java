@@ -8,6 +8,8 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
+import project.modele.DAO.DAOVol;
+
 public class Vol {
 
 	private String numeroVol;
@@ -26,6 +28,8 @@ public class Vol {
 	private Timestamp dateHeureLocaleDepart;
 	private Timestamp dateHeureLocaleArrivee;
 	private int prixStandard;
+	
+	private static List<String> numerosVol = new ArrayList<>();
 
 	public Vol(){
 	}
@@ -49,14 +53,6 @@ public class Vol {
 	public void setNumeroVol(String numeroVol) {
 		this.numeroVol = numeroVol;
 	}
-
-//		public Date getDate() {
-//			return date;
-//		}
-//
-//		public void setDate(Date date) {
-//			this.date = date;
-//		}
 
 	public Time getHeureDepart() {
 		return heureDepart;
@@ -152,13 +148,6 @@ public class Vol {
         this.heureArrivee = new Time(instantArrivee.toEpochMilli());
         this.dateArrivee = instantArrivee.atZone(ZoneId.systemDefault()).toLocalDate();
     }
-	
-	public List<Vol> getAllVols() {
-		List<Vol> vols = new ArrayList<>();
-		DAOVol daoVol = new DAOVol();
-		vols = daoVol.getAllVols();
-		return vols;
-	}
 
 	public int getPrixStandard() {
 		return prixStandard;
@@ -167,11 +156,61 @@ public class Vol {
 	public void setPrixStandard(int prixStandard) {
 		this.prixStandard = prixStandard;
 	}
-
-	public void addVol(Vol vol,short utcDepart, short utcArrivee) {
+	
+	public static List<Vol> getAllVols() {
+		List<Vol> vols;
 		DAOVol daoVol = new DAOVol();
-		daoVol.addVol(vol, utcDepart, utcArrivee);
+		vols = daoVol.getAllVols();
+		return vols;
 	}
+	
+	public List<String> getNumerosVol() {
+		return numerosVol;
+	}
+
+	public static void removeNumeroVol(String numeroVolToRemove) {
+	    numerosVol.remove(numeroVolToRemove);
+	}
+
+	public Boolean addVol(Vol vol,short utcDepart, short utcArrivee) {
+		DAOVol daoVol = new DAOVol();
+		return daoVol.addVol(vol, utcDepart, utcArrivee);
+	}
+	
+	public void update(Vol vol, short utcDepart, short utcArrivee) {
+		DAOVol daoVol = new DAOVol();
+		daoVol.updateVol(vol, utcDepart, utcArrivee);
+	}
+	
+	public List<Vol> search(String nom, String prenom, String numeroVol, String date, 
+			String aeroport, boolean depart, boolean arrivee) {
+		DAOVol daoVol = new DAOVol();
+		List<Vol> vols;
+		vols = daoVol.searchVols(nom, prenom, numeroVol, date, aeroport, depart, arrivee);
+		return vols;
+	}
+	
+	public static List<String> generateNumerosVol() {
+	    List<Vol> vols = getAllVols();
+
+	    for (int i = 0; i <= 999; i++) {
+	    	String numeroVol = "B737" + String.format("%04d", i);
+	        if (!containsNumeroVol(vols, numeroVol)) {
+	            numerosVol.add(numeroVol);
+	        }
+	    }
+	    return numerosVol;
+	}
+
+	private static boolean containsNumeroVol(List<Vol> vols, String numeroVol) {
+	    for (Vol vol : vols) {
+	        if (vol.getNumeroVol().equals(numeroVol)) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+
 	
 }
 
