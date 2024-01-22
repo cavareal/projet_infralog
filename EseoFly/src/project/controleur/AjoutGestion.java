@@ -98,7 +98,7 @@ public class AjoutGestion {
         String iataArrivee = extraireCodeIATA(aeroportArriveeField);
     	
     	vol = new Vol(numeroVol,modeleAvion,timestamp,timestampDuration,iataDepart, 
-    			iataArrivee, Integer.parseInt(prix));
+    			iataArrivee, Math.abs(Integer.parseInt(prix)));
     	vol.setDureeVol(heure);
     	vol.update(vol, utcDepart, utcArrivee);
     	
