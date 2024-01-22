@@ -188,7 +188,7 @@ public class GardePage {
             		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(),
             		prixField.getText(), datePicker.getValue(), formattedTimeDecollage,
             		formattedTimDuration )) {
-        		Label problemeEnvoi = new Label("Probleme lors de l'ajout du vol à la base de donnée");
+        		Label problemeEnvoi = new Label("Problème lors de l'ajout du vol à la base de données");
         		problemeEnvoi.setTextFill(Color.RED);
         		borderPane.setBottom(problemeEnvoi);
             	BorderPane.setAlignment(problemeEnvoi, Pos.CENTER);
