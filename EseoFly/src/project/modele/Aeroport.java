@@ -65,15 +65,11 @@ public class Aeroport {
     
     public List<Aeroport> getAllAeroports(){
     	DAOAeroport daoAeroport = new DAOAeroport();
-    	List<Aeroport> aeroports = new ArrayList<>();
-    	aeroports = daoAeroport.getAllAeroport();
-        return aeroports;
+        return daoAeroport.getAllAeroport();
     }
     
     public String getAeroportStringByCodeIATA(String codeIATA) {
-        List<Aeroport> aeroportList = getAllAeroports();
-
-        for (Aeroport aeroport : aeroportList) {
+        for (Aeroport aeroport : getAllAeroports()) {
             if (aeroport.getCodeIATA().equals(codeIATA)) {
                 return aeroport.getVille() + " - " +
                        aeroport.getCodeIATA() + " - " +
@@ -83,13 +79,7 @@ public class Aeroport {
         }
         return "";
     }
-    
-//  public short getUtcAeroport(String iata) {
-//	short utc = 0 ; 
-//	DAOAeroport daoAeroport = new DAOAeroport();
-//	utc = daoAeroport.getAeroportByAcronyme(iata);
-//	return utc;
-//}
+
 
 }
     

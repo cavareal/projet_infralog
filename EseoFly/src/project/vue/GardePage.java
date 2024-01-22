@@ -276,7 +276,6 @@ public class GardePage {
         
         
         searchButton.setOnAction(e -> {
-        	System.out.println("nom ici : " + nomField.getText());
             String nom = nomField.getText();
             String prenom = prenomField.getText();
             String numeroVol = numeroVolField.getText();
