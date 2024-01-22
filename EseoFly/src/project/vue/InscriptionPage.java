@@ -101,8 +101,12 @@ public class InscriptionPage {
 //        });
 
             registerButton.setOnAction(e -> {
-                    gridPane.getChildren().removeAll(champsNonRenseignes, emailInvalide, conditionsMotDePasseNonRespectees, motDePasseNonIdentiques, emailDejaUtilise, problèmeInscription);
-                    if (!InscriptionGestion.ensembleChampsRenseignes(nameField.getText(), firstNameField.getText(), emailField.getText(), passwordField.getText(), passwordField2.getText())) {
+                    gridPane.getChildren().removeAll(champsNonRenseignes, emailInvalide, 
+                    		conditionsMotDePasseNonRespectees, motDePasseNonIdentiques, 
+                    		emailDejaUtilise, problèmeInscription);
+                    if (!InscriptionGestion.ensembleChampsRenseignes(nameField.getText(), 
+                    		firstNameField.getText(), emailField.getText(), passwordField.getText(), 
+                    		passwordField2.getText())) {
                             gridPane.add(champsNonRenseignes, 1, 6);
                     }
                     else if (!InscriptionGestion.verifierAdresseEmail(emailField.getText())) {
@@ -117,7 +121,8 @@ public class InscriptionPage {
                     else if (InscriptionGestion.emailDejaUtilise(emailField.getText())) {
                             gridPane.add(emailDejaUtilise, 1, 6);
                     }
-                    else if (!InscriptionGestion.inscriptionEffectuee(nameField.getText(), firstNameField.getText(),emailField.getText(), passwordField.getText(),true)) {
+                    else if (!InscriptionGestion.inscriptionEffectuee(nameField.getText(), firstNameField.getText(),
+                    		emailField.getText(), passwordField.getText(),true)) {
                             gridPane.add(problèmeInscription, 1, 6);
                     }
                     else {
@@ -133,15 +138,4 @@ public class InscriptionPage {
         primaryStage.show();
 	}
 	
-//	private static void handleRegistration(String name, String firstName, String email, String password, Stage primaryStage) {
-//
-//		// traitement des infos
-//        System.out.println("Nom: " + name);
-//        System.out.println("Prénom: " + firstName);
-//        System.out.println("Email: " + email);
-//        System.out.println("Mot de passe: " + password);
-//
-//        // logique de traitement ci dessous
-//        ConnexionGestion.redirection(primaryStage);
-//    }
 }

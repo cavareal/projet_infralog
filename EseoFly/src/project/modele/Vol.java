@@ -179,9 +179,9 @@ public class Vol {
 	    return numerosVol;
 	}
 
-	public void addVol(Vol vol,short utcDepart, short utcArrivee) {
+	public Boolean addVol(Vol vol,short utcDepart, short utcArrivee) {
 		DAOVol daoVol = new DAOVol();
-		daoVol.addVol(vol, utcDepart, utcArrivee);
+		return daoVol.addVol(vol, utcDepart, utcArrivee);
 	}
 	
 	public void update(Vol vol, short utcDepart, short utcArrivee) {

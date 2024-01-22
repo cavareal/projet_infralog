@@ -7,6 +7,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import project.modele.Vol;
@@ -23,7 +25,7 @@ public class AffichageVol {
 	
     protected StackPane createFlightRectangle() {
     	
-    	    	// RECUPERATION DES VRAIES INFOS     	
+    	// RECUPERATION DES VRAIES INFOS     	
     	Timestamp dateTimeArrivee = vol.getDateHeureLocaleArrivee() ;
 
         // Conversion de la chaîne en LocalDateTime
@@ -46,10 +48,16 @@ public class AffichageVol {
         rectangle.setStroke(Color.BLACK);
         rectangle.setStrokeWidth(1);
         
+        String texte = vol.getNumeroVol();
+        Text numVol = new Text(texte);
+
+        numVol.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+
         // RECUPERATION DES DONNEES DE VOL
-        Text text = new Text(vol.getNumeroVol() + "    " + vol.getDateDepart() +"    " + vol.getHeureDepart() + "\n"
+        Text text = new Text(numVol.getText() + "    " + vol.getDateDepart() +"    " + vol.getHeureDepart() + "\n"
         		+ vol.getDepart() + " To " + vol.getArrivee() + "\n" 
-        		+ "Modele : "+ vol.getModeleAvion()+ "   "+ "Places vendues : " + vol.getNbPlaceAchetee());
+        		+ "Modèle : "+ vol.getModeleAvion()+ "   "+ "Places vendues : " + vol.getNbPlaceAchetee());
+
         text.setWrappingWidth(280); // Largeur maximale avant le retour à la ligne
         
         // StackPane pour superposer le rectangle et le texte 

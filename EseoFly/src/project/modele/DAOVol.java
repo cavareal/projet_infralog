@@ -61,7 +61,7 @@ public class DAOVol {
     }
     
     
-    public void addVol(Vol vol,short utcDepart, short utcArrivee) {
+    public boolean addVol(Vol vol,short utcDepart, short utcArrivee) {
         String query = "INSERT INTO fly_book_eseo.Vol (numeroVol, depart, arrivee, dateHeureLocaleDepart, dateHeureLocaleArrivee, modeleAvion, dureeVol, prixStandard) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         boolean succes = false;
 
@@ -82,12 +82,13 @@ public class DAOVol {
             int lignesAffectees = preparedStatement.executeUpdate();
             
             if (lignesAffectees > 0) {
+            	return true ;
                 //System.out.println("OK");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        return false;
     }
     
     public void updateVol(Vol vol, short utcDepart, short utcArrivee) {

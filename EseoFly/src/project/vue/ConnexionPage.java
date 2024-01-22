@@ -21,8 +21,6 @@ public class ConnexionPage{
 		//Changement du favIcon
 		primaryStage.getIcons().add(new Image("file:icon_flybookeseo.png"));
 		
-		
-		 
 		// Création des éléments de l'IHM
         Label emailLabel = new Label("Email:");
         TextField emailField = new TextField();
@@ -96,7 +94,6 @@ public class ConnexionPage{
 //            ConnexionGestion.redirection(primaryStage);
 //            System.out.println("PASS");
 //        }
-//       
 		
 //        // METHODE DE CHANGEMENT DE PAGE
 //        //ConnexionGestion.redirection(primaryStage);

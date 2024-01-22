@@ -80,7 +80,7 @@ public class GardePage {
         // CREATIONS COMPOSANTS  
         Label numeroVolLabel = new Label("Numéro de Vol :");
 
-        Label nombrePlaceLabel = new Label("Modele d'avion :");
+        Label nombrePlaceLabel = new Label("Modèle d'avion :");
         
         Label prixLabel = new Label("Prix du billet standard (€) :");
         TextField prixField = new TextField();
@@ -184,11 +184,10 @@ public class GardePage {
             	borderPane.setBottom(problemeDestination);
             	borderPane.setAlignment(problemeDestination, Pos.CENTER);
             }
-        	else {
-        		AjoutGestion.handleAjout(numVolComboBox.getValue(),modeleComboBox.getValue(),
-                		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(),
-                		prixField.getText(), datePicker.getValue(), formattedTimeDecollage,
-                		formattedTimDuration );
+        	else if(AjoutGestion.handleAjout(numVolComboBox.getValue(),modeleComboBox.getValue(),
+            		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(),
+            		prixField.getText(), datePicker.getValue(), formattedTimeDecollage,
+            		formattedTimDuration )) {
         		borderPane.setBottom(envoiOk);
             	borderPane.setAlignment(envoiOk, Pos.CENTER);
             	TabPane tabPane = (TabPane) ajouterVolTab.getTabPane();
@@ -247,7 +246,7 @@ public class GardePage {
         HBox aeroportsHBox = new HBox(10);
         ComboBox<String> aeroportsComboBox = createAeroportsComboBox();
         aeroportsHBox.getChildren().add(aeroportsComboBox);
-        CheckBox checkBoxArrivee = new CheckBox("Arrivé");
+        CheckBox checkBoxArrivee = new CheckBox("Arrivée");
         CheckBox checkBoxDepart = new CheckBox("Départ");
         
         Button searchButton = new Button("Rechercher");
