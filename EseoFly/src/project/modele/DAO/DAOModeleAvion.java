@@ -1,10 +1,11 @@
-package project.modele;
+package project.modele.DAO;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import defaut.Main;
+import project.modele.ModeleAvion;
 
 
 public class DAOModeleAvion {
@@ -36,7 +37,7 @@ public class DAOModeleAvion {
         return succes;
     }
     
-    protected List<ModeleAvion> getAllModele() {
+    public List<ModeleAvion> getAllModele() {
         List<ModeleAvion> modele = new ArrayList<>();
         String query = "SELECT * FROM fly_book_eseo.ModeleAvion";
 

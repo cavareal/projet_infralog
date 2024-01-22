@@ -1,8 +1,9 @@
-package project.modele;
+package project.modele.DAO;
 
 import java.sql.*;
 
 import defaut.Main;
+import project.modele.Employe;
 
 
 public class DAOEmploye{

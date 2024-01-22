@@ -3,7 +3,7 @@ package defaut;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import project.modele.DAO;
+import project.modele.DAO.DAO;
 import project.vue.ConnexionPage; 
 
 

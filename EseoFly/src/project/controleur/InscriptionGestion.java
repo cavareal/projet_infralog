@@ -1,8 +1,8 @@
 package project.controleur;
 
 import javafx.stage.Stage;
-import project.modele.DAOEmploye;
 import project.modele.Employe;
+import project.modele.DAO.DAOEmploye;
 import project.vue.GardePage;
 
 

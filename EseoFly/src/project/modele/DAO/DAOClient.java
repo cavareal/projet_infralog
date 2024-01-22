@@ -1,10 +1,11 @@
-package project.modele;
+package project.modele.DAO;
 
 import java.util.ArrayList;
 import java.sql.*;
 import java.util.List;
 
 import defaut.Main;
+import project.modele.Client;
 
 
 public class DAOClient {

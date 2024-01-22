@@ -1,4 +1,4 @@
-package project.modele;
+package project.modele.DAO;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import defaut.Main;
 import project.controleur.AjoutGestion;
+import project.modele.Vol;
 
 public class DAOVol {
 
@@ -16,7 +17,7 @@ public class DAOVol {
     	connexion = Main.getDAOInstance().getConnexion();
     }
     
-	protected List<Vol> getAllVols() {
+	public List<Vol> getAllVols() {
         List<Vol> vols = new ArrayList<>();
         String query = "SELECT * FROM fly_book_eseo.Vol ORDER BY dateHeureLocaleDepart";
         
@@ -147,7 +148,7 @@ public class DAOVol {
         return volTrouve;
     }
     
-    protected List<Vol> searchVols(String nom, String prenom, String numeroVol, String date, 
+    public List<Vol> searchVols(String nom, String prenom, String numeroVol, String date, 
     	    String aeroport, boolean depart, boolean arrivee) {
     	    List<Vol> resultats = new ArrayList<>();
     	    

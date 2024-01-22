@@ -1,9 +1,9 @@
-package project.modele;
+package project.modele.DAO;
 import java.sql.Connection;
 
 
 public class DAO {
-	
+
 	private ConnexionBdd connexionbdd;
 	private Connection connexion;
 	

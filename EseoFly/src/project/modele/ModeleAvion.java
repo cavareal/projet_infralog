@@ -3,6 +3,8 @@ package project.modele;
 import java.util.ArrayList;
 import java.util.List;
 
+import project.modele.DAO.DAOModeleAvion;
+
 public class ModeleAvion {
     private String modele;
     private int nbColonnes;

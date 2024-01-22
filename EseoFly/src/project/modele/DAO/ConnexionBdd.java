@@ -1,4 +1,4 @@
-package project.modele;
+package project.modele.DAO;
 
 
 import java.sql.*;
@@ -6,7 +6,7 @@ import java.sql.*;
 public class ConnexionBdd {
 
 	//private String ip = "192.168.56.90"; // private
-	private String ip = "192.168.4.139"; //public
+	private String ip = "192.168.4.194"; //public
 	private int port = 6666; 
 	private String user="bdd"; 
 	private String password="network";

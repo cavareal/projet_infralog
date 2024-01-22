@@ -3,6 +3,8 @@ package project.modele;
 import java.util.ArrayList;
 import java.util.List;
 
+import project.modele.DAO.DAOAeroport;
+
 public class Aeroport {
     private String pays;
     private String ville;
