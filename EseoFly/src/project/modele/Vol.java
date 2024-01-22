@@ -203,7 +203,7 @@ public class Vol {
 	    List<Vol> vols = getAllVols();
 
 	    for (int i = 0; i <= 999; i++) {
-	    	String numeroVol = "B737" + String.format("%03d", i);
+	    	String numeroVol = "B737" + String.format("%04d", i);
 	        if (!containsNumeroVol(vols, numeroVol)) {
 	            numerosVol.add(numeroVol);
 	        }

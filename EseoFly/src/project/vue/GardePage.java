@@ -9,9 +9,6 @@ import project.modele.Vol;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -131,12 +128,6 @@ public class GardePage {
         heureHboxDuree.getChildren().addAll(heureLabelDuree, hourComboBoxDuree, 
         		minuteLabelDuree,minuteComboBoxDuree);
         
-        Label problemeChamps = new Label("Tous les champs ne sont pas remplis");
-        Label problemeDestination = new Label("La destination d'arrivée et de départ sont identiques");
-        Label envoiOk = new Label("Ajout pris en compte, veuillez rafraichir la page");
-        problemeChamps.setTextFill(Color.RED);
-        problemeDestination.setTextFill(Color.RED);
-        envoiOk.setTextFill(Color.GREEN);
         
         Button boutonAjout = new Button("Ajouter");
         
@@ -176,22 +167,33 @@ public class GardePage {
         	        || aeroportsComboBoxBis.getValue() == null
         	        || datePicker.getValue() == null
         	        || prixField.getText().isEmpty()) { 
+        		Label problemeChamps = new Label("Tous les champs ne sont pas remplis");
         		borderPane.setBottom(problemeChamps);
             	borderPane.setAlignment(problemeChamps, Pos.CENTER);
-        		
+                problemeChamps.setTextFill(Color.RED);
         	}
         	else if (aeroportsComboBox.getValue().equals(aeroportsComboBoxBis.getValue())) {
+        		Label problemeDestination = new Label("La destination d'arrivée et de départ sont identiques");
+        		problemeDestination.setTextFill(Color.RED);
             	borderPane.setBottom(problemeDestination);
             	borderPane.setAlignment(problemeDestination, Pos.CENTER);
+            	
             }
         	else if(AjoutGestion.handleAjout(numVolComboBox.getValue(),modeleComboBox.getValue(),
             		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(),
             		prixField.getText(), datePicker.getValue(), formattedTimeDecollage,
             		formattedTimDuration )) {
-        		borderPane.setBottom(envoiOk);
-            	borderPane.setAlignment(envoiOk, Pos.CENTER);
             	TabPane tabPane = (TabPane) ajouterVolTab.getTabPane();
                 tabPane.getTabs().remove(ajouterVolTab);
+        	}
+        	else if(!AjoutGestion.handleAjout(numVolComboBox.getValue(),modeleComboBox.getValue(),
+            		aeroportsComboBox.getValue(), aeroportsComboBoxBis.getValue(),
+            		prixField.getText(), datePicker.getValue(), formattedTimeDecollage,
+            		formattedTimDuration )) {
+        		Label problemeEnvoi = new Label("Probleme lors de l'ajout du vol à la base de donnée");
+        		problemeEnvoi.setTextFill(Color.RED);
+        		borderPane.setBottom(problemeEnvoi);
+            	borderPane.setAlignment(problemeEnvoi, Pos.CENTER);
         	}
         });
 
@@ -221,7 +223,7 @@ public class GardePage {
         return historiqueTab;
     }
     
-    private static Tab createRechercheTab() { // VOL POSTERIEUR A L HEURE COURANTE
+    private static Tab createRechercheTab() { 
     	Tab RechercheTab = new Tab("Recherche");
     	
     	Label nomLabel = new Label("Nom : ");
