@@ -1,6 +1,5 @@
 package project.modele;
 
-import com.google.gson.JsonObject;
 
 public class Billet {
     private String numeroReservation;
